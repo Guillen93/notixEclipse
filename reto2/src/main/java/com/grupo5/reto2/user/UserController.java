@@ -1,3 +1,4 @@
+/*
 package com.grupo5.reto2.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,3 +13,4 @@ public class UserController {
 	
 	
 }
+*/

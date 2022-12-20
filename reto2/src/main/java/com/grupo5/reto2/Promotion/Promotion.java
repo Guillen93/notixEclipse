@@ -1,3 +1,4 @@
+/*
 package com.grupo5.reto2.Promotion;
 
 import jakarta.persistence.Column;
@@ -50,3 +51,4 @@ public class Promotion {
 	}
 	
 }
+*/

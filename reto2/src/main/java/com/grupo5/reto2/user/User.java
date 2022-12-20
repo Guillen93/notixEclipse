@@ -2,7 +2,9 @@ package com.grupo5.reto2.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,8 +15,6 @@ import com.grupo5.reto2.role.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -29,10 +29,11 @@ public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String DNI;
+	private String dni;
+	
 	@Column(length = 100)
 	private String password;
+	
 	@Column(columnDefinition = "boolean default true")
 	private boolean isEnabled;
 	
@@ -40,75 +41,62 @@ public class User implements UserDetails {
 	@JoinTable(
 		name = "user_role",
 		joinColumns = @JoinColumn(
-				name = "userDNI", referencedColumnName = "DNI", foreignKey = @ForeignKey(name = "fk_user_userRole")
+				name = "userDni", referencedColumnName = "dni", foreignKey = @ForeignKey(name = "fk_userDni")
 		),
 		inverseJoinColumns = @JoinColumn(
-				name = "roleID", referencedColumnName = "roleID", foreignKey = @ForeignKey(name = "fk_role_userRole")
+				name = "roleId", referencedColumnName = "roleId", foreignKey = @ForeignKey(name = "fk_roleId")
 		)
 	)
-	
-	private List<Role> roles;
+	private Set<Role> roles = new HashSet<>();
 	
 	public User() {
 		super();
 	}
 
-	public User(String dNI, String password, boolean isEnabled, List<Role> roles) {
+	public User(String dni, String password, boolean isEnabled, Set<Role> roles) {
 		super();
-		DNI = dNI;
+		this.dni = dni;
 		this.password = password;
 		this.isEnabled = isEnabled;
 		this.roles = roles;
 	}
 
-	public String getDNI() {
-		return DNI;
+	public String getDni() {
+		return dni;
 	}
-
-	public void setDNI(String dNI) {
-		DNI = dNI;
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public boolean isEnabled() {
-		return isEnabled;
-	}
-
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
-
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
 		for (final Role role : roles) {
 			authorities.add(new SimpleGrantedAuthority(role.getRole()));
 		}
-		
 		return authorities;
 	}
 
 	@Override
 	public String getUsername() {
-		return DNI;
+		return dni;
 	}
-
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -126,5 +114,16 @@ public class User implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	@Override
+	public String toString() {
+		return "User [dni=" + dni + ", password=" + password + ", roles=" + roles + "]";
+	}
+	
 
 }

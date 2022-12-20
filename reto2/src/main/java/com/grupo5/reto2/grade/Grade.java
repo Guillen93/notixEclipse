@@ -12,27 +12,30 @@ import jakarta.persistence.Table;
 public class Grade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer gradeID;
-	@Column(length = 100)
+	private Integer gradeId;
+	
+	@Column()
 	private String name;
-	@Column(length = 100)
+	
+	@Column()
 	private String language;
 	
 	public Grade() {
 		super();
 	}
-	public Grade(Integer gradeID, String name, String language) {
+	
+	public Grade(Integer gradeId, String name, String language) {
 		super();
-		this.gradeID = gradeID;
+		this.gradeId = gradeId;
 		this.name = name;
 		this.language = language;
 	}
-	
-	public Integer getGradeID() {
-		return gradeID;
+
+	public Integer getGradeId() {
+		return gradeId;
 	}
-	public void setGradeID(Integer gradeID) {
-		this.gradeID = gradeID;
+	public void setGradeId(Integer gradeId) {
+		this.gradeId = gradeId;
 	}
 	public String getName() {
 		return name;
@@ -46,5 +49,11 @@ public class Grade {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+
+	@Override
+	public String toString() {
+		return "Grade [gradeId=" + gradeId + ", name=" + name + ", language=" + language + "]";
+	}
+	
 	
 }

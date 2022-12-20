@@ -1,7 +1,5 @@
 package com.grupo5.reto2.security;
 
-
-
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -34,13 +32,13 @@ public class JwtTokenUtil {
 	public String generateAccessToken(User user) {
 		// cuando generamos el token podemos meter campos custom que nos puedan ser utiles mas adelante.
 		return Jwts.builder()
-				.setSubject(String.format("%s", user.getDNI()))
+				.setSubject(String.format("%s", user.getDni()))
 				.setIssuer("ADTDAM")
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
 				// .claim("userId", user.getId()) // podriamos meter datos custom, u objetos custom. ojo con meter "user" por que tiene la password en el modelo 
 				// y passwords no queremos enviar ni devolver
-				.claim("userDNI", user.getDNI())
+				.claim("userDNI", user.getDni())
 				.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
 				.compact();
 	}

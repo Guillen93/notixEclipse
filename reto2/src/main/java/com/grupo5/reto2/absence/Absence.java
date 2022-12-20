@@ -1,3 +1,4 @@
+/*
 package com.grupo5.reto2.absence;
 
 import java.util.Date;
@@ -64,3 +65,4 @@ public class Absence {
 	}
 	
 }
+*/

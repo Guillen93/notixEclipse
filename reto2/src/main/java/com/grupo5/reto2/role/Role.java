@@ -13,7 +13,8 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer roleID;
-	@Column(length = 100)
+	
+	@Column()
 	private String role;
 	
 	public Role() {
@@ -41,5 +42,11 @@ public class Role {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "Role [roleID=" + roleID + ", role=" + role + "]";
+	}
+	
 	
 }
