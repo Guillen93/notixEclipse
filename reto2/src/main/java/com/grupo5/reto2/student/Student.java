@@ -4,18 +4,22 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.grupo5.reto2.absence.Absence;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
-import com.grupo5.reto2.subject.Subject;
+import com.grupo5.reto2.note.Note;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name="student")
@@ -43,31 +47,15 @@ public class Student {
 	
 	@Column()
 	private String photo;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "note",
-		joinColumns = @JoinColumn(
-				name = "studentDNI", referencedColumnName = "studentDni", foreignKey = @ForeignKey(name = "fk_student_note")
-		),
-		inverseJoinColumns = @JoinColumn(
-				name = "subjectId", referencedColumnName = "subjectId", foreignKey = @ForeignKey(name = "fk_subject_note")
-		)
-	)
-	private Set<Subject> notes = new HashSet<>();
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "absence",
-		joinColumns = @JoinColumn(
-				name = "studentDni", referencedColumnName = "studentDni", foreignKey = @ForeignKey(name = "fk_student_absence")
-		),
-		inverseJoinColumns = @JoinColumn(
-				name = "subjectId", referencedColumnName = "subjectId", foreignKey = @ForeignKey(name = "fk_subject_absence")
-		)
-	)
-	private Set<Subject> absences = new HashSet<>();
-	
+
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonBackReference
+	private Set<Note> notes = new HashSet<>();
+
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonBackReference
+	private Set<Absence> absences = new HashSet<>();	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "promotion",
@@ -85,8 +73,7 @@ public class Student {
 	}
 
 	public Student(String studentDni, String name, String surname, Date bornDate, String nationality, String email,
-			String phone, String photo, Set<Subject> notes, Set<Subject> absences,
-			Set<GradeEdition> promotions) {
+			String phone, String photo, Set<Note> notes, Set<Absence> absences, Set<GradeEdition> promotions) {
 		super();
 		this.studentDni = studentDni;
 		this.name = name;
@@ -149,16 +136,16 @@ public class Student {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	public Set<Subject> getNotes() {
+	public Set<Note> getNotes() {
 		return notes;
 	}
-	public void setNotes(Set<Subject> notes) {
+	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
 	}
-	public Set<Subject> getAbsences() {
+	public Set<Absence> getAbsences() {
 		return absences;
 	}
-	public void setAbsences(Set<Subject> absences) {
+	public void setAbsences(Set<Absence> absences) {
 		this.absences = absences;
 	}
 	public Set<GradeEdition> getPromotions() {
@@ -175,5 +162,5 @@ public class Student {
 				+ photo + ", notes=" + notes + ", absences=" + absences + ", promotions=" + promotions + "]";
 	}
 
-
+	
 }

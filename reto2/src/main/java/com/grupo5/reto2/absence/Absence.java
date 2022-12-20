@@ -1,55 +1,89 @@
-/*
 package com.grupo5.reto2.absence;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.grupo5.reto2.student.Student;
+import com.grupo5.reto2.subject.Subject;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 
 @Entity
-@Table(name="absence")
 public class Absence {
 	
-	private Integer absenceID;
-	@Column()
-	private Integer subjectID;
-	@Column(length = 9)
-	private String studentDNI;
+	@EmbeddedId
+	private AbsenceId id = new AbsenceId();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("studentDni")
+	@JoinColumn(name = "studentDni", foreignKey=@ForeignKey(name = "fk_studentAbsence"))
+	@JsonManagedReference
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private Student student;
+	@Column(name = "studentDni", updatable = false, insertable = false)
+	private String studentDni;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("subjectId")
+	@JoinColumn(name = "subjectId", foreignKey=@ForeignKey(name = "fk_subjectAbsence"))
+	@JsonManagedReference
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private Subject subject;
+	@Column(name = "subjectId", updatable = false, insertable = false)
+	private Integer subjectId;
+	
 	@Column()
 	private Date foul;
+	
 	@Column()
 	private boolean justified = false;
 	
 	public Absence() {
 		super();
 	}
-	public Absence(Integer absenceID, Integer subjectID, String studentDNI, Date foul, boolean justified) {
+	
+	public Absence(Student student, String studentDni, Subject subject, Integer subjectId, Date foul,
+			boolean justified) {
 		super();
-		this.absenceID = absenceID;
-		this.subjectID = subjectID;
-		this.studentDNI = studentDNI;
+		this.student = student;
+		this.studentDni = studentDni;
+		this.subject = subject;
+		this.subjectId = subjectId;
 		this.foul = foul;
 		this.justified = justified;
 	}
-	
-	public Integer getAbsenceID() {
-		return absenceID;
+
+	public Student getStudent() {
+		return student;
 	}
-	public void setAbsenceID(Integer absenceID) {
-		this.absenceID = absenceID;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
-	public Integer getSubjectID() {
-		return subjectID;
+	public String getStudentDni() {
+		return studentDni;
 	}
-	public void setSubjectID(Integer subjectID) {
-		this.subjectID = subjectID;
+	public void setStudentDni(String studentDni) {
+		this.studentDni = studentDni;
 	}
-	public String getStudentDNI() {
-		return studentDNI;
+	public Subject getSubject() {
+		return subject;
 	}
-	public void setStudentDNI(String studentDNI) {
-		this.studentDNI = studentDNI;
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+	public Integer getSubjectId() {
+		return subjectId;
+	}
+	public void setSubjectId(Integer subjectId) {
+		this.subjectId = subjectId;
 	}
 	public Date getFoul() {
 		return foul;
@@ -63,6 +97,12 @@ public class Absence {
 	public void setJustified(boolean justified) {
 		this.justified = justified;
 	}
+
+	@Override
+	public String toString() {
+		return "Absence [student=" + student + ", studentDni=" + studentDni + ", subject=" + subject + ", subjectId="
+				+ subjectId + ", foul=" + foul + ", justified=" + justified + "]";
+	}
+
 	
 }
-*/

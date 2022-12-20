@@ -3,12 +3,15 @@ package com.grupo5.reto2.subject;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.grupo5.reto2.absence.Absence;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
+import com.grupo5.reto2.note.Note;
 import com.grupo5.reto2.professor.Professor;
-import com.grupo5.reto2.student.Student;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,8 +20,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,7 +38,7 @@ public class Subject {
 	private GradeEdition grade;
 	@Column(name = "gradeId", updatable = false, insertable = false)
 	private Integer gradeId;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "professorDni", foreignKey=@ForeignKey(name = "fk_professorDni"))
 	@JsonManagedReference
@@ -49,19 +52,21 @@ public class Subject {
 	
 	@Column()
 	private Integer duration;
+
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonBackReference
+	private Set<Note> notes = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "notes")
-	private Set<Student> notes = new HashSet<>();
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonBackReference
+	private Set<Absence> absences = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "absences")
-	private Set<Student> absences = new HashSet<>();
- 	
 	public Subject() {
 		super();
 	}
 
 	public Subject(Integer subjectId, GradeEdition grade, Integer gradeId, Professor professor, String professorDni,
-			String name, Integer duration, Set<Student> notes, Set<Student> absences) {
+			String name, Integer duration, Set<Note> notes, Set<Absence> absences) {
 		super();
 		this.subjectId = subjectId;
 		this.grade = grade;
@@ -116,16 +121,16 @@ public class Subject {
 	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
-	public Set<Student> getNotes() {
+	public Set<Note> getNotes() {
 		return notes;
 	}
-	public void setNotes(Set<Student> notes) {
+	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
 	}
-	public Set<Student> getAbsences() {
+	public Set<Absence> getAbsences() {
 		return absences;
 	}
-	public void setAbsences(Set<Student> absences) {
+	public void setAbsences(Set<Absence> absences) {
 		this.absences = absences;
 	}
 
