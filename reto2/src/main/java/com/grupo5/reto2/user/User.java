@@ -1,15 +1,16 @@
 package com.grupo5.reto2.user;
 
+import java.util.HashSet;
+import java.util.Set;
+/*
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+*/
 import com.grupo5.reto2.role.Role;
 
 import jakarta.persistence.Column;
@@ -24,9 +25,9 @@ import jakarta.persistence.ForeignKey;
 
 @Entity
 @Table(name="user")
-public class User implements UserDetails {
+public class User {
 	
-	private static final long serialVersionUID = 1L;
+//	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String dni;
@@ -82,7 +83,7 @@ public class User implements UserDetails {
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
-
+/*
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
@@ -119,7 +120,7 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return isEnabled;
 	}
-
+*/
 	@Override
 	public String toString() {
 		return "User [dni=" + dni + ", password=" + password + ", roles=" + roles + "]";
