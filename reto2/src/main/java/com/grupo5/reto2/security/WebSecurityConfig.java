@@ -1,3 +1,4 @@
+/*
 package com.grupo5.reto2.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,3 +64,4 @@ public class WebSecurityConfig {
 		return http.build();
 	}
 }
+*/
