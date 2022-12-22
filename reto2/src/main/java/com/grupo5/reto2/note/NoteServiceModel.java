@@ -1,30 +1,35 @@
 package com.grupo5.reto2.note;
 
-import com.grupo5.reto2.student.Student;
-import com.grupo5.reto2.subject.Subject;
 
-public class NotePostRequest {
 
-	private Student student;
+public class NoteServiceModel {
+
+	private NoteId id = new NoteId();
+	// private StudentServiceModel studentServiceModel;
 	private String studentDni;
-	private Subject subject;
+	// private SubjectServiceModel subjectServiceModel;
 	private Integer subjectId;
+
 	private Float eva1;
+
 	private Float eva2;
+
 	private Float eva3;
+
 	private Integer final1;
+
 	private Integer final2;
 
-	public NotePostRequest() {
+	public NoteServiceModel() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public NotePostRequest(Student student, String studentDni, Subject subject, Integer subjectId, Float eva1,
-			Float eva2, Float eva3, Integer final1, Integer final2) {
+	public NoteServiceModel(NoteId id, String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3,
+			Integer final1, Integer final2) {
 		super();
-		this.student = student;
+		this.id = id;
 		this.studentDni = studentDni;
-		this.subject = subject;
 		this.subjectId = subjectId;
 		this.eva1 = eva1;
 		this.eva2 = eva2;
@@ -33,12 +38,12 @@ public class NotePostRequest {
 		this.final2 = final2;
 	}
 
-	public Student getStudent() {
-		return student;
+	public NoteId getId() {
+		return id;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setId(NoteId id) {
+		this.id = id;
 	}
 
 	public String getStudentDni() {
@@ -47,14 +52,6 @@ public class NotePostRequest {
 
 	public void setStudentDni(String studentDni) {
 		this.studentDni = studentDni;
-	}
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
 	}
 
 	public Integer getSubjectId() {
@@ -103,13 +100,6 @@ public class NotePostRequest {
 
 	public void setFinal2(Integer final2) {
 		this.final2 = final2;
-	}
-
-	@Override
-	public String toString() {
-		return "NotePostRequest [student=" + student + ", studentDni=" + studentDni + ", subject="
-				+ subject + ", subjectId=" + subjectId + ", eva1=" + eva1 + ", eva2=" + eva2 + ", eva3=" + eva3
-				+ ", final1=" + final1 + ", final2=" + final2 + "]";
 	}
 
 }

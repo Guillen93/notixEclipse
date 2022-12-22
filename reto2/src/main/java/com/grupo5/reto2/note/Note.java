@@ -25,7 +25,7 @@ public class Note {
 	@JoinColumn(name = "studentDni", foreignKey=@ForeignKey(name = "fk_studentNote"))
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private Student student;
+	private Student studentNote;
 	@Column(name = "studentDni", updatable = false, insertable = false)
 	private String studentDni;
 	
@@ -63,10 +63,10 @@ public class Note {
 		super();
 	}
 
-	public Note(Student student, String studentDni, Subject subject, Integer subjectId, Float eva1, Float eva2,
+	public Note(Student studentNote, String studentDni, Subject subject, Integer subjectId, Float eva1, Float eva2,
 			Float eva3, Integer final1, Integer final2) {
 		super();
-		this.student = student;
+		this.studentNote = studentNote;
 		this.studentDni = studentDni;
 		this.subject = subject;
 		this.subjectId = subjectId;
@@ -78,10 +78,10 @@ public class Note {
 	}
 
 	public Student getStudent() {
-		return student;
+		return studentNote;
 	}
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudent(Student studentNote) {
+		this.studentNote = studentNote;
 	}
 	public String getStudentDni() {
 		return studentDni;
@@ -134,7 +134,7 @@ public class Note {
 
 	@Override
 	public String toString() {
-		return "Note [student=" + student + ", studentDni=" + studentDni + ", subject=" + subject + ", subjectId="
+		return "Note [student=" + studentNote + ", studentDni=" + studentDni + ", subject=" + subject + ", subjectId="
 				+ subjectId + ", eva1=" + eva1 + ", eva2=" + eva2 + ", eva3=" + eva3 + ", final1=" + final1
 				+ ", final2=" + final2 + "]";
 	}

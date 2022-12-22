@@ -48,7 +48,7 @@ public class Student {
 	@Column()
 	private String photo;
 
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "studentNote", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Set<Note> notes = new HashSet<>();
 
