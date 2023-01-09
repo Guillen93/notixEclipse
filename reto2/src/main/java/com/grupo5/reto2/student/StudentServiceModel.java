@@ -5,19 +5,12 @@ import java.util.Date;
 public class StudentServiceModel {
 
 	private String studentDni;
-
 	private String name;
-
 	private String surname;
-
 	private Date bornDate;
-
 	private String nationality;
-
 	private String email;
-
 	private String phone;
-
 	private String photo;
 
 	public StudentServiceModel() {
