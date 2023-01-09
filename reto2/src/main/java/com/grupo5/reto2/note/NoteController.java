@@ -98,7 +98,7 @@ public class NoteController {
 		    
 	}
 	
-	
+/*	
 	@PostMapping("/notes")
 	public ResponseEntity<Note> createNote(
 						@RequestBody NotePostRequest notePostRequest) {
@@ -119,7 +119,7 @@ public class NoteController {
 
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
-	
+	*/
 	
 	
 //	@PutMapping("/notes/{studentDNI}/{subjetId}")
