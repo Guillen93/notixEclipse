@@ -1,13 +1,18 @@
-/*
 package com.grupo5.reto2.security;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.user.User;
 
 import io.jsonwebtoken.Claims;
@@ -30,6 +35,9 @@ public class JwtTokenUtil {
 	@Value("${app.jwt.secret}")
 	private String SECRET_KEY;
 	
+	private static final String user_dni_claim = "userDni";
+	private static final String roles_claim = "roles";
+	
 	public String generateAccessToken(User user) {
 		// cuando generamos el token podemos meter campos custom que nos puedan ser utiles mas adelante.
 		return Jwts.builder()
@@ -37,9 +45,8 @@ public class JwtTokenUtil {
 				.setIssuer("ADTDAM")
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
-				// .claim("userId", user.getId()) // podriamos meter datos custom, u objetos custom. ojo con meter "user" por que tiene la password en el modelo 
-				// y passwords no queremos enviar ni devolver
-				.claim("userDNI", user.getDni())
+				.claim(user_dni_claim, user.getDni())
+				.claim(roles_claim, user.getRoles())
 				.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
 				.compact();
 	}
@@ -67,6 +74,32 @@ public class JwtTokenUtil {
 		return parseClaims(token).getSubject();
 	}
 	
+	public Integer getUserDni(String token) {
+		Claims claims = parseClaims(token);
+		return(Integer) claims.get(user_dni_claim);
+	}
+	
+	public List<Role> getUserRoles(String token) {
+		Claims claims = parseClaims(token);
+		Object jsonObject = claims.get(roles_claim);
+	
+		List<Role> roles;
+		
+		try {
+			roles = jsonArrayToList(jsonObject, Role.class);
+			return roles;
+		} catch (IOException e) {
+			return new ArrayList<Role>();
+		}
+	}
+	
+	public static <T> List<T> jsonArrayToList(Object json, Class<T> elementClass) throws IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonString = objectMapper.writeValueAsString(json);
+		CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elementClass);
+		return objectMapper.readValue(jsonString, listType);
+	}
+	
 	private Claims parseClaims(String token) {
 		return Jwts.parser()
 				.setSigningKey(SECRET_KEY)
@@ -74,4 +107,3 @@ public class JwtTokenUtil {
 				.getBody();
 	}
 }
-*/

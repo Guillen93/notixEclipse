@@ -1,4 +1,3 @@
-/*
 package com.grupo5.reto2.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,25 +42,18 @@ public class WebSecurityConfig {
 				(authz) ->
 					authz
 						.requestMatchers("/api/users/**").permitAll()
+						//.requestMatchers("/api/professors/**").hasAnyAuthority("Professor", "Admin")
 						.requestMatchers("/api/professors/**").permitAll()
+						//.requestMatchers("/api/students/**").authenticated()
 						.requestMatchers("/api/students/**").permitAll()
-						.anyRequest().authenticated()
+						//.anyRequest().authenticated()
 		);
 		
-		// control de la excepcion : --> Devolver Unauthorized --> 401
-//		http.exceptionHandling()
-//			.authenticationEntryPoint(
-//				(request, response, ex) -> {
-//					response.sendError(
-//							HttpServletResponse.SC_UNAUTHORIZED,
-//							ex.getMessage()
-//					);
-//				}
-//			);
+		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+		http.exceptionHandling().authenticationEntryPoint(new CustomMyAuthenticationEntryPoint());
 
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
 	}
 }
-*/
