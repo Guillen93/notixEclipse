@@ -14,4 +14,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		// TODO Auto-generated method stub
 		return professorRepository.findAll();
 	}
+
+	@Override
+	public Object findByDni(String dni) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

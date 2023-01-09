@@ -17,5 +17,5 @@ public class ProfessorController {
 	public ResponseEntity<Iterable<Professor>> getProfessors() {
 		return new ResponseEntity <Iterable<Professor>>(professorService.findAll(), HttpStatus.OK);
 	}
-	
+
 }
