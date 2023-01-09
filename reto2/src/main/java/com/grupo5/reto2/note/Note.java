@@ -1,6 +1,5 @@
 package com.grupo5.reto2.note;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grupo5.reto2.student.Student;
@@ -24,7 +23,7 @@ public class Note {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("studentDni")
 	@JoinColumn(name = "studentDni", foreignKey = @ForeignKey(name = "fk_studentNote"))
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Student studentNote;
 	@Column(name = "studentDni", updatable = false, insertable = false)
@@ -33,7 +32,7 @@ public class Note {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("subjectId")
 	@JoinColumn(name = "subjectId", foreignKey = @ForeignKey(name = "fk_subjectNote"))
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Subject subject;
 	@Column(name = "subjectId", updatable = false, insertable = false)
@@ -56,6 +55,18 @@ public class Note {
 
 	public Note() {
 		super();
+	}
+
+	public Note(String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3, Integer final1,
+			Integer final2) {
+		super();
+		this.studentDni = studentDni;
+		this.subjectId = subjectId;
+		this.eva1 = eva1;
+		this.eva2 = eva2;
+		this.eva3 = eva3;
+		this.final1 = final1;
+		this.final2 = final2;
 	}
 
 	public Note(Student studentNote, String studentDni, Subject subject, Integer subjectId, Float eva1, Float eva2,

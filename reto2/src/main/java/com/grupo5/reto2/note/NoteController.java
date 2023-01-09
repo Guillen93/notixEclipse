@@ -1,11 +1,10 @@
 package com.grupo5.reto2.note;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +12,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @RequestMapping("api")
+//
+
+// @RequestMapping(value = "api", method = RequestMethod.POST ,consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 public class NoteController {
 
-	
 	@Autowired
 	private NoteRepository noteRepository;
+//	@Autowired
+//	private StudentRepository studentRepository;
+//	@Autowired
+//	private SubjectRepository subjectRepository;
 
 	@GetMapping("/notes")
 	public ResponseEntity<Iterable<NoteServiceModel>> getNote() {
@@ -46,8 +52,6 @@ public class NoteController {
 	                     );
 	        }
 		    return new ResponseEntity <Iterable<NoteServiceModel>> (response, HttpStatus.OK);    
-	
-		    
 	}
 	
 	@GetMapping("/notes/{studentDNI}/{subjetId}")
@@ -98,28 +102,33 @@ public class NoteController {
 		    
 	}
 	
-/*	
-	@PostMapping("/notes")
+	
+	
+	// @PostMapping("/notes")
+	// @PostMapping(value = "/notes", consumes = {"application/xml","application/json"}) 
+	@RequestMapping(value = "/notes", method = RequestMethod.POST ,consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Note> createNote(
 						@RequestBody NotePostRequest notePostRequest) {
-
+		/*
 		Note note = new Note(
-				null,
 				notePostRequest.getStudentDni(),
-				null,
 				notePostRequest.getSubjectId(),
 				notePostRequest.getEva1(),
 				notePostRequest.getEva2(),
 				notePostRequest.getEva3(),
 				notePostRequest.getFinal1(),
-				notePostRequest.getFinal2());
+				notePostRequest.getFinal2()
+		);
+		*/
+//		note.setStudent(studentRepository.findById(notePostRequest.getStudentDni()))
+//		note.setSubject(subjectRepository.findById(notePostRequest.getSubjectId()));
 				
 		
-		Note response = noteRepository.save(note);
-
+		// Note response = noteRepository.save(note);
+		Note response = null;
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
-	*/
+	
 	
 	
 //	@PutMapping("/notes/{studentDNI}/{subjetId}")

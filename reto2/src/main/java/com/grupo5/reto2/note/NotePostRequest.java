@@ -20,12 +20,11 @@ public class NotePostRequest {
 		super();
 	}
 
-	public NotePostRequest(Student student, String studentDni, Subject subject, Integer subjectId, Float eva1,
-			Float eva2, Float eva3, Integer final1, Integer final2) {
+	public NotePostRequest(String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3, Integer final1,
+			Integer final2) {
 		super();
-		this.student = student;
+
 		this.studentDni = studentDni;
-		this.subject = subject;
 		this.subjectId = subjectId;
 		this.eva1 = eva1;
 		this.eva2 = eva2;
@@ -113,14 +112,12 @@ public class NotePostRequest {
 	public void setId(NoteId id) {
 		this.id = id;
 	}
-	
-	
 
 	@Override
 	public String toString() {
-		return "NotePostRequest [student=" + student + ", studentDni=" + studentDni + ", subject="
-				+ subject + ", subjectId=" + subjectId + ", eva1=" + eva1 + ", eva2=" + eva2 + ", eva3=" + eva3
-				+ ", final1=" + final1 + ", final2=" + final2 + "]";
+		return "NotePostRequest [student=" + student + ", studentDni=" + studentDni + ", subject=" + subject
+				+ ", subjectId=" + subjectId + ", eva1=" + eva1 + ", eva2=" + eva2 + ", eva3=" + eva3 + ", final1="
+				+ final1 + ", final2=" + final2 + "]";
 	}
 
 }

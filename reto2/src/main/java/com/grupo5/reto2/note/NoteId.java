@@ -4,16 +4,11 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.GeneratedValue;
 
 @Embeddable
-
 public class NoteId implements Serializable {
 
-	
-	@GeneratedValue
 	private static final long serialVersionUID = 1L;
-	
 	
 	@Column
 	private String studentDni;
