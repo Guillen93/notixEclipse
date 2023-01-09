@@ -15,13 +15,16 @@ public interface NoteRepository extends CrudRepository<Note,NoteId> {
 
 	
 	@Transactional
-	//@Modifying
 	Note findByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
 
 	
 	@Transactional
+	List<Note> findByStudentDni(@Param("StudentDni") String studentDNI);
+
+	
+	@Transactional
 	@Modifying
-	Note deleteByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
+	Integer deleteByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
 
 	
 	//@Transactional
@@ -29,8 +32,7 @@ public interface NoteRepository extends CrudRepository<Note,NoteId> {
 	//void updateBystudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId, NotePostRequest notePostRequest);
 	
 	
-//	 @Query("SELECT * FROM note ")
-//	 public List<Note> findAllNote();
-//	 
-//	
+	
+	
+	
 }

@@ -5,6 +5,7 @@ import com.grupo5.reto2.subject.Subject;
 
 public class NotePostRequest {
 
+	private NoteId id;
 	private Student student;
 	private String studentDni;
 	private Subject subject;
@@ -104,6 +105,16 @@ public class NotePostRequest {
 	public void setFinal2(Integer final2) {
 		this.final2 = final2;
 	}
+
+	public NoteId getId() {
+		return id;
+	}
+
+	public void setId(NoteId id) {
+		this.id = id;
+	}
+	
+	
 
 	@Override
 	public String toString() {

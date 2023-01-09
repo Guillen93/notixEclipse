@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.grupo5.reto2.absence.Absence;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.note.Note;
@@ -26,6 +28,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="subject")
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="subjectId")
 public class Subject {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,12 +57,13 @@ public class Subject {
 	@Column()
 	private Integer duration;
 
+	@JsonIgnoreProperties("student") 
+	@JsonBackReference(value="note")
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JsonBackReference
 	private Set<Note> notes = new HashSet<>();
 	
+	@JsonBackReference(value="absences")
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JsonBackReference
 	private Set<Absence> absences = new HashSet<>();
 	
 	public Subject() {

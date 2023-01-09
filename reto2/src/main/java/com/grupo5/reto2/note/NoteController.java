@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,6 +72,32 @@ public class NoteController {
 		    
 	}
 	
+	@GetMapping("/notes/{studentDNI}")
+	public ResponseEntity<Iterable<NoteServiceModel>> getNote(@PathVariable String studentDNI ) {
+
+		Iterable<Note> notes = noteRepository.findByStudentDni(studentDNI);
+		
+		List<NoteServiceModel> response = new ArrayList<NoteServiceModel>();
+		   
+	    for (Note  note : notes) {
+            response.add(
+                    new NoteServiceModel(
+                    		null,
+                            note.getStudentDni(),
+                            note.getSubjectId(),
+                            note.getEva1(),
+                            note.getEva2(),
+                            note.getEva3(),
+                            note.getFinal1(),
+                            note.getFinal2()
+                            )
+                     );
+        }
+	        
+		    return new ResponseEntity <Iterable<NoteServiceModel>> (response, HttpStatus.OK);
+		    
+	}
+	
 	
 	@PostMapping("/notes")
 	public ResponseEntity<Note> createNote(
@@ -93,6 +119,8 @@ public class NoteController {
 
 		return new ResponseEntity<Note>(response, HttpStatus.OK);
 	}
+	
+	
 	
 //	@PutMapping("/notes/{studentDNI}/{subjetId}")
 //	public void updateNoteByDoubleId(@PathVariable String studentDNI , @PathVariable Integer subjetId, @RequestBody NotePostRequest notePostRequest  ){
@@ -118,13 +146,13 @@ public class NoteController {
 ////		return new ResponseEntity<Integer>(noteRepository.updateByStudentDniAndSubjectId(studentDNI, subjetId),HttpStatus.OK);
 //	}
 	
-//	@DeleteMapping("/notes/{studentDNI}/{subjetId}")
-//	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI , @PathVariable Integer subjetId ){
-//
-//		//noteRepository.deleteByStudentDniAndSubjectId(studentDNI, subjetId);
-//		
-//		return new ResponseEntity<Integer>(noteRepository.deleteByStudentDniAndSubjectId(studentDNI, subjetId),HttpStatus.OK);
-//	}
+	@DeleteMapping("/notes/{studentDNI}/{subjetId}")
+	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI , @PathVariable Integer subjetId ){
+
+		//noteRepository.deleteByStudentDniAndSubjectId(studentDNI, subjetId);
+		
+		return new ResponseEntity<Integer>(noteRepository.deleteByStudentDniAndSubjectId(studentDNI, subjetId),HttpStatus.OK);
+	}
 
 
 	

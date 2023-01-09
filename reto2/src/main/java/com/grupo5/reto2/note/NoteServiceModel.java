@@ -37,6 +37,19 @@ public class NoteServiceModel {
 		this.final1 = final1;
 		this.final2 = final2;
 	}
+	
+	public NoteServiceModel( String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3,
+			Integer final1, Integer final2) {
+		super();
+		this.studentDni = studentDni;
+		this.subjectId = subjectId;
+		this.eva1 = eva1;
+		this.eva2 = eva2;
+		this.eva3 = eva3;
+		this.final1 = final1;
+		this.final2 = final2;
+	}
+
 
 	public NoteId getId() {
 		return id;

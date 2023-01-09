@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.grupo5.reto2.absence.Absence;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.note.Note;
@@ -49,11 +52,12 @@ public class Student {
 	private String photo;
 
 	@OneToMany(mappedBy = "studentNote", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="note")
+	//@JsonIgnoreProperties("subject") 
 	private Set<Note> notes = new HashSet<>();
 
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="absences")
 	private Set<Absence> absences = new HashSet<>();	
 
 	@ManyToMany(fetch = FetchType.LAZY)
