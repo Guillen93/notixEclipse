@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 	
 	@Override
-	public User signUp(User user) {
+	public User signUp(User user) throws UserException {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
@@ -44,7 +45,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		user.setEnabled(true);
 		user.setRoles(roles);
 		
-		return userRepository.save(user);
+		try {
+			return userRepository.save(user);
+		} catch (DataAccessException e) {
+			throw new UserException(e.getMessage());
+		}
+		
 	}
 
 }

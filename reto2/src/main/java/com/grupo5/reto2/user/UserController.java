@@ -47,7 +47,11 @@ public class UserController {
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signIn(@RequestBody UserRequest request) {
 		User user = new User (request.getDni(), request.getPassword());
-		userService.signUp(user);
+		try {
+			userService.signUp(user);
+		} catch (UserException e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT); 
+		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
