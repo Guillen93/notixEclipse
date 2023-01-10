@@ -17,7 +17,8 @@ import javax.mail.internet.MimeMultipart;
 
 
 public class CorreoService {
-	// Server mail user & pass account
+	// Server mail user & pass account aqui se seteara el usuario y contraseña desencriptando el archivo de user y pass
+	
 	private String user = null;
 	private String pass = null;
 
