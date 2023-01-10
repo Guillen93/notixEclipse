@@ -50,6 +50,26 @@ public class Professor {
 		super();
 	}
 
+	public Professor(String professorDni, String nationality, String addres, String photo) {
+		super();
+		this.professorDni = professorDni;
+		this.nationality = nationality;
+		this.addres = addres;
+		this.photo = photo;
+	}
+
+	public Professor(String professorDni, String name, String surname, String nationality, String email, String addres,
+			String photo) {
+		super();
+		this.professorDni = professorDni;
+		this.name = name;
+		this.surname = surname;
+		this.nationality = nationality;
+		this.email = email;
+		this.addres = addres;
+		this.photo = photo;
+	}
+
 	public Professor(String professorDni, String name, String surname, String nationality, String email, String addres,
 			String photo, List<GradeEdition> gradeEditions, List<Subject> subjects) {
 		super();
@@ -125,6 +145,5 @@ public class Professor {
 				+ nationality + ", email=" + email + ", addres=" + addres + ", photo=" + photo + ", gradeEditions="
 				+ gradeEditions + ", subjects=" + subjects + "]";
 	}
-
 	
 }

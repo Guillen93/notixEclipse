@@ -1,9 +1,13 @@
 package com.grupo5.reto2.professor;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 
+import jakarta.transaction.Transactional;
+
 public interface ProfessorRepository extends CrudRepository<Professor, Integer> {
-	Optional<Professor> findByDni(String dni);
+	
+	Professor findByProfessorDni(String professorDni);
+	
+	@Transactional
+	Integer deleteByProfessorDni(String professorDni);
 }
