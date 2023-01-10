@@ -26,98 +26,37 @@ public class GradeController {
 	@Autowired
 	private GradeRepository gradeRepository;
 	
+	@Autowired
+	private GradeService gradeService;
+	
 	@GetMapping("/grades")
-	public ResponseEntity<Iterable<GradeServiceModel>> getEmployees() {
-		Iterable<Grade> grades = gradeRepository.findAll();
-		
-		List<GradeServiceModel> response = new ArrayList<GradeServiceModel>();
-		
-		for (Grade grade : grades) {
-			response.add(
-					new GradeServiceModel(
-							grade.getGradeId(),
-							grade.getName(),
-							grade.getLanguage()
-							)
-					 );
-		}
-		return new ResponseEntity <Iterable<GradeServiceModel>> (response, HttpStatus.OK);	
+	public ResponseEntity<Iterable<GradeServiceModel>> getGrades() {
+	
+		return new ResponseEntity <Iterable<GradeServiceModel>> (gradeService.findAllGrades(), HttpStatus.OK);	
 	}
 	
 	@GetMapping("/grades/{id}")
-public ResponseEntity<GradeServiceModel> getEmployeeById(@PathVariable("id") Integer id) {
+	public ResponseEntity<GradeServiceModel> getGradeById(@PathVariable("id") Integer gradeId) {
 		
-		Grade grade = gradeRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "Grado no encontrado")
-						);
-		
-		GradeServiceModel response = new GradeServiceModel(
-				grade.getGradeId(),
-				grade.getName(),
-				grade.getLanguage()
-				);
-		return new ResponseEntity <GradeServiceModel> (response, HttpStatus.OK);	
+		return gradeService.findByGradeId(gradeId);	
 	}
 	
 	@PostMapping("/grades")
-	public ResponseEntity<GradeServiceModel> createGrade(@RequestBody GradePostRequest gradePostRequest) {
-
-		Grade grade = new Grade(
-				gradePostRequest.getGradeId(),
-				gradePostRequest.getName(),
-				gradePostRequest.getLanguage()
-				);
-		grade = gradeRepository.save(grade);
+	public ResponseEntity<Integer> createGrade(@RequestBody GradePostRequest gradePostRequest) {
 		
-		GradeServiceModel response = new GradeServiceModel(
-				grade.getGradeId(),
-				grade.getName(),
-				grade.getLanguage()
-				);
-		
-		return new ResponseEntity<GradeServiceModel>(response, HttpStatus.CREATED);
+		return gradeService.createGrade(gradePostRequest);
 	}
 	
 	@PutMapping("/grades/{id}")
-	public ResponseEntity<GradeServiceModel> updateGrade(@PathVariable("id") Integer id, @RequestBody GradePostRequest gradePostRequest) {
-
-		Boolean gradeAlreadyExists = gradeRepository.existsById(id);
-		
-		Grade grade = new Grade(
-				id,
-				gradePostRequest.getName(),
-				gradePostRequest.getLanguage()
-				);
-		
-		if(!gradeAlreadyExists) {
-			return new ResponseEntity<GradeServiceModel>(HttpStatus.CONFLICT);
-		} else {
-			if(gradePostRequest.getName() != null && gradePostRequest.getName() != "") {
-				grade.setName(gradePostRequest.getName());
-			}
-			if(gradePostRequest.getLanguage() != null && gradePostRequest.getLanguage() != "") {
-				grade.setLanguage(gradePostRequest.getLanguage());
-			}
-			grade = gradeRepository.save(grade);
+	public ResponseEntity<Integer> updateGrade(@PathVariable("id") Integer gradeId, @RequestBody GradePostRequest gradePostRequest) {
 			
-			GradeServiceModel response = new GradeServiceModel(
-					grade.getGradeId(),
-					grade.getName(),
-					grade.getLanguage()
-					);
-			
-			return new ResponseEntity<GradeServiceModel>(response, HttpStatus.OK);
-		}
+		return gradeService.updateGrade(gradeId, gradePostRequest);
 	}
 	
+	
 	@DeleteMapping("/grades/{id}")
-	public ResponseEntity<Integer> deleteDepartmentById(@PathVariable("id") Integer id){
-		try {
-			gradeRepository.deleteById(id);
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Grado no encontrado");
-		}
-				
+	public ResponseEntity<Integer> deleteGradeById(@PathVariable("id") Integer gradeId){
+		
+		return gradeService.deleteByGradeId(gradeId);		
 	}
 }
