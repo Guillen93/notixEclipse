@@ -1,7 +1,5 @@
 package com.grupo5.reto2.student;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("api")
 public class StudentController {
 
 	@Autowired
 	StudentRepository studentRepository;
-	
+
 	@Autowired
 	StudentService studentService;
 
@@ -36,42 +33,21 @@ public class StudentController {
 	}
 
 	@PostMapping("/students")
-	public ResponseEntity<Integer> createStudents(@RequestBody StudentPostRequest studentPostRequest ) {
+	public ResponseEntity<Integer> createStudents(@RequestBody StudentPostRequest studentPostRequest) {
 		return studentService.createStudent(studentPostRequest);
 	}
-	
+
 	@PutMapping("/students/{studentDNI}")
-	public ResponseEntity<Student> updateStudents(@PathVariable String studentDNI,@RequestBody StudentPostRequest studentPostRequest ) {
-
-
-		Student student = studentRepository.findByStudentDni(studentDNI);
-		
-		if(student == null) {
-			return new ResponseEntity<Student>(student, HttpStatus.NOT_FOUND);
-			
-		}else {
-			Student response = new Student(
-					studentDNI,
-					studentPostRequest.getName(),
-					studentPostRequest.getSurname(),
-					studentPostRequest.getBornDate(),
-					studentPostRequest.getNationality(),
-					studentPostRequest.getEmail(),
-					studentPostRequest.getPhone(),
-					studentPostRequest.getPhoto()
-					);
-
-			 studentRepository.save(response);
-			
-			return new ResponseEntity<Student>(response, HttpStatus.OK);
-		}
+	public ResponseEntity<Integer> updateStudents(@PathVariable String studentDNI,
+			@RequestBody StudentPostRequest studentPostRequest) {
+		return studentService.updateStudent(studentDNI, studentPostRequest);
 	}
-	
+
 	@DeleteMapping("/students/{studentDNI}")
-	public ResponseEntity<Integer> deleteStudents(@PathVariable String studentDNI ) {
+	public ResponseEntity<Integer> deleteStudents(@PathVariable String studentDNI) {
 
-		return new ResponseEntity<Integer>(studentRepository.deleteByStudentDni(studentDNI),HttpStatus.OK);
+		return studentService.deleteByStudentDni(studentDNI);
 
 	}
-	
+
 }
