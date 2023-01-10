@@ -15,7 +15,7 @@ public class StudentServiceImpl implements StudentService {
 	StudentRepository studentRepository;
 
 	@Override
-	public List<StudentServiceModel> findAllStudents() {
+	public ResponseEntity<Iterable<StudentServiceModel>> findAllStudents() {
 		Iterable<Student> students = studentRepository.findAll();
 
 		List<StudentServiceModel> response = new ArrayList<StudentServiceModel>();
@@ -25,53 +25,104 @@ public class StudentServiceImpl implements StudentService {
 					student.getBornDate(), student.getNationality(), student.getEmail(), student.getPhone(),
 					student.getPhoto()));
 		}
-		return response;
+		return new ResponseEntity<Iterable<StudentServiceModel>>(response, HttpStatus.OK);
 	}
 
 	@Override
-	public StudentServiceModel findByStudentDni(String studentDNI) {
+	public ResponseEntity<StudentServiceModel> findByStudentDni(String studentDNI) {
 		Student student = studentRepository.findByStudentDni(studentDNI);
 
-		StudentServiceModel response = new StudentServiceModel(student.getStudentDni(), student.getName(),
-				student.getSurname(), student.getBornDate(), student.getNationality(), student.getEmail(),
-				student.getPhone(), student.getPhoto());
-		return response;
+		if (student == null) {
+
+			return new ResponseEntity<StudentServiceModel>(HttpStatus.NOT_FOUND);
+		} else {
+			StudentServiceModel response = new StudentServiceModel(student.getStudentDni(), student.getName(),
+					student.getSurname(), student.getBornDate(), student.getNationality(), student.getEmail(),
+					student.getPhone(), student.getPhoto());
+
+			return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
+		}
+
 	}
 
 	@Override
 	public ResponseEntity<Integer> createStudent(StudentPostRequest studentPostRequest) {
 
-		Student response = new Student(studentPostRequest.getStudentDni(), studentPostRequest.getName(),
-				studentPostRequest.getSurname(), studentPostRequest.getBornDate(), studentPostRequest.getNationality(),
-				studentPostRequest.getEmail(), studentPostRequest.getPhone(), studentPostRequest.getPhoto());
+		Student response = studentRepository.findByStudentDni(studentPostRequest.getStudentDni());
 
-		studentRepository.save(response);
-		return new ResponseEntity<Integer>(HttpStatus.OK);
+		if (response != null) {
+
+			return new ResponseEntity<Integer>(HttpStatus.NOT_IMPLEMENTED);
+
+		} else {
+
+			response = new Student(studentPostRequest.getStudentDni(), studentPostRequest.getName(),
+					studentPostRequest.getSurname(), studentPostRequest.getBornDate(),
+					studentPostRequest.getNationality(), studentPostRequest.getEmail(), studentPostRequest.getPhone(),
+					studentPostRequest.getPhoto());
+
+			studentRepository.save(response);
+			return new ResponseEntity<Integer>(HttpStatus.CREATED);
+
+		}
+
 	}
 
 	@Override
 	public ResponseEntity<Integer> updateStudent(String studentDNI, StudentPostRequest studentPostRequest) {
 
-		Student student = studentRepository.findByStudentDni(studentDNI);
+		Student response = studentRepository.findByStudentDni(studentDNI);
 
-		if (student == null) {
+		if (response == null) {
+
 			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
 
 		} else {
-			Student response = new Student(studentPostRequest.getStudentDni(), studentPostRequest.getName(), studentPostRequest.getSurname(),
-					studentPostRequest.getBornDate(), studentPostRequest.getNationality(),
-					studentPostRequest.getEmail(), studentPostRequest.getPhone(), studentPostRequest.getPhoto());
+
+			if (studentPostRequest.getStudentDni() != null) {
+				response.setStudentDni(studentPostRequest.getStudentDni());
+			}
+			if (studentPostRequest.getName() != null) {
+				response.setName(studentPostRequest.getName());
+			}
+			if (studentPostRequest.getSurname() != null) {
+				response.setSurname(studentPostRequest.getSurname());
+			}
+			if (studentPostRequest.getBornDate() != null) {
+				response.setBornDate(studentPostRequest.getBornDate());
+			}
+			if (studentPostRequest.getNationality() != null) {
+				response.setNationality(studentPostRequest.getNationality());
+			}
+			if (studentPostRequest.getEmail() != null) {
+				response.setEmail(studentPostRequest.getEmail());
+			}
+			if (studentPostRequest.getPhone() != null) {
+				response.setPhone(studentPostRequest.getPhone());
+			}
+			if (studentPostRequest.getPhoto() != null) {
+				response.setPhoto(studentPostRequest.getPhoto());
+			}
 
 			studentRepository.save(response);
 
 			return new ResponseEntity<Integer>(HttpStatus.OK);
 		}
+
 	}
 
 	@Override
 	public ResponseEntity<Integer> deleteByStudentDni(String studentDNI) {
 
-		return new ResponseEntity<Integer>(studentRepository.deleteByStudentDni(studentDNI), HttpStatus.OK);
+		Integer response = studentRepository.deleteByStudentDni(studentDNI);
+		
+		if(response == 0) {
+			return new ResponseEntity<Integer>(response, HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<Integer>(response, HttpStatus.OK);
+		}
+		
+		
 	}
 
 }

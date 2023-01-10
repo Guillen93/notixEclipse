@@ -1,7 +1,6 @@
 package com.grupo5.reto2.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +23,12 @@ public class StudentController {
 
 	@GetMapping("/students")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudent() {
-		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.findAllStudents(), HttpStatus.OK);
+		return studentService.findAllStudents();
 	}
 
 	@GetMapping("/students/{studentDNI}")
 	public ResponseEntity<StudentServiceModel> getStudentById(@PathVariable String studentDNI) {
-		return new ResponseEntity<StudentServiceModel>(studentService.findByStudentDni(studentDNI), HttpStatus.OK);
+		return studentService.findByStudentDni(studentDNI);
 	}
 
 	@PostMapping("/students")
