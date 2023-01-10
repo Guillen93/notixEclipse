@@ -65,6 +65,19 @@ public class Subject {
 		super();
 	}
 
+
+	
+	public Subject(Integer subjectId, Integer gradeId, String professorDni, String name, Integer duration) {
+		super();
+		this.subjectId = subjectId;
+		this.gradeId = gradeId;
+		this.professorDni = professorDni;
+		this.name = name;
+		this.duration = duration;
+	}
+
+
+
 	public Subject(Integer subjectId, GradeEdition grade, Integer gradeId, Professor professor, String professorDni,
 			String name, Integer duration, Set<Note> notes, Set<Absence> absences) {
 		super();
