@@ -83,6 +83,18 @@ public class Professor {
 		this.gradeEditions = gradeEditions;
 		this.subjects = subjects;
 	}
+	public Professor(String professorDni, String name, String surname, String nationality, String email, String addres,
+			String photo) {
+		super();
+		this.professorDni = professorDni;
+		this.name = name;
+		this.surname = surname;
+		this.nationality = nationality;
+		this.email = email;
+		this.addres = addres;
+		this.photo = photo;
+	}
+
 
 	public String getProfessorDni() {
 		return professorDni;
