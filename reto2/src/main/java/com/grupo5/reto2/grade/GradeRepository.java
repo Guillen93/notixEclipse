@@ -11,5 +11,8 @@ public interface GradeRepository extends CrudRepository< Grade, Integer> {
 	@Transactional
 	@Modifying
 	Integer deleteByGradeId(Integer gradeId);
+	
+	@Transactional
+	Grade findByName(String gradeName);
 }
 

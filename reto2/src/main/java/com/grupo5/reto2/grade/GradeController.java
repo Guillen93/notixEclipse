@@ -38,25 +38,41 @@ public class GradeController {
 	@GetMapping("/grades/{id}")
 	public ResponseEntity<GradeServiceModel> getGradeById(@PathVariable("id") Integer gradeId) {
 		
-		return gradeService.findByGradeId(gradeId);	
+		return new ResponseEntity <GradeServiceModel> (gradeService.findByGradeId(gradeId),HttpStatus.OK);	
 	}
 	
 	@PostMapping("/grades")
-	public ResponseEntity<Integer> createGrade(@RequestBody GradePostRequest gradePostRequest) {
-		
-		return gradeService.createGrade(gradePostRequest);
+	public ResponseEntity<Grade> createGrade(@RequestBody GradePostRequest gradePostRequest) {
+		Boolean response = gradeService.createGrade(gradePostRequest);
+		if(response) {
+			return new ResponseEntity <Grade> (HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity <Grade> (HttpStatus.CONFLICT);
+		}
 	}
 	
 	@PutMapping("/grades/{id}")
 	public ResponseEntity<Integer> updateGrade(@PathVariable("id") Integer gradeId, @RequestBody GradePostRequest gradePostRequest) {
 			
-		return gradeService.updateGrade(gradeId, gradePostRequest);
+		Boolean response = gradeService.updateGrade(gradeId, gradePostRequest);
+		
+		if(!response) {
+			return new ResponseEntity<Integer> (HttpStatus.CONFLICT);
+		} else {
+			return new ResponseEntity<Integer> (HttpStatus.OK);
+		}
 	}
 	
 	
 	@DeleteMapping("/grades/{id}")
 	public ResponseEntity<Integer> deleteGradeById(@PathVariable("id") Integer gradeId){
 		
-		return gradeService.deleteByGradeId(gradeId);		
+		Boolean response = gradeService.deleteByGradeId(gradeId);
+		
+		if(!response) {
+			return new ResponseEntity<Integer> (HttpStatus.CONFLICT);
+		} else {
+			return new ResponseEntity<Integer> (HttpStatus.OK);
+		}		
 	}
 }

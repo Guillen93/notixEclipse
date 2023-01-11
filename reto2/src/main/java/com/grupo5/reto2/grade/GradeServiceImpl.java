@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class GradeServiceImpl implements GradeService{
 	}
 
 	@Override
-	public ResponseEntity<GradeServiceModel> findByGradeId(Integer gradeId) {
+	public GradeServiceModel findByGradeId(Integer gradeId) {
 		
 		Grade grade = gradeRepository.findById(gradeId)
 		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Grado no encontrado"));
@@ -45,52 +46,69 @@ public class GradeServiceImpl implements GradeService{
 				grade.getLanguage()
 				);
 		
-		return new ResponseEntity<GradeServiceModel>(response,HttpStatus.OK);
+		return response;
 
 	}
 
 	@Override
-	public ResponseEntity<Integer> createGrade(GradePostRequest gradePostRequest) {
+	public Boolean createGrade(GradePostRequest gradePostRequest) {
 		
-		Grade response = new Grade(
+		Grade gradeBd = gradeRepository.findByName(gradePostRequest.getName());
+		Boolean response = false;
+		if(gradeBd == null) {
+		Grade grade = new Grade(
 				gradePostRequest.getGradeId(),
 				gradePostRequest.getName(),
 				gradePostRequest.getLanguage()
 				);
-		gradeRepository.save(response);
+		gradeRepository.save(grade);
+		response = true;
+		}
 		
-		return new ResponseEntity<Integer>(HttpStatus.OK);
+		return response;
 	}
 
 	@Override
-	public ResponseEntity<Integer> updateGrade(Integer gradeId, GradePostRequest gradePostRequest) {
+	public Boolean updateGrade(Integer gradeId, GradePostRequest gradePostRequest) {
 
 		Boolean gradeAlreadyExists = gradeRepository.existsById(gradeId);
 		
 		
 		if(!gradeAlreadyExists) {
-			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
+			return !gradeAlreadyExists;
 		} else {
-			Grade response = gradeRepository.findById(gradeId).get();
+			Grade grade = gradeRepository.findById(gradeId).get();
 			if(gradePostRequest.getName() != null && gradePostRequest.getName() != "") {
-				response.setName(gradePostRequest.getName());
+				grade.setName(gradePostRequest.getName());
 			}
 			if(gradePostRequest.getLanguage() != null && gradePostRequest.getLanguage() != "") {
-				response.setLanguage(gradePostRequest.getLanguage());
+				grade.setLanguage(gradePostRequest.getLanguage());
 			}
 			
-			
-			gradeRepository.save(response);
+			gradeRepository.save(grade);
+			gradeAlreadyExists = true;
 			
 		}
-		return new ResponseEntity<Integer>(HttpStatus.OK);
+		Boolean response = gradeAlreadyExists;
+		
+		return response;
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteByGradeId(Integer gradeId) {
+	public Boolean deleteByGradeId(Integer gradeId) {
 		
-		return new ResponseEntity<Integer>(gradeRepository.deleteByGradeId(gradeId),HttpStatus.OK);
+		Boolean response = false;
+		try {
+			gradeRepository.deleteByGradeId(gradeId);
+			response = true;;
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Grado no encontrado");
+		}
+		return response;
+		
 	
 	}
+
+
 
 }
