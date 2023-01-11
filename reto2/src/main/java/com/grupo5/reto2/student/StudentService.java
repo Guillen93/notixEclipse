@@ -1,5 +1,7 @@
 package com.grupo5.reto2.student;
 
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
 
 public interface StudentService {
 
