@@ -32,9 +32,15 @@ public class ProfessorServiceImpl implements ProfessorService {
 		Boolean response = false;
 		
 		if (professor == null) {
-			professor = new Professor(professorRequest.getProfessorDni(), professorRequest.getName(),
-					professorRequest.getSurname(), professorRequest.getNationality(), professorRequest.getEmail(),
-					professorRequest.getAddres(), professorRequest.getPhoto());
+			professor = new Professor(
+					professorRequest.getProfessorDni(),
+					professorRequest.getName(),
+					professorRequest.getSurname(),
+					professorRequest.getNationality(), 
+					professorRequest.getEmail(),
+					professorRequest.getAddres(), 
+					professorRequest.getPhoto()
+			);
 			professorRepository.save(professor);
 			response = true;
 		}

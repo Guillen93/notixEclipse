@@ -84,6 +84,13 @@ public class Professor {
 		this.subjects = subjects;
 	}
 
+	
+
+	public Professor(String name) {
+		super();
+		this.name = name;
+	}
+
 	public String getProfessorDni() {
 		return professorDni;
 	}

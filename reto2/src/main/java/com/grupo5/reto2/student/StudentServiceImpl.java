@@ -54,6 +54,7 @@ public class StudentServiceImpl implements StudentService {
 					student.getPhone(),
 					student.getPhoto()
 			);
+			
 			return response;
 	}
 

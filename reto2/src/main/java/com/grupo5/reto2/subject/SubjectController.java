@@ -1,4 +1,71 @@
 package com.grupo5.reto2.subject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
+
+@RestController
+@RequestMapping("api")
 public class SubjectController {
+
+	@Autowired
+	SubjectService subjectService;
+
+	@GetMapping("/subjects")
+	public ResponseEntity<Iterable<SubjectServiceModel>> getSubject() throws NotContentException {
+
+		Iterable<SubjectServiceModel> response  = subjectService.findAllSubject();
+		return new ResponseEntity<Iterable<SubjectServiceModel>>(response, HttpStatus.OK);
+		
+	}
+
+	@GetMapping("/subjects/{subjetId}")
+	public ResponseEntity<SubjectServiceModel> getSubjectById(@PathVariable Integer subjetId) throws NotContentException {
+
+		SubjectServiceModel response = subjectService.findSubjectById(subjetId);
+
+		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.OK);
+	}
+
+	@PostMapping("/subjects")
+	public ResponseEntity<SubjectServiceModel> createSubject(@RequestBody SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException {
+
+		SubjectServiceModel response = subjectService.createSubject(subjectPostRequest);
+
+		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.OK);
+	}
+//
+//	@PutMapping("/subjects/{subjectId}")
+//	public ResponseEntity<Subject> updateSubject(@PathVariable Integer subjectId,
+//			@RequestBody SubjectPostRequest subjectPostRequest) {
+//
+//		Subject response = new Subject(subjectId, subjectPostRequest.getGradeId(), subjectPostRequest.getProfessorDni(),
+//				subjectPostRequest.getName(), subjectPostRequest.getDuration());
+//		subjectRepository.save(response);
+//
+//		return new ResponseEntity<Subject>(response, HttpStatus.OK);
+//	}
+//
+//	@DeleteMapping("/subjects/{subjectId}")
+//	public ResponseEntity<Integer> deleteSubject(@PathVariable Integer subjectId) {
+//
+//		subjectRepository.deleteById(subjectId);
+//
+//		return new ResponseEntity<Integer>(HttpStatus.OK);
+//	}
+
 }
