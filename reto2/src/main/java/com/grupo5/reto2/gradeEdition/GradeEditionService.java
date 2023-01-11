@@ -8,7 +8,7 @@ public interface GradeEditionService {
 
 	List<GradeEditionServiceModel> findAllGradeEditions();
 	GradeEditionServiceModel findByGradeEditionId(Integer gradeEditionId);
-	GradeEdition createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest);
+	Boolean createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest);
 	Boolean updateGradeEdition(Integer gradeEditionId,GradeEditionPostRequest gradeEditionPostRequest);
 	Boolean deleteByGradeEditionId(Integer gradeEditionId);
 

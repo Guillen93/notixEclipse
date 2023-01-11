@@ -43,15 +43,18 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 	}
 
 	@Override
-	public GradeEdition createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest) {
+	public Boolean createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest) {
 
-		GradeEdition response = new GradeEdition();
+		GradeEdition gradeEditionBd = gradeEditionRepository.findByGradeIdAndTutorDni(gradeEditionPostRequest.getGradeId(),gradeEditionPostRequest.getTutorDni());
+		Boolean response = false;
 		
+		if(gradeEditionBd == null) {
 		GradeEdition gradeEdition = new GradeEdition(gradeEditionPostRequest.getGradeEdId(),
 				gradeEditionPostRequest.getGradeId(), gradeEditionPostRequest.getTutorDni(),
 				gradeEditionPostRequest.getFecha());
-		response = gradeEditionRepository.save(gradeEdition);
-		
+		gradeEditionRepository.save(gradeEdition);
+		response = true;
+		}
 
 		return response;
 	}

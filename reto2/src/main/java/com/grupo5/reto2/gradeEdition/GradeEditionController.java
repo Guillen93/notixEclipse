@@ -33,8 +33,13 @@ public class GradeEditionController {
 	}
 	
 	@PostMapping("/gradeEditions")
-	public ResponseEntity<GradeEdition> createGradeEdition(@RequestBody GradeEditionPostRequest gradeEditionPostRequest) {
-		return new ResponseEntity <GradeEdition> (gradeEditionService.createGradeEdition(gradeEditionPostRequest),HttpStatus.CREATED);
+	public ResponseEntity<Integer> createGradeEdition(@RequestBody GradeEditionPostRequest gradeEditionPostRequest) {
+		Boolean response = gradeEditionService.createGradeEdition(gradeEditionPostRequest);
+		if(!response) {
+			return new ResponseEntity<Integer> (HttpStatus.CONFLICT);
+		} else {
+			return new ResponseEntity<Integer> (HttpStatus.OK);
+		}
 	}
 	
 	@PutMapping("/gradeEditions/{id}")
