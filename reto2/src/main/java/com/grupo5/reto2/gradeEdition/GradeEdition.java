@@ -1,6 +1,6 @@
 package com.grupo5.reto2.gradeEdition;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,6 +65,14 @@ public class GradeEdition {
 		this.tutorDni = tutorDni;
 		this.fecha = fecha;
 		this.promotions = promotions;
+	}
+
+	public GradeEdition(Integer gradeEdId, Integer gradeId, String tutorDni, Date fecha) {
+		super();
+		this.gradeEdId = gradeEdId;
+		this.gradeId = gradeId;
+		this.tutorDni = tutorDni;
+		this.fecha = fecha;
 	}
 
 	public Integer getGradeEdId() {

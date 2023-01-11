@@ -71,6 +71,19 @@ public class Student {
 	public Student() {
 		super();
 	}
+	public Student(String studentDni, String name, String surname, Date bornDate, String nationality, String email,
+			String phone, String photo) {
+		super();
+		this.studentDni = studentDni;
+		this.name = name;
+		this.surname = surname;
+		this.bornDate = bornDate;
+		this.nationality = nationality;
+		this.email = email;
+		this.phone = phone;
+		this.photo = photo;
+	}
+
 
 	public Student(String studentDni, String name, String surname, Date bornDate, String nationality, String email,
 			String phone, String photo, Set<Note> notes, Set<Absence> absences, Set<GradeEdition> promotions) {
