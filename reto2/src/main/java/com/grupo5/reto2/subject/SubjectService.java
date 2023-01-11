@@ -7,6 +7,6 @@ public interface SubjectService {
 	Iterable<SubjectServiceModel> findAllSubject() throws NotContentException;
 	SubjectServiceModel findSubjectById(Integer subjetId) throws NotContentException;
 	SubjectServiceModel createSubject(SubjectPostRequest subjectPostRequest) throws  ConflictException, NotContentException;
-	SubjectServiceModel uupdateSubject(Integer subjectId,SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException;
-	Integer deleteSubject(Integer subjectId);	
+	SubjectServiceModel updateSubject(Integer subjectId,SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException;
+	Boolean deleteSubject(Integer subjectId) throws NotContentException;	
 }

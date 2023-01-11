@@ -15,6 +15,23 @@ public class SubjectServiceModel {
 		super();
 	}
 
+	
+	
+	
+	
+	public SubjectServiceModel(Integer subjectId, Integer gradeId, String professorDni, String name, Integer duration) {
+		super();
+		this.subjectId = subjectId;
+		this.gradeId = gradeId;
+		this.professorDni = professorDni;
+		this.name = name;
+		this.duration = duration;
+	}
+
+
+
+
+
 	public SubjectServiceModel(Integer subjectId, Integer gradeId, Professor professor, String professorDni,
 			String name, Integer duration) {
 		super();

@@ -1,7 +1,6 @@
 package com.grupo5.reto2.subject;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+
 
 @RestController
 @RequestMapping("api")
@@ -46,26 +46,24 @@ public class SubjectController {
 
 		SubjectServiceModel response = subjectService.createSubject(subjectPostRequest);
 
+		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.CREATED);
+	}
+
+	@PutMapping("/subjects/{subjectId}")
+	public ResponseEntity<SubjectServiceModel> updateSubject(@PathVariable Integer subjectId,
+			@RequestBody SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException {
+		
+		SubjectServiceModel response = subjectService.updateSubject(subjectId,subjectPostRequest);
+
 		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.OK);
 	}
-//
-//	@PutMapping("/subjects/{subjectId}")
-//	public ResponseEntity<Subject> updateSubject(@PathVariable Integer subjectId,
-//			@RequestBody SubjectPostRequest subjectPostRequest) {
-//
-//		Subject response = new Subject(subjectId, subjectPostRequest.getGradeId(), subjectPostRequest.getProfessorDni(),
-//				subjectPostRequest.getName(), subjectPostRequest.getDuration());
-//		subjectRepository.save(response);
-//
-//		return new ResponseEntity<Subject>(response, HttpStatus.OK);
-//	}
-//
-//	@DeleteMapping("/subjects/{subjectId}")
-//	public ResponseEntity<Integer> deleteSubject(@PathVariable Integer subjectId) {
-//
-//		subjectRepository.deleteById(subjectId);
-//
-//		return new ResponseEntity<Integer>(HttpStatus.OK);
-//	}
+
+	@DeleteMapping("/subjects/{subjectId}")
+	public ResponseEntity<Integer> deleteSubject(@PathVariable Integer subjectId) throws NotContentException {
+
+		subjectService.deleteSubject(subjectId);
+
+		return new ResponseEntity<Integer>(HttpStatus.OK);
+	}
 
 }
