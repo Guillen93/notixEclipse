@@ -1,8 +1,6 @@
 package com.grupo5.reto2.professor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +11,6 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 	@Override
 	public Iterable<Professor> findAll() {
-		// TODO Auto-generated method stub
 		return professorRepository.findAll();
 	}
 
@@ -29,54 +26,69 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 
 	@Override
-	public ResponseEntity<Integer> createProfessor(ProfessorRequest professorRequest) {
-		Professor response = new Professor(professorRequest.getProfessorDni(), professorRequest.getName(),
-				professorRequest.getSurname(), professorRequest.getNationality(), professorRequest.getEmail(),
-				professorRequest.getAddres(), professorRequest.getPhoto());
-
-		professorRepository.save(response);
-		return new ResponseEntity<Integer>(HttpStatus.OK);
+	public Boolean createProfessor(ProfessorRequest professorRequest) {
+		
+		Professor professor = professorRepository.findByProfessorDni(professorRequest.getProfessorDni());
+		Boolean response = false;
+		
+		if (professor == null) {
+			professor = new Professor(professorRequest.getProfessorDni(), professorRequest.getName(),
+					professorRequest.getSurname(), professorRequest.getNationality(), professorRequest.getEmail(),
+					professorRequest.getAddres(), professorRequest.getPhoto());
+			professorRepository.save(professor);
+			response = true;
+		}
+		return response;
+		
 	}
 
 	@Override
-	public ResponseEntity<Integer> updateProfessor(String professorDni, ProfessorRequest professorRequest) {
+	public Boolean updateProfessor(String professorDni, ProfessorRequest professorRequest) {
 
-		Professor response = professorRepository.findByProfessorDni(professorDni);
-
-		if (response == null) {
-			return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
-		} else {
+		Professor professor = professorRepository.findByProfessorDni(professorDni);
+		Boolean response = false;
+		
+		if (professor != null) {
 			
 			if (professorRequest.getProfessorDni() != null) {
-				response.setProfessorDni(professorRequest.getProfessorDni());
+				professor.setProfessorDni(professorRequest.getProfessorDni());
 			}
 			if (professorRequest.getName() != null) {
-				response.setName(professorRequest.getName());
+				professor.setName(professorRequest.getName());
 			}
 			if (professorRequest.getSurname() != null) {
-				response.setSurname(professorRequest.getSurname());
+				professor.setSurname(professorRequest.getSurname());
 			}
 			if (professorRequest.getNationality() != null) {
-				response.setNationality(professorRequest.getNationality());
+				professor.setNationality(professorRequest.getNationality());
 			}
 			if (professorRequest.getEmail() != null) {
-				response.setEmail(professorRequest.getEmail());
+				professor.setEmail(professorRequest.getEmail());
 			}
 			if (professorRequest.getAddres() != null) {
-				response.setAddres(professorRequest.getAddres());
+				professor.setAddres(professorRequest.getAddres());
 			}
 			if (professorRequest.getPhoto() != null) {
-				response.setPhoto(professorRequest.getPhoto());
+				professor.setPhoto(professorRequest.getPhoto());
 			}
 
-			professorRepository.save(response);
-			return new ResponseEntity<Integer>(HttpStatus.OK);
+			professorRepository.save(professor);
+			response = true;
 		}
+		return response;
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteByProfessorDni(String professorDni) {
-		return new ResponseEntity<Integer>(professorRepository.deleteByProfessorDni(professorDni), HttpStatus.OK);
+	public Boolean deleteByProfessorDni(String professorDni) {
+		
+		Professor professor = professorRepository.findByProfessorDni(professorDni);
+		Boolean response = false;
+		
+		if (professor != null) {
+			professorRepository.deleteByProfessorDni(professorDni);
+			response = true;
+		} 
+		return response;
 	}
 
 }

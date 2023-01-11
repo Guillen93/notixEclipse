@@ -30,18 +30,39 @@ public class ProfessorController {
 	
 	@PostMapping("/professors")
 	public ResponseEntity<Integer> createProfessor(@RequestBody ProfessorRequest professorRequest) {
-		return professorService.createProfessor(professorRequest);
+		
+		Boolean response = professorService.createProfessor(professorRequest);
+		
+		if (response == true) {
+			return new ResponseEntity<Integer>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<Integer>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	@PutMapping("/professors/{professorDni}")
 	public ResponseEntity<Integer> updateProfessor(@PathVariable String professorDni,
 			@RequestBody ProfessorRequest professorRequest) {
-		return professorService.updateProfessor(professorDni, professorRequest);
+		
+		Boolean response = professorService.updateProfessor(professorDni, professorRequest);
+		
+		if (response == true) {
+			return new ResponseEntity<Integer>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Integer>(HttpStatus.NOT_MODIFIED);
+		}		
 	}
 	
 	@DeleteMapping("/professors/{professorDni}")
 	public ResponseEntity<Integer> deleteProfessor(@PathVariable String professorDni) {
-		return professorService.deleteByProfessorDni(professorDni);
+		
+		Boolean response = professorService.deleteByProfessorDni(professorDni);
+		
+		if (response == true) {
+			return new ResponseEntity<Integer>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Integer>(HttpStatus.CONFLICT);
+		}
 	}
 
 }
