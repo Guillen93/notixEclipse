@@ -4,24 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.grade.Grade;
+import com.grupo5.reto2.grade.GradeRepository;
+import com.grupo5.reto2.professor.Professor;
+import com.grupo5.reto2.professor.ProfessorRepository;
 
 @Service
 public class GradeEditionServiceImpl implements GradeEditionService {
 
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
+	
+	@Autowired
+	GradeRepository gradeRepository;
+	
+	@Autowired
+	ProfessorRepository professorRepository;
 
 	@Override
-	public List<GradeEditionServiceModel> findAllGradeEditions() {
+	public Iterable<GradeEditionServiceModel> findAllGradeEditions() throws NotContentException {
 
 		Iterable<GradeEdition> gradeEditions = gradeEditionRepository.findAll();
 
 		List<GradeEditionServiceModel> response = new ArrayList<GradeEditionServiceModel>();
+
+		if (gradeEditions == null) {
+			throw new NotContentException("No hay ediciones de ese grado");
+		}
 
 		for (GradeEdition gradeEdition : gradeEditions) {
 			response.add(new GradeEditionServiceModel(gradeEdition.getGradeEdId(), gradeEdition.getGradeId(),
@@ -31,10 +44,10 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 	}
 
 	@Override
-	public GradeEditionServiceModel findByGradeEditionId(Integer gradeEditionId) {
+	public GradeEditionServiceModel findByGradeEditionId(Integer gradeEditionId) throws NotContentException {
 
-		GradeEdition gradeEdition = gradeEditionRepository.findById(gradeEditionId).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "Edicion de grado no encontrado"));
+		GradeEdition gradeEdition = gradeEditionRepository.findById(gradeEditionId)
+				.orElseThrow(() -> new NotContentException("Edicion de grado no encontrado"));
 
 		GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
 				gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha());
@@ -43,34 +56,47 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 	}
 
 	@Override
-	public Boolean createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest) {
+	public GradeEditionServiceModel createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest)
+			throws ConflictException {
 
-		GradeEdition gradeEditionBd = gradeEditionRepository.findByGradeIdAndTutorDni(gradeEditionPostRequest.getGradeId(),gradeEditionPostRequest.getTutorDni());
-		Boolean response = false;
-		
-		if(gradeEditionBd == null) {
-		GradeEdition gradeEdition = new GradeEdition(gradeEditionPostRequest.getGradeEdId(),
-				gradeEditionPostRequest.getGradeId(), gradeEditionPostRequest.getTutorDni(),
-				gradeEditionPostRequest.getFecha());
-		gradeEditionRepository.save(gradeEdition);
-		response = true;
+		GradeEdition gradeEdition = gradeEditionRepository
+				.findByGradeIdAndTutorDni(gradeEditionPostRequest.getGradeId(), gradeEditionPostRequest.getTutorDni());
+
+		if (gradeEdition != null) {
+
+			throw new ConflictException("Esa edicion de grado  ya esta registrado");
+
+		} else {
+			
+			Grade grade = gradeRepository.findById(gradeEditionPostRequest.getGradeId()).get();
+			Professor professor = professorRepository.findByProfessorDni(gradeEditionPostRequest.getTutorDni());
+
+			gradeEdition = new GradeEdition(
+					gradeEditionPostRequest.getGradeEdId(),
+					grade,
+					gradeEditionPostRequest.getGradeId(),
+					professor,
+					gradeEditionPostRequest.getTutorDni(),
+					gradeEditionPostRequest.getFecha());
+			gradeEditionRepository.save(gradeEdition);
+
+			GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
+					gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha());
+
+			return response;
+
 		}
-
-		return response;
 	}
 
 	@Override
-	public Boolean updateGradeEdition(Integer gradeEditionId,
-			GradeEditionPostRequest gradeEditionPostRequest) {
+	public GradeEditionServiceModel updateGradeEdition(Integer gradeEditionId,
+			GradeEditionPostRequest gradeEditionPostRequest) throws NotContentException {
 
-		Boolean gradeEditionAlreadyExists = gradeEditionRepository.existsById(gradeEditionId);
+		GradeEdition gradeEdition = gradeEditionRepository.findByGradeEditionId(gradeEditionId);
 
-		GradeEdition gradeEdition = new GradeEdition(gradeEditionId, gradeEditionPostRequest.getGradeId(),
-				gradeEditionPostRequest.getTutorDni(), gradeEditionPostRequest.getFecha());
+		if (gradeEdition == null) {
+			throw new NotContentException("No existe esa edicion de grado");
 
-		if (!gradeEditionAlreadyExists) {
-			return !gradeEditionAlreadyExists;
-			
 		} else {
 			if (gradeEditionPostRequest.getGradeId() != null) {
 				gradeEdition.setGradeId(gradeEditionPostRequest.getGradeId());
@@ -78,24 +104,37 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 			if (gradeEditionPostRequest.getTutorDni() != null && gradeEditionPostRequest.getTutorDni() != "") {
 				gradeEdition.setTutorDni(gradeEditionPostRequest.getTutorDni());
 			}
-			gradeEditionRepository.save(gradeEdition);
-			gradeEditionAlreadyExists =true;
+			if (gradeEditionPostRequest.getFecha() != null ) {
+				gradeEdition.setFecha(gradeEditionPostRequest.getFecha());
+			}
+			
+			gradeEdition = gradeEditionRepository.save(gradeEdition);
+
+			
+			
+			GradeEditionServiceModel response = new GradeEditionServiceModel(
+					gradeEditionId,
+					gradeEdition.getGradeId(),
+					gradeEdition.getTutorDni(),
+					gradeEdition.getFecha()
+					);
+
+			return response;
 		}
-		Boolean response = gradeEditionAlreadyExists;
-		
-		return response;
+
 	}
 
 	@Override
-	public Boolean deleteByGradeEditionId(Integer gradeEditionId) {
-		
-		Boolean response = false;
-		try {
+	public Boolean deleteById(Integer gradeEditionId) throws NotContentException {
+
+		Boolean response = gradeEditionRepository.existsById(gradeEditionId);
+
+		if (!response) {
+			throw new NotContentException("No existe esa edicion de grado");
+		}else {
 			gradeEditionRepository.deleteById(gradeEditionId);
-			response = true;;
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Grado no encontrado");
 		}
+			
 		return response;
 	}
 

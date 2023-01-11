@@ -10,6 +10,7 @@ import com.grupo5.reto2.grade.Grade;
 import com.grupo5.reto2.professor.Professor;
 import com.grupo5.reto2.student.Student;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,7 +28,7 @@ import jakarta.persistence.ForeignKey;
 public class GradeEdition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer gradeEdId;
+	private Integer gradeEditionId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "gradeId", foreignKey=@ForeignKey(name = "fk_gradeId"))
@@ -48,17 +49,27 @@ public class GradeEdition {
 	@Column()
 	private Date fecha;
 	
-	@ManyToMany(mappedBy = "promotions")
+	@ManyToMany(mappedBy = "promotions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Student> promotions = new HashSet<>();
 	
 	public GradeEdition() {
 		super();
 	}
 
+	public GradeEdition(Integer gradeEdId, Grade grade, Integer gradeId, Professor tutor, String tutorDni, Date fecha) {
+		super();
+		this.gradeEditionId = gradeEdId;
+		this.grade = grade;
+		this.gradeId = gradeId;
+		this.tutor = tutor;
+		this.tutorDni = tutorDni;
+		this.fecha = fecha;
+	}
+
 	public GradeEdition(Integer gradeEdId, Grade grade, Integer gradeId, Professor tutor, String tutorDni, Date fecha,
 			Set<Student> promotions) {
 		super();
-		this.gradeEdId = gradeEdId;
+		this.gradeEditionId = gradeEdId;
 		this.grade = grade;
 		this.gradeId = gradeId;
 		this.tutor = tutor;
@@ -69,17 +80,17 @@ public class GradeEdition {
 
 	public GradeEdition(Integer gradeEdId, Integer gradeId, String tutorDni, Date fecha) {
 		super();
-		this.gradeEdId = gradeEdId;
+		this.gradeEditionId = gradeEdId;
 		this.gradeId = gradeId;
 		this.tutorDni = tutorDni;
 		this.fecha = fecha;
 	}
 
 	public Integer getGradeEdId() {
-		return gradeEdId;
+		return gradeEditionId;
 	}
 	public void setGradeEdId(Integer gradeEdId) {
-		this.gradeEdId = gradeEdId;
+		this.gradeEditionId = gradeEdId;
 	}
 	public Grade getGrade() {
 		return grade;
@@ -120,7 +131,7 @@ public class GradeEdition {
 
 	@Override
 	public String toString() {
-		return "GradeEdition [gradeEdId=" + gradeEdId + ", grade=" + grade + ", gradeId=" + gradeId + ", tutor=" + tutor
+		return "GradeEdition [gradeEdId=" + gradeEditionId + ", grade=" + grade + ", gradeId=" + gradeId + ", tutor=" + tutor
 				+ ", tutorDni=" + tutorDni + ", fecha=" + fecha + ", promotions=" + promotions + "]";
 	}
 

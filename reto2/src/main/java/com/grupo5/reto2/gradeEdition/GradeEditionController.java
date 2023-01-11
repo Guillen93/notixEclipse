@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
 
 @RestController
 @RequestMapping("api")
@@ -23,45 +23,34 @@ public class GradeEditionController {
 	GradeEditionService gradeEditionService;
 	
 	@GetMapping("/gradeEditions")
-	public ResponseEntity<Iterable<GradeEditionServiceModel>> getGradeEditions() {
+	public ResponseEntity<Iterable<GradeEditionServiceModel>> getGradeEditions() throws NotContentException {
 		return new ResponseEntity <Iterable<GradeEditionServiceModel>> (gradeEditionService.findAllGradeEditions(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/gradeEditions/{id}")
-	public ResponseEntity<GradeEditionServiceModel> getGradeEditionById(@PathVariable("id") Integer gradeEditionId) {
+	public ResponseEntity<GradeEditionServiceModel> getGradeEditionById(@PathVariable("id") Integer gradeEditionId) throws NotContentException {
 		return new ResponseEntity <GradeEditionServiceModel> (gradeEditionService.findByGradeEditionId(gradeEditionId),HttpStatus.OK);	
 	}
 	
 	@PostMapping("/gradeEditions")
-	public ResponseEntity<Integer> createGradeEdition(@RequestBody GradeEditionPostRequest gradeEditionPostRequest) {
-		Boolean response = gradeEditionService.createGradeEdition(gradeEditionPostRequest);
-		if(!response) {
-			return new ResponseEntity<Integer> (HttpStatus.CONFLICT);
-		} else {
-			return new ResponseEntity<Integer> (HttpStatus.OK);
-		}
+	public ResponseEntity<GradeEditionServiceModel> createGradeEdition(@RequestBody GradeEditionPostRequest gradeEditionPostRequest) throws ConflictException {
+		GradeEditionServiceModel response = gradeEditionService.createGradeEdition(gradeEditionPostRequest);
+		return new ResponseEntity<GradeEditionServiceModel>(response, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/gradeEditions/{id}")
-	public ResponseEntity<Integer> updateGradeEdition(@PathVariable("id") Integer gradeEditionId, @RequestBody GradeEditionPostRequest gradeEditionPostRequest) {
-		Boolean response = gradeEditionService.updateGradeEdition(gradeEditionId, gradeEditionPostRequest);
+	public ResponseEntity<GradeEditionServiceModel > updateGradeEdition(@PathVariable("id") Integer gradeEditionId, @RequestBody GradeEditionPostRequest gradeEditionPostRequest) throws NotContentException {
+		GradeEditionServiceModel  response = gradeEditionService.updateGradeEdition(gradeEditionId, gradeEditionPostRequest);
 		
-		if(!response) {
-			return new ResponseEntity<Integer> (HttpStatus.CONFLICT);
-		} else {
-			return new ResponseEntity<Integer> (HttpStatus.OK);
-		}
+		return new ResponseEntity<GradeEditionServiceModel>(response, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/gradeEditions/{id}")
-	public ResponseEntity<Integer> deleteGradeEditionById(@PathVariable("id") Integer gradeEditionId){
+	public ResponseEntity<Integer> deleteGradeEditionById(@PathVariable("id") Integer gradeEditionId) throws NotContentException{
 
-		Boolean response = gradeEditionService.deleteByGradeEditionId(gradeEditionId);
+		gradeEditionService.deleteById(gradeEditionId);
+
+			return new ResponseEntity<Integer>(HttpStatus.OK);
 		
-		if(!response) {
-			return new ResponseEntity<Integer> (HttpStatus.CONFLICT);
-		} else {
-			return new ResponseEntity<Integer> (HttpStatus.OK);
-		}		
 	}
 }

@@ -63,7 +63,7 @@ public class Student {
 				name = "studentDni", referencedColumnName = "studentDni", foreignKey = @ForeignKey(name = "fk_student_promotion")
 		),
 		inverseJoinColumns = @JoinColumn(
-				name = "gradeId", referencedColumnName = "gradeEdId", foreignKey = @ForeignKey(name = "fk_gradeEd_promotion")
+				name = "gradeEdId", referencedColumnName = "gradeEditionId", foreignKey = @ForeignKey(name = "fk_gradeEd_promotion")
 		)
 	)
 	private Set<GradeEdition> promotions = new HashSet<>();

@@ -1,15 +1,14 @@
 package com.grupo5.reto2.gradeEdition;
 
-import java.util.List;
-
-
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
 
 public interface GradeEditionService {
 
-	List<GradeEditionServiceModel> findAllGradeEditions();
-	GradeEditionServiceModel findByGradeEditionId(Integer gradeEditionId);
-	Boolean createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest);
-	Boolean updateGradeEdition(Integer gradeEditionId,GradeEditionPostRequest gradeEditionPostRequest);
-	Boolean deleteByGradeEditionId(Integer gradeEditionId);
+	Iterable<GradeEditionServiceModel> findAllGradeEditions() throws NotContentException;
+	GradeEditionServiceModel findByGradeEditionId(Integer gradeEditionId) throws NotContentException;
+	GradeEditionServiceModel createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest) throws ConflictException;
+	GradeEditionServiceModel updateGradeEdition(Integer gradeEditionId,GradeEditionPostRequest gradeEditionPostRequest) throws NotContentException;
+	Boolean deleteById(Integer gradeEditionId) throws NotContentException; 
 
 }

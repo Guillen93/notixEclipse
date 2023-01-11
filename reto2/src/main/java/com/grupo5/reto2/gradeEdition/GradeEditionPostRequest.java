@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class GradeEditionPostRequest {
 	
-	private Integer gradeEdId;
+	private Integer gradeEditionId;
 	private Integer gradeId;
 	private String tutorDni;
 	private Date fecha;
@@ -22,18 +22,18 @@ public class GradeEditionPostRequest {
 
 	public GradeEditionPostRequest(Integer gradeEdId, Integer gradeId, String tutorDni, Date fecha) {
 		super();
-		this.gradeEdId = gradeEdId;
+		this.gradeEditionId = gradeEdId;
 		this.gradeId = gradeId;
 		this.tutorDni = tutorDni;
 		this.fecha = fecha;
 	}
 
 	public Integer getGradeEdId() {
-		return gradeEdId;
+		return gradeEditionId;
 	}
 
 	public void setGradeEdId(Integer gradeEdId) {
-		this.gradeEdId = gradeEdId;
+		this.gradeEditionId = gradeEdId;
 	}
 
 	public Integer getGradeId() {
@@ -62,7 +62,7 @@ public class GradeEditionPostRequest {
 
 	@Override
 	public String toString() {
-		return "GradeEditionPostRequest [gradeEdId=" + gradeEdId + ", gradeId=" + gradeId + ", tutorDni=" + tutorDni
+		return "GradeEditionPostRequest [gradeEdId=" + gradeEditionId + ", gradeId=" + gradeId + ", tutorDni=" + tutorDni
 				+ ", fecha=" + fecha + "]";
 	}
 

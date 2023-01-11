@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import jakarta.transaction.Transactional;
 
-public interface GradeRepository extends CrudRepository< Grade, Integer> {
+public interface GradeRepository extends CrudRepository<Grade, Integer> {
 
 	@Transactional
 	@Modifying
@@ -14,5 +14,7 @@ public interface GradeRepository extends CrudRepository< Grade, Integer> {
 	
 	@Transactional
 	Grade findByName(String gradeName);
+	
+	
 }
 

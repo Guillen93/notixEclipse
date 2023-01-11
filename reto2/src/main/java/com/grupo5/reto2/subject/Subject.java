@@ -32,11 +32,11 @@ public class Subject {
 	private Integer subjectId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "gradeId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
+	@JoinColumn(name = "gradeEditionId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private GradeEdition grade;
-	@Column(name = "gradeId", updatable = false, insertable = false)
+	@Column(name = "gradeEdId", updatable = false, insertable = false)
 	private Integer gradeId;
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
 
 @Service
 public class GradeServiceImpl implements GradeService{
@@ -17,10 +16,14 @@ public class GradeServiceImpl implements GradeService{
 	GradeRepository gradeRepository;
 	
 	@Override
-	public List<GradeServiceModel> findAllGrades() {
+	public List<GradeServiceModel> findAllGrades() throws NotContentException {
 	Iterable<Grade> grades = gradeRepository.findAll();
 		
 		List<GradeServiceModel> response = new ArrayList<GradeServiceModel>();
+		
+		if (grades == null) {
+			throw new NotContentException("No hay estudiantes ");
+		}
 		
 		for (Grade grade : grades) {
 			response.add(
@@ -35,10 +38,10 @@ public class GradeServiceImpl implements GradeService{
 	}
 
 	@Override
-	public GradeServiceModel findByGradeId(Integer gradeId) {
+	public GradeServiceModel findByGradeId(Integer gradeId) throws NotContentException {
 		
 		Grade grade = gradeRepository.findById(gradeId)
-		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Grado no encontrado"));
+		.orElseThrow(() -> new NotContentException("No existe el estudiante"));
 		
 		GradeServiceModel response = new GradeServiceModel(
 				grade.getGradeId(),
@@ -51,33 +54,46 @@ public class GradeServiceImpl implements GradeService{
 	}
 
 	@Override
-	public Boolean createGrade(GradePostRequest gradePostRequest) {
+	public GradeServiceModel createGrade(GradePostRequest gradePostRequest) throws ConflictException {
 		
 		Grade gradeBd = gradeRepository.findByName(gradePostRequest.getName());
-		Boolean response = false;
-		if(gradeBd == null) {
-		Grade grade = new Grade(
-				gradePostRequest.getGradeId(),
-				gradePostRequest.getName(),
-				gradePostRequest.getLanguage()
-				);
-		gradeRepository.save(grade);
-		response = true;
+		
+		
+		
+		if(gradeBd != null) {
+			throw new ConflictException("El estudiante ya esta registrado");
+		}else {
+			
+			Grade grade = new Grade(
+					gradePostRequest.getGradeId(),
+					gradePostRequest.getName(),
+					gradePostRequest.getLanguage()
+					);
+			
+			grade = gradeRepository.save(grade);
+		
+			GradeServiceModel response = new GradeServiceModel(
+					grade.getGradeId(),
+					grade.getName(),
+					grade.getLanguage()
+					);
+			
+			return response;
 		}
 		
-		return response;
+		
 	}
 
 	@Override
-	public Boolean updateGrade(Integer gradeId, GradePostRequest gradePostRequest) {
+	public GradeServiceModel updateGrade(Integer gradeId, GradePostRequest gradePostRequest) throws NotContentException {
 
-		Boolean gradeAlreadyExists = gradeRepository.existsById(gradeId);
+		Grade grade = gradeRepository.findById(gradeId).get();
 		
 		
-		if(!gradeAlreadyExists) {
-			return !gradeAlreadyExists;
+		if(grade==null) {
+			throw new NotContentException("No existe el estudiante");
 		} else {
-			Grade grade = gradeRepository.findById(gradeId).get();
+			
 			if(gradePostRequest.getName() != null && gradePostRequest.getName() != "") {
 				grade.setName(gradePostRequest.getName());
 			}
@@ -85,29 +101,26 @@ public class GradeServiceImpl implements GradeService{
 				grade.setLanguage(gradePostRequest.getLanguage());
 			}
 			
-			gradeRepository.save(grade);
-			gradeAlreadyExists = true;
-			
-		}
-		Boolean response = gradeAlreadyExists;
+			grade = gradeRepository.save(grade);
 		
-		return response;
+			
+			GradeServiceModel response = new GradeServiceModel(
+					grade.getGradeId(),
+					grade.getName(),
+					grade.getLanguage()
+					);
+			return response;
+		}
+		
+		
+		
 	}
 
 	@Override
-	public Boolean deleteByGradeId(Integer gradeId) {
+	public Integer  deleteByGradeId(Integer gradeId) {
 		
-		Boolean response = false;
-		try {
-			gradeRepository.deleteByGradeId(gradeId);
-			response = true;;
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Grado no encontrado");
+		return gradeRepository.deleteByGradeId(gradeId);
 		}
-		return response;
-		
-	
-	}
 
 
 
