@@ -1,6 +1,9 @@
 package com.grupo5.reto2.user;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.role.Rol;
 import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.role.RoleRepository;
@@ -24,6 +28,38 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Override
+	public Iterable<UserServiceModel> GetUsers() throws NotContentException {
+		Iterable<User> users = userRepository.findAll();
+		List<UserServiceModel> response = new ArrayList<UserServiceModel>();
+		
+		if (users == null) {
+			throw new NotContentException("No hay usuarios ");
+		}
+
+	
+		for (User user : users) {
+			response.add(new UserServiceModel(
+					user.getDni(),
+					user.isEnabled()));
+		}
+
+		return response;
+	}
+	@Override
+	public UserServiceModel GetUsersBydni(String userDni) throws NotContentException {
+		User user = userRepository.findByDni(userDni).get();
+		
+		if (user == null && userDni.length()==0) {
+			throw new NotContentException("No hay usuarios ");
+		}
+		UserServiceModel response = new UserServiceModel(
+				user.getDni(),
+				user.isEnabled()
+				);
+		
+		return response;
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,5 +88,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 		
 	}
+
+	
 
 }

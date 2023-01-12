@@ -7,11 +7,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.security.JwtTokenUtil;
 
 @RestController
@@ -25,6 +28,21 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping("/users")
+	public ResponseEntity<Iterable<UserServiceModel>> GetUsers() throws NotContentException {
+		
+		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/users/{userDni}")
+	public ResponseEntity<UserServiceModel> GetUserbyDni(@PathVariable String userDni) throws NotContentException {
+		
+		return new ResponseEntity <UserServiceModel>(userService.GetUsersBydni(userDni), HttpStatus.OK);
+	}
+	
+	
+	
 	
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {

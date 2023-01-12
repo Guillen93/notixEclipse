@@ -4,7 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
+import jakarta.transaction.Transactional;
+
 public interface UserRepository extends CrudRepository< User, Integer> {
 	Optional<User> findByDni(String DNI);
+
 }
 
