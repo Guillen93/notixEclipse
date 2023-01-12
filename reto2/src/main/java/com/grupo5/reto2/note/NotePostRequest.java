@@ -1,5 +1,6 @@
 package com.grupo5.reto2.note;
 
+
 public class NotePostRequest {
 
 	private NoteId id;
