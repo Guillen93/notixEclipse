@@ -78,7 +78,8 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 					professor,
 					gradeEditionPostRequest.getTutorDni(),
 					gradeEditionPostRequest.getFecha());
-			gradeEditionRepository.save(gradeEdition);
+			
+				gradeEditionRepository.save(gradeEdition);
 
 			GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
 					gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha());
