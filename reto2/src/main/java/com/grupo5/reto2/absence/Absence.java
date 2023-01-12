@@ -61,39 +61,60 @@ public class Absence {
 		this.justified = justified;
 	}
 
+
+
+	public AbsenceId getId() {
+		return id;
+	}
+
+	public void setId(AbsenceId id) {
+		this.id = id;
+	}
+
 	public Student getStudent() {
 		return student;
 	}
+
 	public void setStudent(Student student) {
 		this.student = student;
 	}
+
 	public String getStudentDni() {
 		return studentDni;
 	}
+
 	public void setStudentDni(String studentDni) {
 		this.studentDni = studentDni;
 	}
+
 	public Subject getSubject() {
 		return subject;
 	}
+
 	public void setSubject(Subject subject) {
 		this.subject = subject;
 	}
+
 	public Integer getSubjectId() {
 		return subjectId;
 	}
+
 	public void setSubjectId(Integer subjectId) {
 		this.subjectId = subjectId;
 	}
+
 	public Date getFoul() {
 		return foul;
 	}
+
 	public void setFoul(Date foul) {
 		this.foul = foul;
 	}
+
 	public boolean isJustified() {
 		return justified;
 	}
+
 	public void setJustified(boolean justified) {
 		this.justified = justified;
 	}
