@@ -1,7 +1,6 @@
 package com.grupo5.reto2.note;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grupo5.reto2.student.Student;
 import com.grupo5.reto2.subject.Subject;
 
@@ -153,6 +152,23 @@ public class Note {
 
 	public void setFinal2(Integer final2) {
 		this.final2 = final2;
+	}
+
+	
+	public NoteId getId() {
+		return id;
+	}
+
+	public void setId(NoteId id) {
+		this.id = id;
+	}
+
+	public Student getStudentNote() {
+		return studentNote;
+	}
+
+	public void setStudentNote(Student studentNote) {
+		this.studentNote = studentNote;
 	}
 
 	@Override

@@ -1,14 +1,9 @@
 package com.grupo5.reto2.note;
 
-import com.grupo5.reto2.student.Student;
-import com.grupo5.reto2.subject.Subject;
-
 public class NotePostRequest {
 
 	private NoteId id;
-	private Student student;
 	private String studentDni;
-	private Subject subject;
 	private Integer subjectId;
 	private Float eva1;
 	private Float eva2;
@@ -33,13 +28,7 @@ public class NotePostRequest {
 		this.final2 = final2;
 	}
 
-	public Student getStudent() {
-		return student;
-	}
-
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+	
 
 	public String getStudentDni() {
 		return studentDni;
@@ -49,14 +38,7 @@ public class NotePostRequest {
 		this.studentDni = studentDni;
 	}
 
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
-
+	
 	public Integer getSubjectId() {
 		return subjectId;
 	}
@@ -113,11 +95,6 @@ public class NotePostRequest {
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "NotePostRequest [student=" + student + ", studentDni=" + studentDni + ", subject=" + subject
-				+ ", subjectId=" + subjectId + ", eva1=" + eva1 + ", eva2=" + eva2 + ", eva3=" + eva3 + ", final1="
-				+ final1 + ", final2=" + final2 + "]";
-	}
+	
 
 }
