@@ -78,6 +78,37 @@ public class Subject {
 		this.notes = notes;
 		this.absences = absences;
 	}
+	
+
+	
+	public Subject(GradeEdition grade, Integer gradeId, Professor professor, String professorDni, String name,
+			Integer duration) {
+		super();
+		this.grade = grade;
+		this.gradeId = gradeId;
+		this.professor = professor;
+		this.professorDni = professorDni;
+		this.name = name;
+		this.duration = duration;
+	}
+
+	public Subject(Integer subjectId, Integer gradeId, String professorDni, String name, Integer duration) {
+		super();
+		this.subjectId = subjectId;
+		this.gradeId = gradeId;
+		this.professorDni = professorDni;
+		this.name = name;
+		this.duration = duration;
+	}
+	
+	public Subject( Integer gradeId, String professorDni, String name, Integer duration) {
+		super();
+		this.gradeId = gradeId;
+		this.professorDni = professorDni;
+		this.name = name;
+		this.duration = duration;
+	}
+
 
 	public Integer getSubjectId() {
 		return subjectId;
