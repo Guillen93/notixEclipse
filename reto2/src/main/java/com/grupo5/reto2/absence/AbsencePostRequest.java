@@ -12,7 +12,6 @@ public class AbsencePostRequest {
 
 	public AbsencePostRequest() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public AbsencePostRequest(AbsenceId id, String studentDni, Integer subjectId, Date foul, boolean justified) {
