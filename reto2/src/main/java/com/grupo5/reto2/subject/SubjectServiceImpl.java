@@ -93,8 +93,7 @@ public class SubjectServiceImpl implements SubjectService {
 	public SubjectServiceModel createSubject(SubjectPostRequest subjectPostRequest)
 			throws ConflictException, NotContentException {
 		
-
-		Subject subject = subjectRepository.findBySubjectId(subjectPostRequest.getSubjectId());
+		Subject subject = subjectRepository.findByName(subjectPostRequest.getName());
 		
 		if (subject != null) {
 			throw new ConflictException("La asignatura ya esta creada");
