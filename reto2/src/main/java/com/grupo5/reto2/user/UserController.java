@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.security.JwtTokenUtil;
 
@@ -64,7 +65,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/users/signup")
-	public ResponseEntity<?> signIn(@RequestBody UserRequest request) {
+	public ResponseEntity<?> signIn(@RequestBody UserRequest request) throws ConflictException {
 		User user = new User (request.getDni(), request.getPassword());
 		try {
 			userService.signUp(user);
