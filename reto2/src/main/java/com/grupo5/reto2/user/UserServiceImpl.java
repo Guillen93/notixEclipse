@@ -3,6 +3,7 @@ package com.grupo5.reto2.user;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -48,17 +49,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 	@Override
 	public UserServiceModel GetUsersBydni(String userDni) throws NotContentException {
+		try {
+			
 		User user = userRepository.findByDni(userDni).get();
 		
-		if (user == null && userDni.length()==0) {
-			throw new NotContentException("No hay usuarios ");
-		}
 		UserServiceModel response = new UserServiceModel(
 				user.getDni(),
 				user.isEnabled()
 				);
-		
 		return response;
+		}catch(NoSuchElementException e){
+			throw new NotContentException("No hay usuarios ");
+		}
+		
 	}
 	
 	@Override
@@ -87,6 +90,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			throw new UserException(e.getMessage());
 		}
 		
+	}
+	@Override
+	public Boolean deleteUser(String username) throws NotContentException {
+		Boolean response = userRepository.existsByDni(username);
+
+		if (!response) {
+			throw new NotContentException("No existe el usuario");
+		}else {
+			userRepository.deleteByDni(username);
+		}
+			
+		return response;
 	}
 
 	

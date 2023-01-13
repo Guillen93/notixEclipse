@@ -8,4 +8,5 @@ public interface UserService {
 
 	UserServiceModel GetUsersBydni(String username) throws NotContentException;
 	
+	Boolean deleteUser(String username) throws NotContentException;
 }

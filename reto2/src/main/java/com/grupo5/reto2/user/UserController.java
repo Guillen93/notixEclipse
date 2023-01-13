@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +72,14 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.CONFLICT); 
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/users/{userDni}")
+	public ResponseEntity<Integer> deleteUser(@PathVariable String userDni) throws NotContentException {
+
+		userService.deleteUser(userDni);
+
+		return new ResponseEntity<Integer>(HttpStatus.OK);
 	}
 	
 }
