@@ -20,9 +20,6 @@ import com.grupo5.reto2.exceptions.NotContentException;
 public class StudentController {
 
 	@Autowired
-	StudentRepository studentRepository;
-
-	@Autowired
 	StudentService studentService;
 
 	@GetMapping("/students")
