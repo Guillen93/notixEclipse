@@ -6,5 +6,6 @@ public interface SubjectRepository extends CrudRepository<Subject, Integer> {
 
 	Subject findBySubjectId(Integer subjectId);
 	
+	Subject findByName(String name);
 	
 }

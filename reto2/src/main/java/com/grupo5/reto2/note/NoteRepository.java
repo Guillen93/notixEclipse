@@ -26,9 +26,6 @@ public interface NoteRepository extends CrudRepository<Note,NoteId> {
 	Integer deleteByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
 
 	
-	//@Transactional
-	//@Modifying
-	//void updateBystudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId, NotePostRequest notePostRequest);
 	
 	
 	
