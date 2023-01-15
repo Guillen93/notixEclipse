@@ -1,11 +1,12 @@
 package com.grupo5.reto2.subject;
 
+import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.professor.Professor;
 
 public class SubjectServiceModel {
 
 	private Integer subjectId;
-	private Integer gradeId;
+	private Integer gradeEdId;
 	private Professor professor;
 	private String professorDni;
 	private String name;
@@ -15,38 +16,29 @@ public class SubjectServiceModel {
 		super();
 	}
 
-	
-	
-	
-	
 	public SubjectServiceModel(Integer subjectId, Integer gradeId, String professorDni, String name, Integer duration) {
 		super();
-		this.subjectId = subjectId;
-		this.gradeId = gradeId;
+		this.gradeEdId = gradeId;
 		this.professorDni = professorDni;
 		this.name = name;
 		this.duration = duration;
 	}
 
-
-
-
-
-	public SubjectServiceModel(Integer subjectId, Integer gradeId, Professor professor, String professorDni,
+	public SubjectServiceModel( Integer gradeId, Professor professor, String professorDni,
 			String name, Integer duration) {
 		super();
-		this.subjectId = subjectId;
-		this.gradeId = gradeId;
+		this.gradeEdId = gradeId;
 		this.professor = professor;
 		this.professorDni = professorDni;
 		this.name = name;
 		this.duration = duration;
 	}
-	
-	public SubjectServiceModel( Integer gradeId, Professor professor, String professorDni,
-			String name, Integer duration) {
+
+	public SubjectServiceModel(Integer subjectId, Integer gradeId, Professor professor,
+			String professorDni, String name, Integer duration) {
 		super();
-		this.gradeId = gradeId;
+		this.subjectId = subjectId;
+		this.gradeEdId = gradeId;
 		this.professor = professor;
 		this.professorDni = professorDni;
 		this.name = name;
@@ -61,12 +53,12 @@ public class SubjectServiceModel {
 		this.subjectId = subjectId;
 	}
 
-	public Integer getGradeId() {
-		return gradeId;
+	public Integer getGradeEdId() {
+		return gradeEdId;
 	}
 
-	public void setGradeId(Integer gradeId) {
-		this.gradeId = gradeId;
+	public void setGradeEdId(Integer gradeEdId) {
+		this.gradeEdId = gradeEdId;
 	}
 
 	public Professor getProfessor() {
@@ -99,6 +91,13 @@ public class SubjectServiceModel {
 
 	public void setDuration(Integer duration) {
 		this.duration = duration;
+	}
+
+	@Override
+	public String toString() {
+		return "SubjectServiceModel [subjectId=" + subjectId + ", gradeEdId=" + gradeEdId
+				+ ", professor=" + professor + ", professorDni=" + professorDni + ", name=" + name + ", duration="
+				+ duration + "]";
 	}
 
 }

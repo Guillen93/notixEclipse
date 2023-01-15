@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.grade.GradeRepository;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
 import com.grupo5.reto2.professor.Professor;
@@ -22,6 +23,8 @@ public class SubjectServiceImpl implements SubjectService {
 	ProfessorRepository professorRepository;
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
+	@Autowired
+	GradeRepository gradeRepository;
 
 	@Override
 	public Iterable<SubjectServiceModel> findAllSubject() throws NotContentException {
@@ -35,6 +38,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 		for (Subject subject : subjects) {
 			Professor professorbd = professorRepository.findByProfessorDni(subject.getProfessorDni());
+			//Grade gradeBd = gradeRepository.findById(null)
 			
 			Professor professor = new Professor(
 					professorbd.getProfessorDni(),
@@ -48,7 +52,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 			response.add(new SubjectServiceModel(
 					subject.getSubjectId(),
-					subject.getGradeId(),
+					subject.getGradeEdId(),
 					professor,
 					subject.getProfessorDni(),
 					subject.getName(),
@@ -79,7 +83,7 @@ public class SubjectServiceImpl implements SubjectService {
 		
 		SubjectServiceModel response = new SubjectServiceModel(
 				subject.getSubjectId(),
-				subject.getGradeId(),
+				subject.getGradeEdId(),
 				professor,
 				subject.getProfessorDni(),
 				subject.getName(),
@@ -155,7 +159,7 @@ public class SubjectServiceImpl implements SubjectService {
 		} else {
 
 			if (subjectPostRequest.getGradeId() != null) {
-				subject.setGradeId(subjectPostRequest.getGradeId());
+				subject.setGradeEdId(subjectPostRequest.getGradeId());
 			}
 			if (subjectPostRequest.getProfessorDni() != null) {
 				subject.setProfessorDni(subjectPostRequest.getProfessorDni());
@@ -171,7 +175,7 @@ public class SubjectServiceImpl implements SubjectService {
 			
 			SubjectServiceModel response = new SubjectServiceModel(
 					subjectId,
-					subject.getGradeId(),
+					subject.getGradeEdId(),
 					subject.getProfessorDni(),
 					subject.getName(),
 					subject.getDuration()

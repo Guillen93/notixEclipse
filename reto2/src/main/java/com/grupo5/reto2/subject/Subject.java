@@ -32,12 +32,12 @@ public class Subject {
 	private Integer subjectId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "gradeEditionId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
+	@JoinColumn(name = "gradeEdId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private GradeEdition grade;
 	@Column(name = "gradeEdId", updatable = false, insertable = false)
-	private Integer gradeId;
+	private Integer gradeEdId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "professorDni", foreignKey=@ForeignKey(name = "fk_professorDni"))
@@ -70,7 +70,7 @@ public class Subject {
 		super();
 		this.subjectId = subjectId;
 		this.grade = grade;
-		this.gradeId = gradeId;
+		this.gradeEdId = gradeId;
 		this.professor = professor;
 		this.professorDni = professorDni;
 		this.name = name;
@@ -85,7 +85,7 @@ public class Subject {
 			Integer duration) {
 		super();
 		this.grade = grade;
-		this.gradeId = gradeId;
+		this.gradeEdId = gradeId;
 		this.professor = professor;
 		this.professorDni = professorDni;
 		this.name = name;
@@ -95,7 +95,7 @@ public class Subject {
 	public Subject(Integer subjectId, Integer gradeId, String professorDni, String name, Integer duration) {
 		super();
 		this.subjectId = subjectId;
-		this.gradeId = gradeId;
+		this.gradeEdId = gradeId;
 		this.professorDni = professorDni;
 		this.name = name;
 		this.duration = duration;
@@ -103,74 +103,92 @@ public class Subject {
 	
 	public Subject( Integer gradeId, String professorDni, String name, Integer duration) {
 		super();
-		this.gradeId = gradeId;
+		this.gradeEdId = gradeId;
 		this.professorDni = professorDni;
 		this.name = name;
 		this.duration = duration;
 	}
-
 
 	public Integer getSubjectId() {
 		return subjectId;
 	}
+
 	public void setSubjectId(Integer subjectId) {
 		this.subjectId = subjectId;
 	}
+
 	public GradeEdition getGrade() {
 		return grade;
 	}
+
 	public void setGrade(GradeEdition grade) {
 		this.grade = grade;
 	}
-	public Integer getGradeId() {
-		return gradeId;
+
+	public Integer getGradeEdId() {
+		return gradeEdId;
 	}
-	public void setGradeId(Integer gradeId) {
-		this.gradeId = gradeId;
+
+	public void setGradeEdId(Integer gradeEdId) {
+		this.gradeEdId = gradeEdId;
 	}
+
 	public Professor getProfessor() {
 		return professor;
 	}
+
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
+
 	public String getProfessorDni() {
 		return professorDni;
 	}
+
 	public void setProfessorDni(String professorDni) {
 		this.professorDni = professorDni;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Integer getDuration() {
 		return duration;
 	}
+
 	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
+
 	public Set<Note> getNotes() {
 		return notes;
 	}
+
 	public void setNotes(Set<Note> notes) {
 		this.notes = notes;
 	}
+
 	public Set<Absence> getAbsences() {
 		return absences;
 	}
+
 	public void setAbsences(Set<Absence> absences) {
 		this.absences = absences;
 	}
 
 	@Override
 	public String toString() {
-		return "Subject [subjectId=" + subjectId + ", grade=" + grade + ", gradeId=" + gradeId + ", professor="
+		return "Subject [subjectId=" + subjectId + ", grade=" + grade + ", gradeEdId=" + gradeEdId + ", professor="
 				+ professor + ", professorDni=" + professorDni + ", name=" + name + ", duration=" + duration
 				+ ", notes=" + notes + ", absences=" + absences + "]";
 	}
 
+
+	
 	
 }

@@ -63,10 +63,10 @@ public class AbsenceController {
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/absence/{studentDNI}/{subjetId}")
+	@DeleteMapping("/absence/{studentDNI}/{subjetId}/{dateString}")
 	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI,
-			@PathVariable Integer subjetId,@PathVariable Date date) throws NotContentException {
-
+			@PathVariable Integer subjetId,@PathVariable String dateString) throws NotContentException {
+		Date date=Date.valueOf(dateString);
 		Integer response = absenceService.deleteAbsence(studentDNI,subjetId,date);
 
 		if (response == 0) {

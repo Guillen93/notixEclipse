@@ -63,16 +63,16 @@ public class NoteController {
 
 	@DeleteMapping("/notes/{studentDNI}/{subjetId}")
 	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI,
-			@PathVariable Integer subjetId) {
+			@PathVariable Integer subjetId) throws NotContentException {
 
 		Integer response = noteService.deleteNotesById(studentDNI,subjetId);
 
 		if (response == 0) {
-			//throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");
+			throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");
 		} else {
-			//return new ResponseEntity<Integer>(HttpStatus.OK);
+			return new ResponseEntity<Integer>(HttpStatus.OK);
 		}
-		return new ResponseEntity<Integer>(HttpStatus.OK);
+
 	}
 
 }
