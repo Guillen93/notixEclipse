@@ -12,57 +12,59 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
+
 @RestController
 @RequestMapping("api")
 public class ProfessorController {
 	@Autowired
 	ProfessorService professorService;
-	
+
 	@GetMapping("/professors")
-	public ResponseEntity<Iterable<Professor>> getProfessors() {
-		return new ResponseEntity <Iterable<Professor>>(professorService.findAll(), HttpStatus.OK);
+	public ResponseEntity<Iterable<ProfessorResponse>> getProfessors() throws NotContentException {
+		Iterable<ProfessorResponse> response = professorService.findAll();
+		return new ResponseEntity<Iterable<ProfessorResponse>>(response, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/professors/{professorDni}")
-	public ResponseEntity<ProfessorResponse> getProfessorByDni(@PathVariable String professorDni) {
+	public ResponseEntity<ProfessorResponse> getProfessorByDni(@PathVariable String professorDni)
+			throws NotContentException {
 		return new ResponseEntity<ProfessorResponse>(professorService.findByProfessorDni(professorDni), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/professors")
-	public ResponseEntity<Integer> createProfessor(@RequestBody ProfessorRequest professorRequest) {
-		
-		Boolean response = professorService.createProfessor(professorRequest);
-		
-		if (response == true) {
-			return new ResponseEntity<Integer>(HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<Integer>(HttpStatus.CONFLICT);
-		}
+	public ResponseEntity<ProfessorResponse> createProfessor(@RequestBody ProfessorRequest professorRequest)
+			throws ConflictException {
+
+		ProfessorResponse response = professorService.createProfessor(professorRequest);
+		return new ResponseEntity<ProfessorResponse>(response, HttpStatus.CREATED);
+
 	}
-	
+
 	@PutMapping("/professors/{professorDni}")
-	public ResponseEntity<Integer> updateProfessor(@PathVariable String professorDni,
-			@RequestBody ProfessorRequest professorRequest) {
-		
-		Boolean response = professorService.updateProfessor(professorDni, professorRequest);
-		
-		if (response == true) {
-			return new ResponseEntity<Integer>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Integer>(HttpStatus.NOT_MODIFIED);
-		}		
+	public ResponseEntity<ProfessorResponse> updateProfessor(@PathVariable String professorDni,
+			@RequestBody ProfessorRequest professorRequest) throws NotContentException {
+
+		ProfessorResponse response = professorService.updateProfessor(professorDni, professorRequest);
+
+		return new ResponseEntity<ProfessorResponse>(response, HttpStatus.OK);
+
 	}
-	
+
 	@DeleteMapping("/professors/{professorDni}")
-	public ResponseEntity<Integer> deleteProfessor(@PathVariable String professorDni) {
+	public ResponseEntity<Integer> deleteProfessor(@PathVariable String professorDni) throws NotContentException {
+
 		
-		Boolean response = professorService.deleteByProfessorDni(professorDni);
-		
-		if (response == true) {
-			return new ResponseEntity<Integer>(HttpStatus.OK);
+		Integer response = professorService.deleteByProfessorDni(professorDni);
+
+		if (response == 0) {
+			throw new NotContentException("No existe el estudiante");
 		} else {
-			return new ResponseEntity<Integer>(HttpStatus.CONFLICT);
+			return new ResponseEntity<Integer>(HttpStatus.OK);
 		}
+		
+		
 	}
 
 }
