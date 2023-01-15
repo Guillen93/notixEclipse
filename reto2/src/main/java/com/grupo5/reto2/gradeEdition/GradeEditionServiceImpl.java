@@ -32,7 +32,7 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 		List<GradeEditionServiceModel> response = new ArrayList<GradeEditionServiceModel>();
 
-		if (gradeEditions == null) {
+		if (gradeEditions == null || gradeEditions.iterator().hasNext()==false) {
 			throw new NotContentException("No hay ediciones de ese grado");
 		}
 

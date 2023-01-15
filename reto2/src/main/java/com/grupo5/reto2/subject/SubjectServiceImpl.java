@@ -29,7 +29,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
 
-		if (subjects == null) {
+		if (subjects == null || subjects.iterator().hasNext()==false) {
 			throw new NotContentException("No hay asignatura ");
 		}
 

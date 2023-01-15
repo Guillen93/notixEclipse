@@ -23,7 +23,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 		List<ProfessorResponse> response = new ArrayList<ProfessorResponse>();
 		
-		if (professors == null) {
+		if (professors == null || professors.iterator().hasNext()==false) {
 			throw new NotContentException("No hay professores ");
 		}
 		
@@ -46,7 +46,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 		Professor professor = professorRepository.findByProfessorDni(professorDni);
 		
 		
-		if (professor == null) {
+		if (professor == null ) {
 			throw new NotContentException("No hay professores ");
 		}
 

@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
 
 		List<StudentServiceModel> response = new ArrayList<StudentServiceModel>();
 		
-		if (students == null) {
+		if (students == null || students.iterator().hasNext()==false) {
 			throw new NotContentException("No hay estudiantes ");
 		}
 

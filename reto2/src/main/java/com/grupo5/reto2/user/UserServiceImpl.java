@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		Iterable<User> users = userRepository.findAll();
 		List<UserServiceModel> response = new ArrayList<UserServiceModel>();
 
-		if (users == null) {
+		if (users == null || users.iterator().hasNext()==false) {
 			throw new NotContentException("No hay usuarios ");
 		}
 

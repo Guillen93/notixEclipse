@@ -21,7 +21,7 @@ public class GradeServiceImpl implements GradeService{
 		
 		List<GradeServiceModel> response = new ArrayList<GradeServiceModel>();
 		
-		if (grades == null) {
+		if (grades == null || grades.iterator().hasNext()==false) {
 			throw new NotContentException("No hay estudiantes ");
 		}
 		
