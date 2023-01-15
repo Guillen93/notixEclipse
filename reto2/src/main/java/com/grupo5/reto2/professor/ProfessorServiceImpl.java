@@ -1,7 +1,13 @@
 package com.grupo5.reto2.professor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.grupo5.reto2.exceptions.ConflictException;
+import com.grupo5.reto2.exceptions.NotContentException;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
@@ -10,28 +16,62 @@ public class ProfessorServiceImpl implements ProfessorService {
 	private ProfessorRepository professorRepository;
 
 	@Override
-	public Iterable<Professor> findAll() {
-		return professorRepository.findAll();
+	public Iterable<ProfessorResponse> findAll() throws NotContentException {
+		//return professorRepository.findAll();
+		
+		Iterable<Professor> professors = professorRepository.findAll();
+
+		List<ProfessorResponse> response = new ArrayList<ProfessorResponse>();
+		
+		if (professors == null) {
+			throw new NotContentException("No hay professores ");
+		}
+		
+		for (Professor professor : professors) {
+			response.add(new ProfessorResponse(
+					professor.getProfessorDni(),
+					professor.getName(),
+					professor.getSurname(),
+					professor.getEmail(),
+					professor.getPhoto()
+					));
+			}
+
+		return response;
 	}
 
 	@Override
-	public ProfessorResponse findByProfessorDni(String professorDni) {
+	public ProfessorResponse findByProfessorDni(String professorDni) throws NotContentException {
 
 		Professor professor = professorRepository.findByProfessorDni(professorDni);
+		
+		
+		if (professor == null) {
+			throw new NotContentException("No hay professores ");
+		}
 
-		ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
-				professor.getSurname(), professor.getEmail(), professor.getPhoto());
+		ProfessorResponse response = new ProfessorResponse(
+				professor.getProfessorDni(),
+				professor.getName(),
+				professor.getSurname(),
+				professor.getEmail(),
+				professor.getPhoto()
+				);
 		return response;
 
 	}
 
 	@Override
-	public Boolean createProfessor(ProfessorRequest professorRequest) {
+	public ProfessorResponse createProfessor(ProfessorRequest professorRequest) throws ConflictException {
 		
 		Professor professor = professorRepository.findByProfessorDni(professorRequest.getProfessorDni());
-		Boolean response = false;
 		
-		if (professor == null) {
+		if (professor != null) {
+
+			throw new ConflictException("El profesor ya esta registrado");
+
+		} else {
+			
 			professor = new Professor(
 					professorRequest.getProfessorDni(),
 					professorRequest.getName(),
@@ -41,20 +81,29 @@ public class ProfessorServiceImpl implements ProfessorService {
 					professorRequest.getAddres(), 
 					professorRequest.getPhoto()
 			);
-			professorRepository.save(professor);
-			response = true;
+			professor = professorRepository.save(professor);
+			
+			ProfessorResponse response = new ProfessorResponse(
+					professor.getProfessorDni(),
+					professor.getName(),
+					professor.getSurname(),
+					professor.getEmail(),
+					professor.getPhoto()
+					);
+			
+			return response;
+			
 		}
-		return response;
-		
 	}
 
 	@Override
-	public Boolean updateProfessor(String professorDni, ProfessorRequest professorRequest) {
+	public ProfessorResponse updateProfessor(String professorDni, ProfessorRequest professorRequest) throws NotContentException {
 
 		Professor professor = professorRepository.findByProfessorDni(professorDni);
-		Boolean response = false;
 		
-		if (professor != null) {
+		if (professor == null) {
+			throw new NotContentException("No existe el profesor");
+		}else {
 			
 			if (professorRequest.getProfessorDni() != null) {
 				professor.setProfessorDni(professorRequest.getProfessorDni());
@@ -78,23 +127,24 @@ public class ProfessorServiceImpl implements ProfessorService {
 				professor.setPhoto(professorRequest.getPhoto());
 			}
 
-			professorRepository.save(professor);
-			response = true;
+			professor = professorRepository.save(professor);
+			
+			
+			ProfessorResponse response = new ProfessorResponse(
+					professor.getProfessorDni(),
+					professor.getName(),
+					professor.getSurname(),
+					professor.getEmail(),
+					professor.getPhoto()
+					);
+			return response;
 		}
-		return response;
+		
 	}
 
 	@Override
-	public Boolean deleteByProfessorDni(String professorDni) {
-		
-		Professor professor = professorRepository.findByProfessorDni(professorDni);
-		Boolean response = false;
-		
-		if (professor != null) {
-			professorRepository.deleteByProfessorDni(professorDni);
-			response = true;
-		} 
-		return response;
+	public Integer deleteByProfessorDni(String professorDni) {
+		return professorRepository.deleteByProfessorDni(professorDni);
 	}
 
 }
