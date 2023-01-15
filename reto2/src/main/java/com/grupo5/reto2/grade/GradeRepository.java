@@ -15,6 +15,9 @@ public interface GradeRepository extends CrudRepository<Grade, Integer> {
 	@Transactional
 	Grade findByName(String gradeName);
 	
+	@Transactional
+	Grade findByNameAndLanguage(String gradeName, String language);
+	
 	
 }
 

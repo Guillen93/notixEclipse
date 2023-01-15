@@ -56,7 +56,7 @@ public class GradeServiceImpl implements GradeService{
 	@Override
 	public GradeServiceModel createGrade(GradePostRequest gradePostRequest) throws ConflictException {
 		
-		Grade gradeBd = gradeRepository.findByName(gradePostRequest.getName());
+		Grade gradeBd = gradeRepository.findByNameAndLanguage(gradePostRequest.getName(),gradePostRequest.getLanguage());
 		
 		
 		
