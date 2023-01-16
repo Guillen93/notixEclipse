@@ -40,7 +40,24 @@ public class SubjectController {
 
 		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.OK);
 	}
+	
+	@GetMapping("/subjects/student/{studentDni}")
+	public ResponseEntity<Iterable<SubjectServiceModel>> getSubjectByStudentDni(@PathVariable String studentDni) throws NotContentException {
 
+		Iterable<SubjectServiceModel> response = subjectService.findSubjectsByStudentDni(studentDni);
+
+		return new ResponseEntity<Iterable<SubjectServiceModel>>(response, HttpStatus.OK);
+	}
+
+	@GetMapping("/subjects/professor/{professorDni}")
+	public ResponseEntity<Iterable<SubjectServiceModel>> getSubjectByProfessorDni(@PathVariable String professorDni) throws NotContentException {
+
+		Iterable<SubjectServiceModel> response = subjectService.findSubjectsByProfessorDni(professorDni);
+
+		return new ResponseEntity<Iterable<SubjectServiceModel>>(response, HttpStatus.OK);
+	}
+	
+	
 	@PostMapping("/subjects")
 	public ResponseEntity<SubjectServiceModel> createSubject(@RequestBody SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException {
 

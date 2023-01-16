@@ -55,6 +55,16 @@ public class GradeEdition {
 	public GradeEdition() {
 		super();
 	}
+	
+	public GradeEdition(Integer gradeEdId,  Integer gradeId, Professor tutor, String tutorDni, Date fecha) {
+		super();
+		this.gradeEditionId = gradeEdId;
+		this.gradeId = gradeId;
+		this.tutor = tutor;
+		this.tutorDni = tutorDni;
+		this.fecha = fecha;
+	}
+
 
 	public GradeEdition(Integer gradeEdId, Grade grade, Integer gradeId, Professor tutor, String tutorDni, Date fecha) {
 		super();

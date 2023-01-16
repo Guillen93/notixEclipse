@@ -28,9 +28,14 @@ public class StudentServiceImpl implements StudentService {
 		for (Student student : students) {
 			response.add(new StudentServiceModel(
 					student.getStudentDni(),
-					student.getName(), student.getSurname(),
-					student.getBornDate(), student.getNationality(), student.getEmail(), student.getPhone(),
-					student.getPhoto()));
+					student.getName(),
+					student.getSurname(),
+					student.getBornDate(),
+					student.getNationality(),
+					student.getEmail(),
+					student.getPhone(),
+					student.getPhoto()
+					));
 		}
 
 		return response;
@@ -135,7 +140,7 @@ public class StudentServiceImpl implements StudentService {
 			student = studentRepository.save(student);
 			
 			StudentServiceModel response = new StudentServiceModel(
-					student.getStudentDni(),
+					studentDNI,
 					student.getName(),
 					student.getSurname(),
 					student.getBornDate(),

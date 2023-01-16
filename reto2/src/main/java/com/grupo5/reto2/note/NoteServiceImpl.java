@@ -181,8 +181,8 @@ public class NoteServiceImpl implements NoteService {
 			note = noteRepository.save(note);
 			
 			NoteServiceModel response = new NoteServiceModel(
-					note.getStudentDni(),
-					note.getSubjectId(),
+					studentDNI,
+					subjetId,
 					note.getEva1(),
 					note.getEva2(),
 					note.getEva3(),

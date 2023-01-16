@@ -35,7 +35,7 @@ public class Subject {
 	@JoinColumn(name = "gradeEdId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private GradeEdition grade;
+	private GradeEdition gradeEdition;
 	@Column(name = "gradeEdId", updatable = false, insertable = false)
 	private Integer gradeEdId;
 
@@ -69,7 +69,7 @@ public class Subject {
 			String name, Integer duration, Set<Note> notes, Set<Absence> absences) {
 		super();
 		this.subjectId = subjectId;
-		this.grade = grade;
+		this.gradeEdition = grade;
 		this.gradeEdId = gradeId;
 		this.professor = professor;
 		this.professorDni = professorDni;
@@ -84,7 +84,7 @@ public class Subject {
 	public Subject(GradeEdition grade, Integer gradeId, Professor professor, String professorDni, String name,
 			Integer duration) {
 		super();
-		this.grade = grade;
+		this.gradeEdition = grade;
 		this.gradeEdId = gradeId;
 		this.professor = professor;
 		this.professorDni = professorDni;
@@ -117,12 +117,12 @@ public class Subject {
 		this.subjectId = subjectId;
 	}
 
-	public GradeEdition getGrade() {
-		return grade;
+	public GradeEdition getGradeEdition() {
+		return gradeEdition;
 	}
 
-	public void setGrade(GradeEdition grade) {
-		this.grade = grade;
+	public void setGradeEdition(GradeEdition grade) {
+		this.gradeEdition = grade;
 	}
 
 	public Integer getGradeEdId() {
@@ -183,7 +183,7 @@ public class Subject {
 
 	@Override
 	public String toString() {
-		return "Subject [subjectId=" + subjectId + ", grade=" + grade + ", gradeEdId=" + gradeEdId + ", professor="
+		return "Subject [subjectId=" + subjectId + ", grade=" + gradeEdition + ", gradeEdId=" + gradeEdId + ", professor="
 				+ professor + ", professorDni=" + professorDni + ", name=" + name + ", duration=" + duration
 				+ ", notes=" + notes + ", absences=" + absences + "]";
 	}

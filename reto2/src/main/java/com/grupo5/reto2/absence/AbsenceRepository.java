@@ -26,4 +26,5 @@ public interface AbsenceRepository extends CrudRepository<Absence,AbsenceId> {
 	@Transactional
 	@Modifying
 	Integer deleteByStudentDniAndSubjectIdAndFoul(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId,@Param("Date") Date date);
+
 }

@@ -50,7 +50,6 @@ public class GradeServiceImpl implements GradeService{
 				);
 		
 		return response;
-
 	}
 
 	@Override
@@ -58,12 +57,9 @@ public class GradeServiceImpl implements GradeService{
 		
 		Grade gradeBd = gradeRepository.findByNameAndLanguage(gradePostRequest.getName(),gradePostRequest.getLanguage());
 		
-		
-		
 		if(gradeBd != null) {
 			throw new ConflictException("El estudiante ya esta registrado");
 		}else {
-			
 			Grade grade = new Grade(
 					gradePostRequest.getGradeId(),
 					gradePostRequest.getName(),
@@ -80,8 +76,6 @@ public class GradeServiceImpl implements GradeService{
 			
 			return response;
 		}
-		
-		
 	}
 
 	@Override
@@ -105,7 +99,7 @@ public class GradeServiceImpl implements GradeService{
 		
 			
 			GradeServiceModel response = new GradeServiceModel(
-					grade.getGradeId(),
+					gradeId,
 					grade.getName(),
 					grade.getLanguage()
 					);

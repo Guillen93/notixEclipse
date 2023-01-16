@@ -160,15 +160,14 @@ public class AbsenceServiceImpl implements AbsenceService {
 					absence.setJustified(false);
 				}
 				
-				
 			}
 			
 			absence = absenceRepository.save(absence);
 			
 			AbsenceServiceModel response = new AbsenceServiceModel(
 					absence.getId(), 
-					absence.getStudentDni(),
-					absence.getSubjectId(),
+					studentDni,
+					subjectId,
 					absence.getFoul(),
 					absence.isJustified()
 			);

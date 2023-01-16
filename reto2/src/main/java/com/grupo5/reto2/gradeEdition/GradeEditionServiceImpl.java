@@ -18,10 +18,10 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
-	
+
 	@Autowired
 	GradeRepository gradeRepository;
-	
+
 	@Autowired
 	ProfessorRepository professorRepository;
 
@@ -32,13 +32,17 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 		List<GradeEditionServiceModel> response = new ArrayList<GradeEditionServiceModel>();
 
-		if (gradeEditions == null || gradeEditions.iterator().hasNext()==false) {
+		if (gradeEditions == null || gradeEditions.iterator().hasNext() == false) {
 			throw new NotContentException("No hay ediciones de ese grado");
 		}
 
 		for (GradeEdition gradeEdition : gradeEditions) {
-			response.add(new GradeEditionServiceModel(gradeEdition.getGradeEdId(), gradeEdition.getGradeId(),
-					gradeEdition.getTutorDni(), gradeEdition.getFecha()));
+			response.add(new GradeEditionServiceModel(
+					gradeEdition.getGradeEdId(),
+					gradeEdition.getGradeId(),
+					gradeEdition.getTutorDni(),
+					gradeEdition.getFecha()
+					));
 		}
 		return response;
 	}
@@ -49,8 +53,12 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 		GradeEdition gradeEdition = gradeEditionRepository.findById(gradeEditionId)
 				.orElseThrow(() -> new NotContentException("Edicion de grado no encontrado"));
 
-		GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
-				gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha());
+		GradeEditionServiceModel response = new GradeEditionServiceModel(
+				gradeEdition.getGradeEdId(),
+				gradeEdition.getGradeId(),
+				gradeEdition.getTutorDni(),
+				gradeEdition.getFecha()
+				);
 
 		return response;
 	}
@@ -67,7 +75,7 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 			throw new ConflictException("Esa edicion de grado  ya esta registrado");
 
 		} else {
-			
+
 			Grade grade = gradeRepository.findById(gradeEditionPostRequest.getGradeId()).get();
 			Professor professor = professorRepository.findByProfessorDni(gradeEditionPostRequest.getTutorDni());
 
@@ -77,12 +85,17 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 					gradeEditionPostRequest.getGradeId(),
 					professor,
 					gradeEditionPostRequest.getTutorDni(),
-					gradeEditionPostRequest.getFecha());
-			
-				gradeEditionRepository.save(gradeEdition);
+					gradeEditionPostRequest.getFecha()
+					);
 
-			GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
-					gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha());
+			gradeEditionRepository.save(gradeEdition);
+
+			GradeEditionServiceModel response = new GradeEditionServiceModel(
+					gradeEdition.getGradeEdId(),
+					gradeEdition.getGradeId(),
+					gradeEdition.getTutorDni(),
+					gradeEdition.getFecha()
+					);
 
 			return response;
 
@@ -105,14 +118,12 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 			if (gradeEditionPostRequest.getTutorDni() != null && gradeEditionPostRequest.getTutorDni() != "") {
 				gradeEdition.setTutorDni(gradeEditionPostRequest.getTutorDni());
 			}
-			if (gradeEditionPostRequest.getFecha() != null ) {
+			if (gradeEditionPostRequest.getFecha() != null) {
 				gradeEdition.setFecha(gradeEditionPostRequest.getFecha());
 			}
-			
+
 			gradeEdition = gradeEditionRepository.save(gradeEdition);
 
-			
-			
 			GradeEditionServiceModel response = new GradeEditionServiceModel(
 					gradeEditionId,
 					gradeEdition.getGradeId(),
@@ -132,10 +143,10 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 		if (!response) {
 			throw new NotContentException("No existe esa edicion de grado");
-		}else {
+		} else {
 			gradeEditionRepository.deleteById(gradeEditionId);
 		}
-			
+
 		return response;
 	}
 

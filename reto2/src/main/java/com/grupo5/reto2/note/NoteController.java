@@ -72,7 +72,6 @@ public class NoteController {
 		} else {
 			return new ResponseEntity<Integer>(HttpStatus.OK);
 		}
-
 	}
 
 }

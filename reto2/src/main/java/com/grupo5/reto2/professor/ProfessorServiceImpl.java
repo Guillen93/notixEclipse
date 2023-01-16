@@ -33,7 +33,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 					professor.getName(),
 					professor.getSurname(),
 					professor.getEmail(),
-					professor.getPhoto()
+					professor.getPhoto(),
+					professor.getNationality(),
+					professor.getAddres()
 					));
 			}
 
@@ -55,7 +57,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 				professor.getName(),
 				professor.getSurname(),
 				professor.getEmail(),
-				professor.getPhoto()
+				professor.getPhoto(),
+				professor.getNationality(),
+				professor.getAddres()
 				);
 		return response;
 
@@ -88,7 +92,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 					professor.getName(),
 					professor.getSurname(),
 					professor.getEmail(),
-					professor.getPhoto()
+					professor.getPhoto(),
+					professor.getNationality(),
+					professor.getAddres()
 					);
 			
 			return response;
@@ -131,11 +137,13 @@ public class ProfessorServiceImpl implements ProfessorService {
 			
 			
 			ProfessorResponse response = new ProfessorResponse(
-					professor.getProfessorDni(),
+					professorDni,
 					professor.getName(),
 					professor.getSurname(),
 					professor.getEmail(),
-					professor.getPhoto()
+					professor.getPhoto(),
+					professor.getNationality(),
+					professor.getAddres()
 					);
 			return response;
 		}
