@@ -10,6 +10,10 @@ import java.util.Properties;
 @Configuration
 public class MailSenderConfig {
 
+	CifradoAES cifradoAES = new CifradoAES();
+	
+	String user=cifradoAES.descifrarTexto("Clave");
+	
     @Bean("javaMailSender")
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
