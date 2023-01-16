@@ -36,10 +36,18 @@ public class NoteController {
 
 	}
 
-	@GetMapping("/notes/{studentDNI}")
+	@GetMapping("/notes/student/{studentDNI}")
 	public ResponseEntity<Iterable<NoteServiceModel>> getNote(@PathVariable String studentDNI ) throws NotContentException {
 
 		Iterable<NoteServiceModel> response = noteService.getAllNotesByStudentDni(studentDNI);
+		return new ResponseEntity<Iterable<NoteServiceModel>>(response, HttpStatus.OK);
+		    
+	}
+	
+	@GetMapping("/notes/professor/{professorDNI}")
+	public ResponseEntity<Iterable<NoteServiceModel>> getNotesByProfessorDni(@PathVariable String professorDNI ) throws NotContentException {
+
+		Iterable<NoteServiceModel> response = noteService.getAllNotesByprofessorDni(professorDNI);
 		return new ResponseEntity<Iterable<NoteServiceModel>>(response, HttpStatus.OK);
 		    
 	}

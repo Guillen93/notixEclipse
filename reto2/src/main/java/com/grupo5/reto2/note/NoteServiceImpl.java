@@ -1,4 +1,4 @@
-	package com.grupo5.reto2.note;
+package com.grupo5.reto2.note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +12,17 @@ import com.grupo5.reto2.student.Student;
 import com.grupo5.reto2.student.StudentRepository;
 import com.grupo5.reto2.subject.Subject;
 import com.grupo5.reto2.subject.SubjectRepository;
+import com.grupo5.reto2.subject.SubjectServiceModel;
 
 @Service
 public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	NoteRepository noteRepository;
-	
+
 	@Autowired
 	StudentRepository studentRepository;
-	
+
 	@Autowired
 	SubjectRepository subjectRepository;
 
@@ -30,165 +31,167 @@ public class NoteServiceImpl implements NoteService {
 		Iterable<Note> notes = noteRepository.findAll();
 
 		List<NoteServiceModel> response = new ArrayList<NoteServiceModel>();
-		
-		if (notes == null || notes.iterator().hasNext()==false) {
+
+		if (notes == null || notes.iterator().hasNext() == false) {
 			throw new NotContentException("No hay ediciones de ese grado");
 		}
-		
+
 		for (Note note : notes) {
-			response.add(new NoteServiceModel(
-					note.getId(),
-					note.getStudentDni(),
-					note.getSubjectId(),
-					note.getEva1(),
-					note.getEva2(),
-					note.getEva3(),
-					note.getFinal1(),
-					note.getFinal2()
-	
-					));
+			response.add(new NoteServiceModel(note.getId(), note.getStudentDni(), note.getSubjectId(), note.getEva1(),
+					note.getEva2(), note.getEva3(), note.getFinal1(), note.getFinal2()
+
+			));
 		}
 		return response;
 	}
 
 	@Override
 	public NoteServiceModel getAllNoteById(String studentDNI, Integer subjetId) throws NotContentException {
-		Note note = noteRepository.findByStudentDniAndSubjectId(studentDNI,subjetId);
-		
+		Note note = noteRepository.findByStudentDniAndSubjectId(studentDNI, subjetId);
+
 		if (note == null) {
 			throw new NotContentException("No existe el estudiante");
-		}	
+		}
 
-		NoteServiceModel response = new NoteServiceModel(
-				note.getId(),
-				note.getStudentDni(),
-				note.getSubjectId(),
-				note.getEva1(),
-				note.getEva2(),
-				note.getEva3(),
-				note.getFinal1(),
-				note.getFinal2()
-				);
+		NoteServiceModel response = new NoteServiceModel(note.getId(), note.getStudentDni(), note.getSubjectId(),
+				note.getEva1(), note.getEva2(), note.getEva3(), note.getFinal1(), note.getFinal2());
 
 		return response;
 	}
-	
+
 	@Override
 	public Iterable<NoteServiceModel> getAllNotesByStudentDni(String studentDNI) throws NotContentException {
-		
+
 		Iterable<Note> notes = noteRepository.findByStudentDni(studentDNI);
-		
+
 		List<NoteServiceModel> response = new ArrayList<NoteServiceModel>();
-		   
+
 		if (notes == null) {
 			throw new NotContentException("No existe el estudiante");
 		}
+
+		for (Note note : notes) {
+			response.add(new NoteServiceModel(note.getId(), note.getStudentDni(), note.getSubjectId(), note.getEva1(),
+					note.getEva2(), note.getEva3(), note.getFinal1(), note.getFinal2()));
+		}
+		return response;
+	}
+
+	@Override
+	public Iterable<NoteServiceModel> getAllNotesByprofessorDni(String professorDNI) throws NotContentException {
+
+		Iterable<Subject> subjectsBD = subjectRepository.findByProfessorDni(professorDNI);
+		if (subjectsBD == null || subjectsBD.iterator().hasNext() == false) {
+
+			throw new NotContentException("Ese profesor no imparte asignaturas por tanto no tiene notas.");
+
+		} else {
+			List<SubjectServiceModel> asignaturas = new ArrayList<SubjectServiceModel>();
+
+			for (Subject subject : subjectsBD) {
+
+				asignaturas.add(new SubjectServiceModel(
+						subject.getSubjectId(),
+						subject.getGradeEdId(),
+						subject.getProfessorDni(),
+						subject.getName(),
+						subject.getDuration()
+						));
+			}
+
+			ArrayList<NoteServiceModel> ListNotes = new ArrayList<NoteServiceModel>();
+
+			for (int i = 0; i < asignaturas.size(); i++) {
+
+				Iterable<Note> noteToBD = noteRepository.findBySubjectId(asignaturas.get(i).getSubjectId());
+
+				for (Note note : noteToBD) {
+					ListNotes.add(new NoteServiceModel(
+							note.getId(),
+							note.getStudentDni(),
+							note.getSubjectId(),
+							note.getEva1(),
+							note.getEva2(),
+							note.getEva3(),
+							note.getFinal1(),
+							note.getFinal2()
+							));
+				}
+
+			}
+
+			return ListNotes;
+		}
+
 		
-	    for (Note  note : notes) {
-            response.add(
-                    new NoteServiceModel(
-                    		note.getId(),
-                            note.getStudentDni(),
-                            note.getSubjectId(),
-                            note.getEva1(),
-                            note.getEva2(),
-                            note.getEva3(),
-                            note.getFinal1(),
-                            note.getFinal2()
-                            )
-                     );
-        }
-		    return response;
 	}
 
 	@Override
 	public NoteServiceModel createNotes(NotePostRequest notePostRequest) throws ConflictException, NotContentException {
-		
 
-		Student student =  studentRepository.findByStudentDni(notePostRequest.getStudentDni());
+		Student student = studentRepository.findByStudentDni(notePostRequest.getStudentDni());
 		Subject subject = subjectRepository.findBySubjectId(notePostRequest.getSubjectId());
-		
-		if(student == null && subject == null) {
-			
-			throw new NotContentException("El estudiante no se encuentra en el sistema por lo que no se puede crear una nota para el mismo");
-			
-		}else {
-			Note note = noteRepository.findByStudentDniAndSubjectId(notePostRequest.getStudentDni(),notePostRequest.getSubjectId());
+
+		if (student == null && subject == null) {
+
+			throw new NotContentException(
+					"El estudiante no se encuentra en el sistema por lo que no se puede crear una nota para el mismo");
+
+		} else {
+			Note note = noteRepository.findByStudentDniAndSubjectId(notePostRequest.getStudentDni(),
+					notePostRequest.getSubjectId());
 			if (note != null) {
 
 				throw new ConflictException("El estudiante ya esta registrado");
 
 			} else {
 
-				note = new Note(
-						student,
-						notePostRequest.getStudentDni(),
-						subject,
-						notePostRequest.getSubjectId(),
-						notePostRequest.getEva1(),
-						notePostRequest.getEva2(),
-						notePostRequest.getEva3(),
-						notePostRequest.getFinal1(),
-						notePostRequest.getFinal2()
-						);
+				note = new Note(student, notePostRequest.getStudentDni(), subject, notePostRequest.getSubjectId(),
+						notePostRequest.getEva1(), notePostRequest.getEva2(), notePostRequest.getEva3(),
+						notePostRequest.getFinal1(), notePostRequest.getFinal2());
 
 				note = noteRepository.save(note);
-				
-				NoteServiceModel response = new NoteServiceModel(
-						note.getStudentDni(),
-						note.getSubjectId(),
-						note.getEva1(),
-						note.getEva2(),
-						note.getEva3(),
-						note.getFinal1(),
-						note.getFinal2()
-				);
+
+				NoteServiceModel response = new NoteServiceModel(note.getStudentDni(), note.getSubjectId(),
+						note.getEva1(), note.getEva2(), note.getEva3(), note.getFinal1(), note.getFinal2());
 				return response;
 			}
 		}
-		
+
 	}
 
 	@Override
-	public NoteServiceModel updateNotes(String studentDNI, Integer subjetId, NotePostRequest notePostRequest) throws NotContentException {
-		
-	
-		Note note = noteRepository.findByStudentDniAndSubjectId(studentDNI,subjetId);
+	public NoteServiceModel updateNotes(String studentDNI, Integer subjetId, NotePostRequest notePostRequest)
+			throws NotContentException {
+
+		Note note = noteRepository.findByStudentDniAndSubjectId(studentDNI, subjetId);
 
 		if (note == null) {
 
 			throw new NotContentException("El estudiante ya esta registrado");
 
 		} else {
-			
-			if(notePostRequest.getEva1()!=null) {
+
+			if (notePostRequest.getEva1() != null) {
 				note.setEva1(notePostRequest.getEva1());
 			}
-			if(notePostRequest.getEva2()!=null) {
+			if (notePostRequest.getEva2() != null) {
 				note.setEva2(notePostRequest.getEva2());
 			}
-			if(notePostRequest.getEva3()!=null) {
+			if (notePostRequest.getEva3() != null) {
 				note.setEva3(notePostRequest.getEva3());
 			}
-			if(notePostRequest.getFinal1()!=null) {
-				note.setFinal1(notePostRequest.getFinal1());		
+			if (notePostRequest.getFinal1() != null) {
+				note.setFinal1(notePostRequest.getFinal1());
 			}
-			if(notePostRequest.getFinal2()!=null) {
+			if (notePostRequest.getFinal2() != null) {
 				note.setFinal2(notePostRequest.getFinal2());
 			}
-			
 
 			note = noteRepository.save(note);
-			
-			NoteServiceModel response = new NoteServiceModel(
-					studentDNI,
-					subjetId,
-					note.getEva1(),
-					note.getEva2(),
-					note.getEva3(),
-					note.getFinal1(),
-					note.getFinal2()
-			);
+
+			NoteServiceModel response = new NoteServiceModel(studentDNI, subjetId, note.getEva1(), note.getEva2(),
+					note.getEva3(), note.getFinal1(), note.getFinal2());
 			return response;
 		}
 
@@ -196,10 +199,8 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Integer deleteNotesById(String studentDNI, Integer subjetId) {
-		 Integer response = noteRepository.deleteByStudentDniAndSubjectId(studentDNI, subjetId);
+		Integer response = noteRepository.deleteByStudentDniAndSubjectId(studentDNI, subjetId);
 		return response;
 	}
-
-	
 
 }
