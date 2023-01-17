@@ -2,6 +2,9 @@ package com.grupo5.reto2.absence;
 
 import java.util.Date;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grupo5.reto2.student.Student;
@@ -32,6 +35,7 @@ public class Absence {
 	private String studentDni;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@MapsId("subjectId")
 	@JoinColumn(name = "subjectId", foreignKey=@ForeignKey(name = "fk_subjectAbsence"))
 	@JsonManagedReference

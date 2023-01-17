@@ -49,8 +49,7 @@ public class GradeController {
 			
 		GradeServiceModel response = gradeService.updateGrade(gradeId, gradePostRequest);
 		
-		return new ResponseEntity<GradeServiceModel> (response,HttpStatus.OK);
-		
+		return new ResponseEntity<GradeServiceModel> (response,HttpStatus.OK);	
 	}
 	
 	

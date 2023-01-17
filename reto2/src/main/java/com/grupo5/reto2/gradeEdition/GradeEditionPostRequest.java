@@ -9,8 +9,7 @@ import jakarta.validation.constraints.Pattern;
 public class GradeEditionPostRequest {
 
 	private Integer gradeEditionId;
-	@NotNull(message = "el campo no puede ser nulo")
-	@NotEmpty(message = "el campo no puede estar vacio")
+
 	private Integer gradeId;
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")

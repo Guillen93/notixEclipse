@@ -1,5 +1,8 @@
 package com.grupo5.reto2.note;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.grupo5.reto2.student.Student;
 import com.grupo5.reto2.subject.Subject;
@@ -20,6 +23,7 @@ public class Note {
 	private NoteId id = new NoteId();
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@MapsId("studentDni")
 	@JoinColumn(name = "studentDni", foreignKey = @ForeignKey(name = "fk_studentNote"))
 	//@JsonManagedReference
@@ -29,6 +33,7 @@ public class Note {
 	private String studentDni;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@MapsId("subjectId")
 	@JoinColumn(name = "subjectId", foreignKey = @ForeignKey(name = "fk_subjectNote"))
 	//@JsonManagedReference

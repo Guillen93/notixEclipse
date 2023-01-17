@@ -80,14 +80,14 @@ public class GradeServiceImpl implements GradeService{
 
 	@Override
 	public GradeServiceModel updateGrade(Integer gradeId, GradePostRequest gradePostRequest) throws NotContentException {
-
-		Grade grade = gradeRepository.findById(gradeId).get();
+		 
+		Boolean existe = gradeRepository.existsById(gradeId);
 		
 		
-		if(grade==null) {
+		if(!existe) {
 			throw new NotContentException("No existe el estudiante");
 		} else {
-			
+			Grade grade = gradeRepository.findById(gradeId).get();
 			if(gradePostRequest.getName() != null && gradePostRequest.getName() != "") {
 				grade.setName(gradePostRequest.getName());
 			}

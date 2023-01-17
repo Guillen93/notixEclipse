@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	StudentRepository studentRepository;
+	
+	@Autowired
+	GradeEditionRepository gradeEditionRepository;
 
 	@Override
 	public Iterable<StudentServiceModel> findAllStudents() throws NotContentException {
@@ -160,6 +164,38 @@ public class StudentServiceImpl implements StudentService {
 	public Integer deleteByStudentDni(String studentDNI) {
 
 		return studentRepository.deleteByStudentDni(studentDNI);
+	}
+
+	@Override
+	public Iterable<StudentServiceModel> getStudentsByGradeEdition(Integer GradeEditionId) throws NotContentException {
+		
+		Boolean existeGradeEdition = gradeEditionRepository.existsById(GradeEditionId);
+		
+		if(!existeGradeEdition) {
+			throw new NotContentException("No existe el Grade Edition");
+		}else {
+			
+			Iterable<Student> students =studentRepository.findStudentByPromotionsGradeEditionId(GradeEditionId);
+			
+			List<StudentServiceModel> response = new ArrayList<StudentServiceModel>();
+			
+			for (Student student : students) {
+				response.add(new StudentServiceModel(
+						student.getStudentDni(),
+						student.getName(),
+						student.getSurname(),
+						student.getBornDate().toString(),
+						student.getNationality(),
+						student.getEmail(),
+						student.getPhone(),
+						student.getPhoto()
+						));
+			}
+			
+			return response;
+			
+		}
+	
 	}
 
 }

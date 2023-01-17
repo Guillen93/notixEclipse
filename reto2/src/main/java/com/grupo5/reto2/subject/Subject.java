@@ -3,6 +3,9 @@ package com.grupo5.reto2.subject;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,12 +34,13 @@ public class Subject {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer subjectId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "gradeEdId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private GradeEdition gradeEdition;
-	@Column(name = "gradeEdId", updatable = false, insertable = false)
+	@Column(name = "gradeEdId", updatable = false, insertable = false )
 	private Integer gradeEdId;
 
 	@ManyToOne(fetch = FetchType.LAZY)

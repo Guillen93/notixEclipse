@@ -18,4 +18,7 @@ public interface StudentRepository extends CrudRepository<Student, Integer> {
 	@Transactional
 	@Modifying
 	Integer deleteByStudentDni(String studentDNI);
+	
+	@Transactional
+	Iterable<Student> findStudentByPromotionsGradeEditionId(Integer gradeEditionId);
 }
