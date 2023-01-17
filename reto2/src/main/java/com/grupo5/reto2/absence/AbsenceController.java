@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api")
 public class AbsenceController {
@@ -48,7 +50,7 @@ public class AbsenceController {
 	}
 	
 	@PostMapping("/absences")
-	public ResponseEntity<AbsenceServiceModel> createNote(@RequestBody AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException {
+	public ResponseEntity<AbsenceServiceModel> createNote(@Valid @RequestBody AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException {
 		
 		AbsenceServiceModel response = absenceService.createAbsence(absencePostRequest);
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.CREATED);

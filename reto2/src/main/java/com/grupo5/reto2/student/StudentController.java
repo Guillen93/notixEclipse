@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api")
 public class StudentController {
@@ -39,7 +41,7 @@ public class StudentController {
 	}
 
 	@PostMapping("/students")
-	public ResponseEntity<StudentServiceModel> createStudents(@RequestBody StudentPostRequest studentPostRequest)
+	public ResponseEntity<StudentServiceModel> createStudents(@Valid @RequestBody StudentPostRequest studentPostRequest)
 			throws ConflictException, NotContentException {
 		StudentServiceModel response = studentService.createStudent(studentPostRequest);
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.CREATED);

@@ -1,21 +1,34 @@
 package com.grupo5.reto2.grade;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class GradePostRequest {
 
+
 	private Integer gradeId;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private String name;
+	@Pattern(regexp = "IN|ES", message = "idioma invalido[IN | ES]")
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private String language;
-	
+
 	public GradePostRequest() {
 		super();
 	}
-	
-	public GradePostRequest(Integer gradeId, String name, String language) {
+
+	public GradePostRequest(Integer gradeId,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") String name,
+			@Pattern(regexp = "IN|ES", message = "idioma invalido[IN | ES]") @NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") String language) {
 		super();
 		this.gradeId = gradeId;
 		this.name = name;
 		this.language = language;
 	}
+
 
 	public GradePostRequest(String name, String language) {
 		super();
@@ -51,5 +64,5 @@ public class GradePostRequest {
 	public String toString() {
 		return "GradePostRequest [gradeId=" + gradeId + ", name=" + name + ", language=" + language + "]";
 	}
-	
+
 }

@@ -1,25 +1,55 @@
 package com.grupo5.reto2.note;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class NotePostRequest {
 
 	private NoteId id;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
+	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]")
 	private String studentDni;
+	@NotNull(message = "el campo no puede ser nulo")
 	private Integer subjectId;
+	@NotNull(message = "el campo no puede ser nulo")
+	@Min(0)
+	@Max(10)
 	private Float eva1;
+	@NotNull(message = "el campo no puede ser nulo")
+	@Min(0)
+	@Max(10)
 	private Float eva2;
+	@NotNull(message = "el campo no puede ser nulo")
+	@Min(0)
+	@Max(10)
 	private Float eva3;
+	@NotNull(message = "el campo no puede ser nulo")
+	@Min(0)
+	@Max(10)
 	private Integer final1;
+	@NotNull(message = "el campo no puede ser nulo")
+	@Min(0)
+	@Max(10)
 	private Integer final2;
 
 	public NotePostRequest() {
 		super();
 	}
 
-	public NotePostRequest(String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3, Integer final1,
-			Integer final2) {
+	public NotePostRequest(NoteId id,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]") String studentDni,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer subjectId,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Float eva1,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Float eva2,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Float eva3,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer final1,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer final2) {
 		super();
-
+		this.id = id;
 		this.studentDni = studentDni;
 		this.subjectId = subjectId;
 		this.eva1 = eva1;
@@ -29,8 +59,6 @@ public class NotePostRequest {
 		this.final2 = final2;
 	}
 
-	
-
 	public String getStudentDni() {
 		return studentDni;
 	}
@@ -39,7 +67,6 @@ public class NotePostRequest {
 		this.studentDni = studentDni;
 	}
 
-	
 	public Integer getSubjectId() {
 		return subjectId;
 	}
@@ -95,7 +122,5 @@ public class NotePostRequest {
 	public void setId(NoteId id) {
 		this.id = id;
 	}
-
-	
 
 }

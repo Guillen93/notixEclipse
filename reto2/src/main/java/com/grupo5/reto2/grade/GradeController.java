@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("api")
@@ -37,7 +39,7 @@ public class GradeController {
 	}
 	
 	@PostMapping("/grades")
-	public ResponseEntity<GradeServiceModel> createGrade(@RequestBody GradePostRequest gradePostRequest) throws ConflictException {
+	public ResponseEntity<GradeServiceModel> createGrade(@Valid @RequestBody GradePostRequest gradePostRequest) throws ConflictException {
 		GradeServiceModel response = gradeService.createGrade(gradePostRequest);
 		return new ResponseEntity<GradeServiceModel>(response, HttpStatus.CREATED);
 	}

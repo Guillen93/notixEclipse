@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api")
 public class NoteController {
@@ -53,7 +55,7 @@ public class NoteController {
 	}
 
 	@PostMapping("/notes")
-	public ResponseEntity<NoteServiceModel> createNote(@RequestBody NotePostRequest notePostRequest) throws ConflictException, NotContentException {
+	public ResponseEntity<NoteServiceModel> createNote(@Valid @RequestBody NotePostRequest notePostRequest) throws ConflictException, NotContentException {
 		
 		NoteServiceModel response = noteService.createNotes(notePostRequest);
 		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.CREATED);

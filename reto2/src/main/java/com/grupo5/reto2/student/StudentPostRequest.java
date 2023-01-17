@@ -2,23 +2,52 @@ package com.grupo5.reto2.student;
 
 import java.util.Date;
 
-public class StudentPostRequest {
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
+public class StudentPostRequest {
+	
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
+	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]", message = "Formato DNI incorrecto")
 	private String studentDni;
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
 	private String name;
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
 	private String surname;
+
+	
 	private Date bornDate;
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
 	private String nationality;
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
 	private String email;
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
 	private String phone;
+	@NotNull(message = "Campo no nulo")
+	@NotEmpty(message = "Campo no puede ser vacio")
 	private String photo;
 
 	public StudentPostRequest() {
 		super();
 	}
 
-	public StudentPostRequest(String studentDni, String name, String surname, Date bornDate, String nationality,
-			String email, String phone, String photo) {
+
+
+	public StudentPostRequest(
+			@NotNull @NotEmpty @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]", message = "Formato DNI incorrecto") String studentDni,
+			@NotNull(message = "Campo no nulo") @NotEmpty String name,
+			@NotNull(message = "Campo no nulo") @NotEmpty String surname, Date bornDate,
+			@NotNull(message = "Campo no nulo") @NotEmpty String nationality,
+			@NotNull(message = "Campo no nulo") @NotEmpty String email,
+			@NotNull(message = "Campo no nulo") @NotEmpty String phone,
+			@NotNull(message = "Campo no nulo") @NotEmpty String photo) {
 		super();
 		this.studentDni = studentDni;
 		this.name = name;
@@ -29,6 +58,8 @@ public class StudentPostRequest {
 		this.phone = phone;
 		this.photo = photo;
 	}
+
+
 
 	public String getStudentDni() {
 		return studentDni;

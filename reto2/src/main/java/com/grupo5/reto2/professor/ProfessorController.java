@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api")
 public class ProfessorController {
@@ -34,7 +36,7 @@ public class ProfessorController {
 	}
 
 	@PostMapping("/professors")
-	public ResponseEntity<ProfessorResponse> createProfessor(@RequestBody ProfessorRequest professorRequest)
+	public ResponseEntity<ProfessorResponse> createProfessor(@Valid @RequestBody ProfessorRequest professorRequest)
 			throws ConflictException {
 
 		ProfessorResponse response = professorService.createProfessor(professorRequest);
