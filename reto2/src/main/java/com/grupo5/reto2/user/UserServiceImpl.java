@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			Boolean response = userRepository.existsByDni(user.getDni());
 
 			if (response) {
-				throw new ConflictException("No existe el usuario");
+				throw new ConflictException("Ya existe el usuario");
 			} else {
 				
 			
