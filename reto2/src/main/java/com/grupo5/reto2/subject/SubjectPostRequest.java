@@ -1,12 +1,26 @@
 package com.grupo5.reto2.subject;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class SubjectPostRequest {
 
 	private Integer subjectId;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private Integer gradeEditionId;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
+	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]")
 	private String professorDni;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private String name;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private Integer duration;
+	
 	public SubjectPostRequest() {
 		super();
 	}

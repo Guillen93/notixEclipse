@@ -16,6 +16,9 @@ public interface NoteRepository extends CrudRepository<Note,NoteId> {
 	
 	@Transactional
 	Note findByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
+	
+	@Transactional
+	Iterable<Note> findBySubjectId(@Param("SubjectId") Integer subjectId);
 
 	
 	@Transactional

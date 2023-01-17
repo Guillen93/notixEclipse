@@ -19,6 +19,7 @@ import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.role.Rol;
 import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.role.RoleRepository;
+import com.grupo5.reto2.security.HashPasswordEncoder;
 
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		Iterable<User> users = userRepository.findAll();
 		List<UserServiceModel> response = new ArrayList<UserServiceModel>();
 
-		if (users == null || users.iterator().hasNext()==false) {
+		if (users == null || users.iterator().hasNext() == false) {
 			throw new NotContentException("No hay usuarios ");
 		}
 
@@ -69,10 +70,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User signUp(User user) throws UserException, ConflictException {
 		try {
 
-			if (userRepository.findByDni(user.getDni()).get() != null) {
-				throw new NoSuchElementException("el usuario ya existe");
+//			if (userRepository.findByDni(user.getDni()).get() != null) {
+//				throw new NoSuchElementException("el usuario ya existe");
+//			} else {
+//				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//				String password = passwordEncoder.encode(user.getPassword());
+//				user.setPassword(password);
+
+			Boolean response = userRepository.existsByDni(user.getDni());
+
+			if (response) {
+				throw new ConflictException("Ya existe el usuario");
 			} else {
-				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
 				String password = passwordEncoder.encode(user.getPassword());
 				user.setPassword(password);
 
@@ -93,7 +104,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		} catch (NoSuchElementException e) {
 			throw new ConflictException("el usuario ya existe");
 		}
-		
 
 	}
 

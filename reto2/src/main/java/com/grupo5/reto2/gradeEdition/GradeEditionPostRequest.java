@@ -2,27 +2,43 @@ package com.grupo5.reto2.gradeEdition;
 
 import java.sql.Date;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class GradeEditionPostRequest {
-	
+
 	private Integer gradeEditionId;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private Integer gradeId;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
+	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]")
 	private String tutorDni;
+
 	private Date fecha;
-	
+
 	public GradeEditionPostRequest() {
 		super();
 	}
-	
-	public GradeEditionPostRequest(Integer gradeId, String tutorDni, Date fecha) {
+
+	public GradeEditionPostRequest(
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer gradeId,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]") String tutorDni,
+			Date fecha) {
 		super();
 		this.gradeId = gradeId;
 		this.tutorDni = tutorDni;
 		this.fecha = fecha;
 	}
 
-	public GradeEditionPostRequest(Integer gradeEdId, Integer gradeId, String tutorDni, Date fecha) {
+	public GradeEditionPostRequest(Integer gradeEditionId,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer gradeId,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]") String tutorDni,
+			Date fecha) {
 		super();
-		this.gradeEditionId = gradeEdId;
+		this.gradeEditionId = gradeEditionId;
 		this.gradeId = gradeId;
 		this.tutorDni = tutorDni;
 		this.fecha = fecha;
@@ -62,8 +78,8 @@ public class GradeEditionPostRequest {
 
 	@Override
 	public String toString() {
-		return "GradeEditionPostRequest [gradeEdId=" + gradeEditionId + ", gradeId=" + gradeId + ", tutorDni=" + tutorDni
-				+ ", fecha=" + fecha + "]";
+		return "GradeEditionPostRequest [gradeEdId=" + gradeEditionId + ", gradeId=" + gradeId + ", tutorDni="
+				+ tutorDni + ", fecha=" + fecha + "]";
 	}
 
 }

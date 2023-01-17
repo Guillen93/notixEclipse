@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("api")
@@ -59,7 +61,7 @@ public class SubjectController {
 	
 	
 	@PostMapping("/subjects")
-	public ResponseEntity<SubjectServiceModel> createSubject(@RequestBody SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException {
+	public ResponseEntity<SubjectServiceModel> createSubject(@Valid @RequestBody SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException {
 
 		SubjectServiceModel response = subjectService.createSubject(subjectPostRequest);
 

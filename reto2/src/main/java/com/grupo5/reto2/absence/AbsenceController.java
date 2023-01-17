@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api")
 public class AbsenceController {
@@ -24,13 +26,13 @@ public class AbsenceController {
 	@Autowired
 	AbsenceService absenceService;
 
-	@GetMapping("/absence")
+	@GetMapping("/absences")
 	public ResponseEntity<Iterable<AbsenceServiceModel>> getAbsence() throws NotContentException {
 		Iterable<AbsenceServiceModel> response = absenceService.getAllAbsences();
 		return new ResponseEntity<Iterable<AbsenceServiceModel>>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/absence/{studentDNI}")
+	@GetMapping("/absences/{studentDNI}")
 	public ResponseEntity<Iterable<AbsenceServiceModel>> getAbsenceByStudentDni(@PathVariable String studentDNI)
 			throws NotContentException {
 
@@ -38,7 +40,7 @@ public class AbsenceController {
 		return new ResponseEntity<Iterable<AbsenceServiceModel>>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/absence/{studentDNI}/{subjetId}")
+	@GetMapping("/absences/{studentDNI}/{subjetId}")
 	public ResponseEntity<AbsenceServiceModel> getNote(@PathVariable String studentDNI, @PathVariable Integer subjetId)
 			throws NotContentException {
 
@@ -47,14 +49,14 @@ public class AbsenceController {
 
 	}
 	
-	@PostMapping("/absence")
-	public ResponseEntity<AbsenceServiceModel> createNote(@RequestBody AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException {
+	@PostMapping("/absences")
+	public ResponseEntity<AbsenceServiceModel> createNote(@Valid @RequestBody AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException {
 		
 		AbsenceServiceModel response = absenceService.createAbsence(absencePostRequest);
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/absence/{studentDNI}/{subjetId}/{dateString}")
+	@PutMapping("/absences/{studentDNI}/{subjetId}/{dateString}")
 	public ResponseEntity<AbsenceServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI , @PathVariable Integer subjetId,@PathVariable String dateString, @RequestBody AbsencePostRequest absencePostRequest  ) throws NotContentException{
 
 		
@@ -63,7 +65,7 @@ public class AbsenceController {
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/absence/{studentDNI}/{subjetId}/{dateString}")
+	@DeleteMapping("/absences/{studentDNI}/{subjetId}/{dateString}")
 	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI,
 			@PathVariable Integer subjetId,@PathVariable String dateString) throws NotContentException {
 		Date date=Date.valueOf(dateString);

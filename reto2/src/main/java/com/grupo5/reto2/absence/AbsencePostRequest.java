@@ -2,19 +2,36 @@ package com.grupo5.reto2.absence;
 
 import java.util.Date;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class AbsencePostRequest {
 
 	private AbsenceId id = new AbsenceId();
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
+	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]")
 	private String studentDni;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private Integer subjectId;
+
 	private Date foul;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private boolean justified = false;
 
 	public AbsencePostRequest() {
 		super();
 	}
 
-	public AbsencePostRequest(AbsenceId id, String studentDni, Integer subjectId, Date foul, boolean justified) {
+
+	public AbsencePostRequest(AbsenceId id,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]") String studentDni,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer subjectId,
+			Date foul,
+			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") boolean justified) {
 		super();
 		this.id = id;
 		this.studentDni = studentDni;
@@ -22,6 +39,7 @@ public class AbsencePostRequest {
 		this.foul = foul;
 		this.justified = justified;
 	}
+
 
 	public AbsenceId getId() {
 		return id;
