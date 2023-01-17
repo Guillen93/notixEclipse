@@ -1,13 +1,11 @@
 package com.grupo5.reto2.student;
 
-import java.util.Date;
-
 public class StudentServiceModel {
 
 	private String studentDni;
 	private String name;
 	private String surname;
-	private Date bornDate;
+	private String bornDate;
 	private String nationality;
 	private String email;
 	private String phone;
@@ -17,7 +15,7 @@ public class StudentServiceModel {
 		super();
 	}
 
-	public StudentServiceModel(String studentDni, String name, String surname, Date bornDate, String nationality,
+	public StudentServiceModel(String studentDni, String name, String surname, String bornDate, String nationality,
 			String email, String phone, String photo) {
 		super();
 		this.studentDni = studentDni;
@@ -54,11 +52,11 @@ public class StudentServiceModel {
 		this.surname = surname;
 	}
 
-	public Date getBornDate() {
+	public String getBornDate() {
 		return bornDate;
 	}
 
-	public void setBornDate(Date bornDate) {
+	public void setBornDate(String bornDate) {
 		this.bornDate = bornDate;
 	}
 

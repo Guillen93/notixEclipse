@@ -42,7 +42,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 					absence.getId(), 
 					absence.getStudentDni(),
 					absence.getSubjectId(),
-					absence.getFoul(),
+					absence.getFoul().toString(),
 					absence.isJustified()
 					
 					));
@@ -67,7 +67,7 @@ public class AbsenceServiceImpl implements AbsenceService {
                     		absence.getId(), 
         					absence.getStudentDni(),
         					absence.getSubjectId(),
-        					absence.getFoul(),
+        					absence.getFoul().toString(),
         					absence.isJustified()
                             )
                      );
@@ -88,7 +88,7 @@ public class AbsenceServiceImpl implements AbsenceService {
             		absence.getId(), 
 					absence.getStudentDni(),
 					absence.getSubjectId(),
-					absence.getFoul(),
+					absence.getFoul().toString(),
 					absence.isJustified()
                     );
              
@@ -118,7 +118,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 						absencePostRequest.getStudentDni(),
 						subject,
 						absencePostRequest.getSubjectId(),
-						absencePostRequest.getFoul(),
+						Date.valueOf(absencePostRequest.getFoul()),
 						absencePostRequest.isJustified()
 						);
 
@@ -128,7 +128,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 						absence.getId(), 
 						absence.getStudentDni(),
 						absence.getSubjectId(),
-						absence.getFoul(),
+						absence.getFoul().toString(),
 						absence.isJustified()
 				);
 				return response;
@@ -150,7 +150,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		} else {
 			
 			if(absencePostRequest.getFoul()!=null) {
-				absence.setFoul(absencePostRequest.getFoul());
+				absence.setFoul(Date.valueOf(absencePostRequest.getFoul()));
 			}
 			if(absencePostRequest.isJustified() != absence.isJustified()) {
 				if(absencePostRequest.isJustified()==true) {
@@ -168,7 +168,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 					absence.getId(), 
 					studentDni,
 					subjectId,
-					absence.getFoul(),
+					absence.getFoul().toString(),
 					absence.isJustified()
 			);
 			return response;

@@ -1,6 +1,5 @@
 package com.grupo5.reto2.student;
 
-import java.util.Date;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,8 +19,10 @@ public class StudentPostRequest {
 	@NotNull(message = "Campo no nulo")
 	@NotEmpty(message = "Campo no puede ser vacio")
 	private String surname;
-
-	private Date bornDate;
+	@Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
+	private String bornDate;
 	@NotNull(message = "Campo no nulo")
 	@NotEmpty(message = "Campo no puede ser vacio")
 	private String nationality;
@@ -42,25 +43,7 @@ public class StudentPostRequest {
 		super();
 	}
 
-	public StudentPostRequest(
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]", message = "Formato DNI incorrecto") String studentDni,
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") String name,
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") String surname,
-			Date bornDate,
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") String nationality,
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") String email,
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") @Pattern(regexp = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]", message = "Formato telefono incorrecto") @Size(max = 9, min = 9) String phone,
-			@NotNull(message = "Campo no nulo") @NotEmpty(message = "Campo no puede ser vacio") String photo) {
-		super();
-		this.studentDni = studentDni;
-		this.name = name;
-		this.surname = surname;
-		this.bornDate = bornDate;
-		this.nationality = nationality;
-		this.email = email;
-		this.phone = phone;
-		this.photo = photo;
-	}
+
 
 	public String getStudentDni() {
 		return studentDni;
@@ -86,11 +69,11 @@ public class StudentPostRequest {
 		this.surname = surname;
 	}
 
-	public Date getBornDate() {
+	public String getBornDate() {
 		return bornDate;
 	}
 
-	public void setBornDate(Date bornDate) {
+	public void setBornDate(String bornDate) {
 		this.bornDate = bornDate;
 	}
 

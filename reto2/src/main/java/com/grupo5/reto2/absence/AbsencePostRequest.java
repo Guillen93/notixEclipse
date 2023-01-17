@@ -1,7 +1,5 @@
 package com.grupo5.reto2.absence;
 
-import java.util.Date;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -14,23 +12,23 @@ public class AbsencePostRequest {
 	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]")
 	private String studentDni;
 	@NotNull(message = "el campo no puede ser nulo")
-	@NotEmpty(message = "el campo no puede estar vacio")
 	private Integer subjectId;
-
-	private Date foul;
+	@Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
+	private String foul;
+	
+	
 	private boolean justified = false;
 
 	public AbsencePostRequest() {
 		super();
 	}
 
-
 	public AbsencePostRequest(AbsenceId id,
 			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") @Pattern(regexp = "[0-9]{7,8}[A-Z a-z]") String studentDni,
 			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") Integer subjectId,
-			Date foul,
+			@Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))") @NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") String foul,
 			@NotNull(message = "el campo no puede ser nulo") @NotEmpty(message = "el campo no puede estar vacio") boolean justified) {
 		super();
 		this.id = id;
@@ -39,7 +37,6 @@ public class AbsencePostRequest {
 		this.foul = foul;
 		this.justified = justified;
 	}
-
 
 	public AbsenceId getId() {
 		return id;
@@ -65,11 +62,11 @@ public class AbsencePostRequest {
 		this.subjectId = subjectId;
 	}
 
-	public Date getFoul() {
+	public String getFoul() {
 		return foul;
 	}
 
-	public void setFoul(Date foul) {
+	public void setFoul(String foul) {
 		this.foul = foul;
 	}
 
@@ -86,5 +83,8 @@ public class AbsencePostRequest {
 		return "AbsencePostRequest [id=" + id + ", studentDni=" + studentDni + ", subjectId=" + subjectId + ", foul="
 				+ foul + ", justified=" + justified + "]";
 	}
+
+
+
 
 }

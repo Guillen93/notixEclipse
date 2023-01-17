@@ -1,19 +1,17 @@
 package com.grupo5.reto2.gradeEdition;
 
-import java.sql.Date;
-
 public class GradeEditionServiceModel {
 	
 	private Integer gradeEditionId;
 	private Integer gradeId;
 	private String tutorDni;
-	private Date fecha;
+	private String fecha;
 	
 	public GradeEditionServiceModel() {
 		super();
 	}
 	
-	public GradeEditionServiceModel(Integer gradeEdId, Integer gradeId, String tutorDni, Date date) {
+	public GradeEditionServiceModel(Integer gradeEdId, Integer gradeId, String tutorDni, String date) {
 		super();
 		this.gradeEditionId = gradeEdId;
 		this.gradeId = gradeId;
@@ -45,11 +43,11 @@ public class GradeEditionServiceModel {
 		this.tutorDni = tutorDni;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

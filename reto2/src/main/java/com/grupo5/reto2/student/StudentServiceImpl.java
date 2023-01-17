@@ -1,5 +1,6 @@
 package com.grupo5.reto2.student;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
 					student.getStudentDni(),
 					student.getName(),
 					student.getSurname(),
-					student.getBornDate(),
+					student.getBornDate().toString(),
 					student.getNationality(),
 					student.getEmail(),
 					student.getPhone(),
@@ -53,7 +54,7 @@ public class StudentServiceImpl implements StudentService {
 					student.getStudentDni(),
 					student.getName(),
 					student.getSurname(),
-					student.getBornDate(),
+					student.getBornDate().toString(),
 					student.getNationality(),
 					student.getEmail(),
 					student.getPhone(),
@@ -78,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
 					studentPostRequest.getStudentDni(),
 					studentPostRequest.getName(),
 					studentPostRequest.getSurname(),
-					studentPostRequest.getBornDate(),
+					Date.valueOf(studentPostRequest.getBornDate()),
 					studentPostRequest.getNationality(),
 					studentPostRequest.getEmail(),
 					studentPostRequest.getPhone(),
@@ -91,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
 					student.getStudentDni(),
 					student.getName(),
 					student.getSurname(),
-					student.getBornDate(),
+					student.getBornDate().toString(),
 					student.getNationality(),
 					student.getEmail(),
 					student.getPhone(),
@@ -122,7 +123,7 @@ public class StudentServiceImpl implements StudentService {
 				student.setSurname(studentPostRequest.getSurname());
 			}
 			if (studentPostRequest.getBornDate() != null) {
-				student.setBornDate(studentPostRequest.getBornDate());
+				student.setBornDate(Date.valueOf(studentPostRequest.getBornDate()));
 			}
 			if (studentPostRequest.getNationality() != null) {
 				student.setNationality(studentPostRequest.getNationality());
@@ -143,7 +144,7 @@ public class StudentServiceImpl implements StudentService {
 					studentDNI,
 					student.getName(),
 					student.getSurname(),
-					student.getBornDate(),
+					student.getBornDate().toString(),
 					student.getNationality(),
 					student.getEmail(),
 					student.getPhone(),

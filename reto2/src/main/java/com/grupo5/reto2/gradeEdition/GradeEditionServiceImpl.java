@@ -1,5 +1,6 @@
 package com.grupo5.reto2.gradeEdition;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 					gradeEdition.getGradeEdId(),
 					gradeEdition.getGradeId(),
 					gradeEdition.getTutorDni(),
-					gradeEdition.getFecha()
+					gradeEdition.getFecha().toString()
 					));
 		}
 		return response;
@@ -57,7 +58,7 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 				gradeEdition.getGradeEdId(),
 				gradeEdition.getGradeId(),
 				gradeEdition.getTutorDni(),
-				gradeEdition.getFecha()
+				gradeEdition.getFecha().toString()
 				);
 
 		return response;
@@ -85,7 +86,8 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 					gradeEditionPostRequest.getGradeId(),
 					professor,
 					gradeEditionPostRequest.getTutorDni(),
-					gradeEditionPostRequest.getFecha()
+					Date.valueOf(gradeEditionPostRequest.getFecha())
+					
 					);
 
 			gradeEditionRepository.save(gradeEdition);
@@ -94,11 +96,10 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 					gradeEdition.getGradeEdId(),
 					gradeEdition.getGradeId(),
 					gradeEdition.getTutorDni(),
-					gradeEdition.getFecha()
+					gradeEdition.getFecha().toString()
 					);
 
 			return response;
-
 		}
 	}
 
@@ -119,7 +120,7 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 				gradeEdition.setTutorDni(gradeEditionPostRequest.getTutorDni());
 			}
 			if (gradeEditionPostRequest.getFecha() != null) {
-				gradeEdition.setFecha(gradeEditionPostRequest.getFecha());
+				gradeEdition.setFecha(Date.valueOf(gradeEditionPostRequest.getFecha()));
 			}
 
 			gradeEdition = gradeEditionRepository.save(gradeEdition);
@@ -128,7 +129,7 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 					gradeEditionId,
 					gradeEdition.getGradeId(),
 					gradeEdition.getTutorDni(),
-					gradeEdition.getFecha()
+					gradeEdition.getFecha().toString()
 					);
 
 			return response;
