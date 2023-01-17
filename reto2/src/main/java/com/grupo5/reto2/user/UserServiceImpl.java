@@ -70,16 +70,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User signUp(User user) throws UserException, ConflictException {
 		try {
 
-			if (userRepository.findByDni(user.getDni()).get() != null) {
-				throw new NoSuchElementException("el usuario ya existe");
-			} else {
-				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-				String password = passwordEncoder.encode(user.getPassword());
-				user.setPassword(password);
-				
-//				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+//			if (userRepository.findByDni(user.getDni()).get() != null) {
+//				throw new NoSuchElementException("el usuario ya existe");
+//			} else {
+//				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //				String password = passwordEncoder.encode(user.getPassword());
 //				user.setPassword(password);
+				
+			Boolean response = userRepository.existsByDni(user.getDni());
+
+			if (response) {
+				throw new ConflictException("No existe el usuario");
+			} else {
+				
+			
+				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+				String password = passwordEncoder.encode(user.getPassword());
+				user.setPassword(password);
 
 				Role userRole = roleRepository.findByRole(Rol.Student.name()).get();
 				Set<Role> roles = new HashSet<Role>();
