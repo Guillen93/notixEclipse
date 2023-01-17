@@ -19,6 +19,7 @@ import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.role.Rol;
 import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.role.RoleRepository;
+import com.grupo5.reto2.security.HashPasswordEncoder;
 
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -75,6 +76,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 				String password = passwordEncoder.encode(user.getPassword());
 				user.setPassword(password);
+				
+//				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+//				String password = passwordEncoder.encode(user.getPassword());
+//				user.setPassword(password);
 
 				Role userRole = roleRepository.findByRole(Rol.Student.name()).get();
 				Set<Role> roles = new HashSet<Role>();
