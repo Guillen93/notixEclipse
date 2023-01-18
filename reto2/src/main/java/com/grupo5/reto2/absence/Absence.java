@@ -15,6 +15,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -44,7 +45,8 @@ public class Absence {
 	@Column(name = "subjectId", updatable = false, insertable = false)
 	private Integer subjectId;
 	
-	@Column()
+	@MapsId("foul")
+	@JoinColumn(name = "foul", foreignKey=@ForeignKey(name = "fk_foulAbsence"))
 	private Date foul;
 	
 	@Column()
@@ -54,15 +56,36 @@ public class Absence {
 		super();
 	}
 	
-	public Absence(Student student, String studentDni, Subject subject, Integer subjectId, Date foul,
+
+	
+	public Absence(AbsenceId id, Student student, String studentDni, Subject subject, Integer subjectId,
+			boolean justified) {
+		super();
+		this.id = id;
+		this.student = student;
+		this.studentDni = studentDni;
+		this.subject = subject;
+		this.subjectId = subjectId;
+		this.justified = justified;
+	}
+
+
+
+	public Absence(Student student, String studentDni, Subject subject, Integer subjectId,
 			boolean justified) {
 		super();
 		this.student = student;
 		this.studentDni = studentDni;
 		this.subject = subject;
 		this.subjectId = subjectId;
-		this.foul = foul;
 		this.justified = justified;
+	}
+
+
+
+	public Absence(Object setId, Student student2, String studentDni2, Subject subject2, Integer subjectId2,
+			boolean justified2) {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -107,13 +130,7 @@ public class Absence {
 		this.subjectId = subjectId;
 	}
 
-	public Date getFoul() {
-		return foul;
-	}
 
-	public void setFoul(Date foul) {
-		this.foul = foul;
-	}
 
 	public boolean isJustified() {
 		return justified;
@@ -126,7 +143,7 @@ public class Absence {
 	@Override
 	public String toString() {
 		return "Absence [student=" + student + ", studentDni=" + studentDni + ", subject=" + subject + ", subjectId="
-				+ subjectId + ", foul=" + foul + ", justified=" + justified + "]";
+				+ subjectId + ", foul=" +/* foul +*/ ", justified=" + justified + "]";
 	}
 
 	

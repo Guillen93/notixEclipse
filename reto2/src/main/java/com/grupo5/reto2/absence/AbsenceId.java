@@ -1,6 +1,7 @@
 package com.grupo5.reto2.absence;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import jakarta.persistence.Embeddable;
 
@@ -11,15 +12,17 @@ public class AbsenceId implements Serializable {
 
 	private String studentDni;
 	private Integer subjectId;
-	
+	private Date foul;
+
 	public AbsenceId() {
 		super();
 	}
 
-	public AbsenceId(String studentDni, Integer subjectId) {
+	public AbsenceId(String studentDni, Integer subjectId, Date foul) {
 		super();
 		this.studentDni = studentDni;
 		this.subjectId = subjectId;
+		this.foul = foul;
 	}
 
 	public String getStudentDni() {
@@ -38,10 +41,17 @@ public class AbsenceId implements Serializable {
 		this.subjectId = subjectId;
 	}
 
+	public Date getFoul() {
+		return foul;
+	}
+
+	public void setFoul(Date foul) {
+		this.foul = foul;
+	}
+
 	@Override
 	public String toString() {
 		return "AbsenceId [studentDni=" + studentDni + ", subjectId=" + subjectId + "]";
 	}
-	
-	
+
 }

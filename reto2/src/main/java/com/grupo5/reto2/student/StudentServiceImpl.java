@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
 import com.grupo5.reto2.professor.Professor;
 import com.grupo5.reto2.professor.ProfessorRepository;
@@ -175,20 +176,22 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Iterable<StudentServiceModel> getStudentsByGradeEdition(Integer GradeEditionId) throws NotContentException {
+	public Iterable<PromotionServiceModel> getStudentsByGradeEdition(Integer GradeEditionId) throws NotContentException {
 		
-		Boolean existeGradeEdition = gradeEditionRepository.existsById(GradeEditionId);
+		GradeEdition gradeEdition = gradeEditionRepository.findByGradeEditionId(GradeEditionId);
 		
-		if(!existeGradeEdition) {
+		if(gradeEdition==null) {
 			throw new NotContentException("No existe el Grade Edition");
 		}else {
 			
 			Iterable<Student> students =studentRepository.findStudentByPromotionsGradeEditionId(GradeEditionId);
 			
-			List<StudentServiceModel> response = new ArrayList<StudentServiceModel>();
+			List<PromotionServiceModel> response = new ArrayList<PromotionServiceModel>();
+			
+			
 			
 			for (Student student : students) {
-				response.add(new StudentServiceModel(
+				response.add(new PromotionServiceModel(
 						student.getStudentDni(),
 						student.getName(),
 						student.getSurname(),
@@ -196,7 +199,8 @@ public class StudentServiceImpl implements StudentService {
 						student.getNationality(),
 						student.getEmail(),
 						student.getPhone(),
-						student.getPhoto()
+						student.getPhoto(),
+						gradeEdition.getFecha().toString()
 						));
 			}
 			

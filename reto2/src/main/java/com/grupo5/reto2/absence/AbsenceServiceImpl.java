@@ -42,7 +42,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 					absence.getId(), 
 					absence.getStudentDni(),
 					absence.getSubjectId(),
-					absence.getFoul().toString(),
+					absence.getId().getFoul().toString(),
 					absence.isJustified()
 					
 					));
@@ -67,7 +67,7 @@ public class AbsenceServiceImpl implements AbsenceService {
                     		absence.getId(), 
         					absence.getStudentDni(),
         					absence.getSubjectId(),
-        					absence.getFoul().toString(),
+        					absence.getId().getFoul().toString(),
         					absence.isJustified()
                             )
                      );
@@ -88,7 +88,7 @@ public class AbsenceServiceImpl implements AbsenceService {
             		absence.getId(), 
 					absence.getStudentDni(),
 					absence.getSubjectId(),
-					absence.getFoul().toString(),
+					absence.getId().getFoul().toString(),
 					absence.isJustified()
                     );
              
@@ -109,16 +109,23 @@ public class AbsenceServiceImpl implements AbsenceService {
 			Absence absence = absenceRepository.findByStudentDniAndSubjectId(absencePostRequest.getStudentDni(),absencePostRequest.getSubjectId());
 			if (absence != null) {
 
-				throw new ConflictException("El estudiante ya esta registrado");
+				throw new ConflictException("La falta ya esta registrado");
 
 			} else {
 
+				AbsenceId absenceId = new AbsenceId();
+				
+				absenceId.setStudentDni(absencePostRequest.getStudentDni());
+				absenceId.setSubjectId(absencePostRequest.getSubjectId());
+				absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
+				
+				
 				absence = new Absence(
+						absence,
 						student,
 						absencePostRequest.getStudentDni(),
 						subject,
 						absencePostRequest.getSubjectId(),
-						Date.valueOf(absencePostRequest.getFoul()),
 						absencePostRequest.isJustified()
 						);
 
@@ -128,7 +135,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 						absence.getId(), 
 						absence.getStudentDni(),
 						absence.getSubjectId(),
-						absence.getFoul().toString(),
+						absence.getId().getFoul().toString(),
 						absence.isJustified()
 				);
 				return response;
@@ -141,7 +148,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 			AbsencePostRequest absencePostRequest) throws NotContentException {
 		
 		Date date=Date.valueOf(dateString);
-		Absence absence = absenceRepository.findByStudentDniAndSubjectIdAndFoul(studentDni,subjectId,date);
+		Absence absence = absenceRepository.findByStudentDniAndSubjectId(studentDni,subjectId);
 
 		if (absence == null) {
 
@@ -150,7 +157,13 @@ public class AbsenceServiceImpl implements AbsenceService {
 		} else {
 			
 			if(absencePostRequest.getFoul()!=null) {
-				absence.setFoul(Date.valueOf(absencePostRequest.getFoul()));
+			//	absence.setId(Date.valueOf(absencePostRequest.getFoul()));
+				AbsenceId absenceId = new AbsenceId();
+				
+				absenceId.setStudentDni(studentDni);
+				absenceId.setSubjectId(subjectId);
+				absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
+				absence.setId(absenceId);
 			}
 			if(absencePostRequest.isJustified() != absence.isJustified()) {
 				if(absencePostRequest.isJustified()==true) {
@@ -168,7 +181,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 					absence.getId(), 
 					studentDni,
 					subjectId,
-					absence.getFoul().toString(),
+					absence.getId().getFoul().toString(),
 					absence.isJustified()
 			);
 			return response;
