@@ -48,7 +48,7 @@ public class User implements UserDetails {
 				name = "roleId", referencedColumnName = "roleId", foreignKey = @ForeignKey(name = "fk_roleId")
 		)
 	)
-	private Set<Role> roles = new HashSet<>();
+	private List<Role> roles;
 	
 	public User() {
 		super();
@@ -60,7 +60,7 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public User(String dni, String password, boolean isEnabled, Set<Role> roles) {
+	public User(String dni, String password, boolean isEnabled, List<Role> roles) {
 		super();
 		this.dni = dni;
 		this.password = password;
@@ -80,11 +80,11 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setRoles(List<Role> roles2) {
+		this.roles = roles2;
 	}
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;

@@ -37,7 +37,7 @@ public class ProfessorController {
 
 	@PostMapping("/professors")
 	public ResponseEntity<ProfessorResponse> createProfessor(@Valid @RequestBody ProfessorRequest professorRequest)
-			throws ConflictException {
+			throws ConflictException, NotContentException {
 
 		ProfessorResponse response = professorService.createProfessor(professorRequest);
 		return new ResponseEntity<ProfessorResponse>(response, HttpStatus.CREATED);

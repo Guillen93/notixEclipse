@@ -21,6 +21,12 @@ public class Role {
 		super();
 	}
 	
+	public Role( String role) {
+		super();
+		this.role = role;
+	}
+
+	
 	public Role(Integer roleID, String role) {
 		super();
 		this.roleID = roleID;

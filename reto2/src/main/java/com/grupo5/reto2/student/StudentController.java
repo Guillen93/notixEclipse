@@ -1,5 +1,7 @@
 package com.grupo5.reto2.student;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,12 +49,12 @@ public class StudentController {
 	}
 
 	@GetMapping("/students/{studentDNI}/gradeEditions")
-	public ResponseEntity<GradeEditionServiceModel> getGradeEditionByDni(@PathVariable String studentDNI)
+	public ResponseEntity<Iterable<GradeEditionServiceModel>> getGradeEditionByDni(@PathVariable String studentDNI)
 			throws NotContentException {
 
-		GradeEditionServiceModel response = gradeEditionService.getGradeEditionByDni(studentDNI);
+		Iterable<GradeEditionServiceModel> response = gradeEditionService.getGradeEditionByDni(studentDNI);
 		
-		return new ResponseEntity<GradeEditionServiceModel>(response, HttpStatus.OK);
+		return new ResponseEntity<Iterable<GradeEditionServiceModel>>(response, HttpStatus.OK);
 
 	}
 

@@ -7,7 +7,7 @@ public interface GradeEditionService {
 
 	Iterable<GradeEditionServiceModel> findAllGradeEditions() throws NotContentException;
 	GradeEditionServiceModel findByGradeEditionId(Integer gradeEditionId) throws NotContentException;
-	GradeEditionServiceModel getGradeEditionByDni(String studentDni) throws NotContentException;
+	Iterable<GradeEditionServiceModel> getGradeEditionByDni(String studentDni) throws NotContentException;
 	GradeEditionServiceModel createGradeEdition(GradeEditionPostRequest gradeEditionPostRequest) throws ConflictException;
 	GradeEditionServiceModel updateGradeEdition(Integer gradeEditionId,GradeEditionPostRequest gradeEditionPostRequest) throws NotContentException;
 	Boolean deleteById(Integer gradeEditionId) throws NotContentException; 

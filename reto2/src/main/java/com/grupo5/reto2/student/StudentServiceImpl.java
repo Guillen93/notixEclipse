@@ -10,12 +10,17 @@ import org.springframework.stereotype.Service;
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
+import com.grupo5.reto2.professor.Professor;
+import com.grupo5.reto2.professor.ProfessorRepository;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	StudentRepository studentRepository;
+	
+	@Autowired
+	ProfessorRepository professorRepository;
 	
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
@@ -71,15 +76,18 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public StudentServiceModel createStudent(StudentPostRequest studentPostRequest) throws ConflictException, NotContentException {
 
+		
 		Student student = studentRepository.findByStudentDni(studentPostRequest.getStudentDni());
+		
+		Professor professor = professorRepository.findByProfessorDni(studentPostRequest.getStudentDni());
+		
+		if (student!=null || professor!=null) {
 
-		if (student != null) {
-
-			throw new ConflictException("El estudiante ya esta registrado");
+			throw new ConflictException("Usuario ya registrado");
 
 		} else {
 
-			student = new Student(
+			 student = new Student(
 					studentPostRequest.getStudentDni(),
 					studentPostRequest.getName(),
 					studentPostRequest.getSurname(),

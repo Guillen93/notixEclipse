@@ -16,7 +16,7 @@ public interface GradeEditionRepository extends CrudRepository<GradeEdition, Int
 	GradeEdition findByGradeEditionId(Integer gradeEdId);
 	
 	@Transactional
-	GradeEdition findGradeEditionByPromotionsStudentDni(String studentDni);
+	Iterable<GradeEdition> findGradeEditionByPromotionsStudentDni(String studentDni);
 	
 	
 	

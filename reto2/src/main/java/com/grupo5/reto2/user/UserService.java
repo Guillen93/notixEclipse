@@ -10,4 +10,5 @@ public interface UserService {
 	UserServiceModel GetUsersBydni(String username) throws NotContentException;
 	
 	Boolean deleteUser(String username) throws NotContentException;
+	UserServiceModel addRoles(String userDni, UserRequest request) throws NotContentException;
 }
