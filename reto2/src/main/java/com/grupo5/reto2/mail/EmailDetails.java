@@ -1,9 +1,18 @@
 package com.grupo5.reto2.mail;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class EmailDetails {
 
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private String recipient;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private String msgBody;
+	@NotNull(message = "el campo no puede ser nulo")
+	@NotEmpty(message = "el campo no puede estar vacio")
 	private String subject;
 	private String attachment;
 

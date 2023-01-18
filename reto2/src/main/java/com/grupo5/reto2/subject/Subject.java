@@ -34,7 +34,7 @@ public class Subject {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer subjectId;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "gradeEdId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
 	@JsonManagedReference
@@ -57,11 +57,11 @@ public class Subject {
 	@Column()
 	private Integer duration;
 
-	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Set<Note> notes = new HashSet<>();
 	
-	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Set<Absence> absences = new HashSet<>();
 	

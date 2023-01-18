@@ -46,8 +46,6 @@ public class UserController {
 	}
 	
 	
-	
-	
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
 		try {

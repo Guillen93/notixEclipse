@@ -101,7 +101,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 		Student student =  studentRepository.findByStudentDni(absencePostRequest.getStudentDni());
 		Subject subject = subjectRepository.findBySubjectId(absencePostRequest.getSubjectId());
 		
-		if(student == null && subject == null) {
+		if(student == null || subject == null) {
 			
 			throw new NotContentException("El estudiante no se encuentra en el sistema por lo que no se puede crear una nota para el mismo");
 			

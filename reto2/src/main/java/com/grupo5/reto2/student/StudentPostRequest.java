@@ -11,7 +11,7 @@ public class StudentPostRequest {
 
 	@NotNull(message = "Campo no nulo")
 	@NotEmpty(message = "Campo no puede ser vacio")
-	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]", message = "Formato DNI incorrecto")
+	@Pattern(regexp = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z a-z]")
 	private String studentDni;
 	@NotNull(message = "Campo no nulo")
 	@NotEmpty(message = "Campo no puede ser vacio")

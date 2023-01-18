@@ -1,6 +1,11 @@
 package com.grupo5.reto2.user;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class UserRequest {
+	@NotNull()
+	@Pattern(regexp = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z a-z]")
 	private String dni;
 	private String password;
 	

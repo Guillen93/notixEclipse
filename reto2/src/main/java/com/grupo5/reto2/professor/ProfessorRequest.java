@@ -9,7 +9,7 @@ public class ProfessorRequest {
 
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
-	@Pattern(regexp = "[0-9]{7,8}[A-Z a-z]")
+	@Pattern(regexp = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z a-z]")
 	private String professorDni;
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
