@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.gradeEdition.GradeEditionService;
+import com.grupo5.reto2.gradeEdition.GradeEditionServiceModel;
 
 import jakarta.validation.Valid;
 
@@ -23,6 +25,10 @@ public class StudentController {
 
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	GradeEditionService gradeEditionService;
+
 
 	@GetMapping("/students")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudent() throws NotContentException {
@@ -39,8 +45,16 @@ public class StudentController {
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
 
 	}
-	
-	
+
+	@GetMapping("/students/{studentDNI}/gradeEditions")
+	public ResponseEntity<GradeEditionServiceModel> getGradeEditionByDni(@PathVariable String studentDNI)
+			throws NotContentException {
+
+		GradeEditionServiceModel response = gradeEditionService.getGradeEditionByDni(studentDNI);
+		
+		return new ResponseEntity<GradeEditionServiceModel>(response, HttpStatus.OK);
+
+	}
 
 	@PostMapping("/students")
 	public ResponseEntity<StudentServiceModel> createStudents(@Valid @RequestBody StudentPostRequest studentPostRequest)

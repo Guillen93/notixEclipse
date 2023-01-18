@@ -13,6 +13,7 @@ import com.grupo5.reto2.grade.Grade;
 import com.grupo5.reto2.grade.GradeRepository;
 import com.grupo5.reto2.professor.Professor;
 import com.grupo5.reto2.professor.ProfessorRepository;
+import com.grupo5.reto2.student.StudentRepository;
 
 @Service
 public class GradeEditionServiceImpl implements GradeEditionService {
@@ -26,6 +27,9 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 	@Autowired
 	ProfessorRepository professorRepository;
 
+	@Autowired
+	StudentRepository studentRepository;
+
 	@Override
 	public Iterable<GradeEditionServiceModel> findAllGradeEditions() throws NotContentException {
 
@@ -38,12 +42,8 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 		}
 
 		for (GradeEdition gradeEdition : gradeEditions) {
-			response.add(new GradeEditionServiceModel(
-					gradeEdition.getGradeEdId(),
-					gradeEdition.getGradeId(),
-					gradeEdition.getTutorDni(),
-					gradeEdition.getFecha().toString()
-					));
+			response.add(new GradeEditionServiceModel(gradeEdition.getGradeEdId(), gradeEdition.getGradeId(),
+					gradeEdition.getTutorDni(), gradeEdition.getFecha().toString()));
 		}
 		return response;
 	}
@@ -54,12 +54,8 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 		GradeEdition gradeEdition = gradeEditionRepository.findById(gradeEditionId)
 				.orElseThrow(() -> new NotContentException("Edicion de grado no encontrado"));
 
-		GradeEditionServiceModel response = new GradeEditionServiceModel(
-				gradeEdition.getGradeEdId(),
-				gradeEdition.getGradeId(),
-				gradeEdition.getTutorDni(),
-				gradeEdition.getFecha().toString()
-				);
+		GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
+				gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha().toString());
 
 		return response;
 	}
@@ -80,24 +76,16 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 			Grade grade = gradeRepository.findById(gradeEditionPostRequest.getGradeId()).get();
 			Professor professor = professorRepository.findByProfessorDni(gradeEditionPostRequest.getTutorDni());
 
-			gradeEdition = new GradeEdition(
-					gradeEditionPostRequest.getGradeEdId(),
-					grade,
-					gradeEditionPostRequest.getGradeId(),
-					professor,
-					gradeEditionPostRequest.getTutorDni(),
+			gradeEdition = new GradeEdition(gradeEditionPostRequest.getGradeEdId(), grade,
+					gradeEditionPostRequest.getGradeId(), professor, gradeEditionPostRequest.getTutorDni(),
 					Date.valueOf(gradeEditionPostRequest.getFecha())
-					
-					);
+
+			);
 
 			gradeEditionRepository.save(gradeEdition);
 
-			GradeEditionServiceModel response = new GradeEditionServiceModel(
-					gradeEdition.getGradeEdId(),
-					gradeEdition.getGradeId(),
-					gradeEdition.getTutorDni(),
-					gradeEdition.getFecha().toString()
-					);
+			GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
+					gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha().toString());
 
 			return response;
 		}
@@ -125,12 +113,8 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 			gradeEdition = gradeEditionRepository.save(gradeEdition);
 
-			GradeEditionServiceModel response = new GradeEditionServiceModel(
-					gradeEditionId,
-					gradeEdition.getGradeId(),
-					gradeEdition.getTutorDni(),
-					gradeEdition.getFecha().toString()
-					);
+			GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEditionId, gradeEdition.getGradeId(),
+					gradeEdition.getTutorDni(), gradeEdition.getFecha().toString());
 
 			return response;
 		}
@@ -149,6 +133,28 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 		}
 
 		return response;
+	}
+
+	@Override
+	public GradeEditionServiceModel getGradeEditionByDni(String studentDNI) throws NotContentException {
+
+		Boolean studentExists = studentRepository.existsByStudentDni(studentDNI);
+
+		if (!studentExists) {
+
+			throw new NotContentException("Alumno no encontrado en el sistema");
+
+		} else {
+
+			GradeEdition gradeEdition = gradeEditionRepository.findGradeEditionByPromotionsStudentDni(studentDNI);
+
+			GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
+					gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha().toString());
+
+			return response;
+
+		}
+
 	}
 
 }
