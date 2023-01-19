@@ -12,13 +12,13 @@ public class AbsenceId implements Serializable {
 
 	private String studentDni;
 	private Integer subjectId;
-	private Date foul;
+	private String foul;
 
 	public AbsenceId() {
 		super();
 	}
 
-	public AbsenceId(String studentDni, Integer subjectId, Date foul) {
+	public AbsenceId(String studentDni, Integer subjectId, String foul) {
 		super();
 		this.studentDni = studentDni;
 		this.subjectId = subjectId;
@@ -41,11 +41,11 @@ public class AbsenceId implements Serializable {
 		this.subjectId = subjectId;
 	}
 
-	public Date getFoul() {
+	public String getFoul() {
 		return foul;
 	}
 
-	public void setFoul(Date foul) {
+	public void setFoul(String foul) {
 		this.foul = foul;
 	}
 

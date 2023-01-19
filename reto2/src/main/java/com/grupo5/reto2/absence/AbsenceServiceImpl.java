@@ -1,6 +1,8 @@
 package com.grupo5.reto2.absence;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,15 +119,23 @@ public class AbsenceServiceImpl implements AbsenceService {
 				
 				absenceId.setStudentDni(absencePostRequest.getStudentDni());
 				absenceId.setSubjectId(absencePostRequest.getSubjectId());
-				absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
+				// absenceId.setfoul(Date.valueOf(absencePostRequest.getFoul()));
+				
+
+				absenceId.setFoul(absencePostRequest.getFoul());
+
+				
+				
 				
 				
 				absence = new Absence(
-						absence,
+						absenceId,
 						student,
 						absencePostRequest.getStudentDni(),
 						subject,
 						absencePostRequest.getSubjectId(),
+						//Date.valueOf(absencePostRequest.getFoul()),
+						absencePostRequest.getFoul(),
 						absencePostRequest.isJustified()
 						);
 
@@ -158,12 +168,12 @@ public class AbsenceServiceImpl implements AbsenceService {
 			
 			if(absencePostRequest.getFoul()!=null) {
 			//	absence.setId(Date.valueOf(absencePostRequest.getFoul()));
-				AbsenceId absenceId = new AbsenceId();
-				
-				absenceId.setStudentDni(studentDni);
-				absenceId.setSubjectId(subjectId);
-				absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
-				absence.setId(absenceId);
+//				AbsenceId absenceId = new AbsenceId();
+//				
+//				absenceId.setStudentDni(studentDni);
+//				absenceId.setSubjectId(subjectId);
+//				//absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
+//				absence.setId(absenceId);
 			}
 			if(absencePostRequest.isJustified() != absence.isJustified()) {
 				if(absencePostRequest.isJustified()==true) {
