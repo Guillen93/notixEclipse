@@ -5,6 +5,7 @@ package com.grupo5.reto2.student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.grupo5.reto2.gradeEdition.GradeEditionServiceModel;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class StudentController {
@@ -45,6 +47,15 @@ public class StudentController {
 
 		StudentServiceModel response = studentService.findByStudentDni(studentDNI);
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
+
+	}
+	
+	@GetMapping("/students/subject/{subjectId}")
+	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectId(@PathVariable Integer subjectId)
+			throws NotContentException {
+
+		
+		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.getStudentsBySubjectId(subjectId) , HttpStatus.OK);
 
 	}
 

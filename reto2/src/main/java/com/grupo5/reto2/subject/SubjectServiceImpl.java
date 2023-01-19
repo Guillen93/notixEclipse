@@ -34,6 +34,7 @@ public class SubjectServiceImpl implements SubjectService {
 	@Autowired
 	StudentRepository studentRepository;
 
+	
 	@Override
 	public Iterable<SubjectServiceModel> findAllSubject() throws NotContentException {
 		Iterable<Subject> subjects = subjectRepository.findAll();

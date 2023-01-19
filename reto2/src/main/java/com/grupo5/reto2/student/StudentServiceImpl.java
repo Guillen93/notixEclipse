@@ -11,8 +11,14 @@ import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
+import com.grupo5.reto2.note.Note;
+import com.grupo5.reto2.note.NoteRepository;
+import com.grupo5.reto2.note.NoteServiceModel;
 import com.grupo5.reto2.professor.Professor;
 import com.grupo5.reto2.professor.ProfessorRepository;
+import com.grupo5.reto2.subject.Subject;
+import com.grupo5.reto2.subject.SubjectRepository;
+import com.grupo5.reto2.subject.SubjectServiceModel;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -25,6 +31,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
+	
+	@Autowired
+	SubjectRepository subjectRepository;
+	
+	@Autowired
+	NoteRepository noteRepository;
 
 	@Override
 	public Iterable<StudentServiceModel> findAllStudents() throws NotContentException {
@@ -208,6 +220,72 @@ public class StudentServiceImpl implements StudentService {
 			
 		}
 	
+	}
+
+	@Override
+	public Iterable<StudentServiceModel> getStudentsbyProfessorDni(String professorDNI) throws NotContentException {
+	
+		
+		Iterable<Subject> subjectsBD = subjectRepository.findByProfessorDni(professorDNI);
+		List<SubjectServiceModel> subjects = new ArrayList<SubjectServiceModel>();
+		if (subjects == null || subjects.iterator().hasNext()==false) {
+			throw new NotContentException("No hay asignatura ");
+		}
+
+		for (Subject subject : subjectsBD) {
+			
+			subjects.add(new SubjectServiceModel(
+					subject.getSubjectId(),
+					subject.getGradeEdId(),
+					subject.getProfessorDni(),
+					subject.getName(),
+					subject.getDuration()
+					));
+		}
+		
+		
+		
+		for(int i = 0;i<subjects.size();i++) {
+			subjects.get(i).getSubjectId();
+			
+			//ge
+			
+		}
+		
+		
+		return null;
+	}
+
+	@Override
+	public Iterable<StudentServiceModel> getStudentsBySubjectId(Integer subjectId) throws NotContentException {
+		
+		Iterable<Note> listOfNotesBD = noteRepository.findBySubjectId(subjectId);
+		List<NoteServiceModel> listOfNotes = new ArrayList<NoteServiceModel>();
+		for (Note note : listOfNotesBD) {
+			listOfNotes.add(new NoteServiceModel(
+					note.getId(),
+					note.getStudentDni(),
+					note.getSubjectId(),
+					note.getEva1(),
+					note.getEva2(),
+					note.getEva3(),
+					note.getFinal1(),
+					note.getFinal2()
+
+			));
+		}
+		List<StudentServiceModel> listofStudents = new ArrayList<StudentServiceModel>();
+		for(int i = 0 ; i<listOfNotes.size();i++){	
+			StudentServiceModel studentServiceModel = findByStudentDni(listOfNotes.get(i).getStudentDni());
+		
+			listofStudents.add(studentServiceModel);
+		
+		}
+		
+		
+		
+		
+		return listofStudents;
 	}
 
 }

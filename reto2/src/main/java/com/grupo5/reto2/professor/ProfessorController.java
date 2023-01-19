@@ -3,6 +3,7 @@ package com.grupo5.reto2.professor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.student.StudentService;
+import com.grupo5.reto2.student.StudentServiceModel;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api")
 public class ProfessorController {
 	@Autowired
 	ProfessorService professorService;
+	@Autowired
+	StudentService studentService;
 
 	@GetMapping("/professors")
 	public ResponseEntity<Iterable<ProfessorResponse>> getProfessors() throws NotContentException {
@@ -33,6 +39,15 @@ public class ProfessorController {
 	public ResponseEntity<ProfessorResponse> getProfessorByDni(@PathVariable String professorDni)
 			throws NotContentException {
 		return new ResponseEntity<ProfessorResponse>(professorService.findByProfessorDni(professorDni), HttpStatus.OK);
+	}
+
+	@GetMapping("/professors/student/{professorDni}")
+	public ResponseEntity<Iterable<StudentServiceModel>>  getStudentsProfessorByDni(@PathVariable String professorDni)
+			throws NotContentException {
+		
+		Iterable<StudentServiceModel> response = studentService.getStudentsbyProfessorDni(professorDni);
+		
+		return new ResponseEntity<Iterable<StudentServiceModel>>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/professors")
@@ -57,7 +72,6 @@ public class ProfessorController {
 	@DeleteMapping("/professors/{professorDni}")
 	public ResponseEntity<Integer> deleteProfessor(@PathVariable String professorDni) throws NotContentException {
 
-		
 		Integer response = professorService.deleteByProfessorDni(professorDni);
 
 		if (response == 0) {
@@ -65,8 +79,7 @@ public class ProfessorController {
 		} else {
 			return new ResponseEntity<Integer>(HttpStatus.OK);
 		}
-		
-		
+
 	}
 
 }
