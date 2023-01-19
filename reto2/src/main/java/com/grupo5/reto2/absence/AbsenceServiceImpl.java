@@ -1,8 +1,6 @@
 package com.grupo5.reto2.absence;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,11 +117,10 @@ public class AbsenceServiceImpl implements AbsenceService {
 				
 				absenceId.setStudentDni(absencePostRequest.getStudentDni());
 				absenceId.setSubjectId(absencePostRequest.getSubjectId());
-				// absenceId.setfoul(Date.valueOf(absencePostRequest.getFoul()));
+				absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
 				
 
-				absenceId.setFoul(absencePostRequest.getFoul());
-
+				
 				
 				
 				
@@ -134,8 +131,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 						absencePostRequest.getStudentDni(),
 						subject,
 						absencePostRequest.getSubjectId(),
-						//Date.valueOf(absencePostRequest.getFoul()),
-						absencePostRequest.getFoul(),
+						Date.valueOf(absencePostRequest.getFoul()),
 						absencePostRequest.isJustified()
 						);
 

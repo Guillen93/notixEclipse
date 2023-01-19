@@ -47,7 +47,7 @@ public class Absence {
 	@MapsId("foul")
 	@JoinColumn(name = "foul", foreignKey = @ForeignKey(name = "fk_foulAbsence"))
 	@Column(name = "foul", updatable = false, insertable = false)
-	private String foul;
+	private Date foul;
 
 	@Column()
 	private boolean justified = false;
@@ -56,7 +56,7 @@ public class Absence {
 		super();
 	}
 
-	public Absence(AbsenceId id, Student student, String studentDni, Subject subject, Integer subjectId, String foul,
+	public Absence(AbsenceId id, Student student, String studentDni, Subject subject, Integer subjectId, Date foul,
 			boolean justified) {
 		super();
 		this.id = id;
@@ -143,11 +143,11 @@ public class Absence {
 	
 	
 
-	public String getFoul() {
+	public Date getFoul() {
 		return foul;
 	}
 
-	public void setFoul(String foul) {
+	public void setFoul(Date foul) {
 		this.foul = foul;
 	}
 
