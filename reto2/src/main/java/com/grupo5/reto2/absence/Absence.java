@@ -44,8 +44,7 @@ public class Absence {
 	@Column(name = "subjectId", updatable = false, insertable = false)
 	private Integer subjectId;
 
-	@MapsId("foul")
-	@JoinColumn(name = "foul", foreignKey = @ForeignKey(name = "fk_foulAbsence"))
+	
 	@Column(name = "foul", updatable = false, insertable = false)
 	private Date foul;
 
@@ -153,8 +152,10 @@ public class Absence {
 
 	@Override
 	public String toString() {
-		return "Absence [student=" + student + ", studentDni=" + studentDni + ", subject=" + subject + ", subjectId="
-				+ subjectId + ", foul=" + /* foul + */ ", justified=" + justified + "]";
+		return "Absence [id=" + id + ", student=" + student + ", studentDni=" + studentDni + ", subject=" + subject
+				+ ", subjectId=" + subjectId + ", foul=" + foul + ", justified=" + justified + "]";
 	}
+
+	
 
 }

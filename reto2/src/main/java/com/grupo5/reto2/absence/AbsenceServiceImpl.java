@@ -19,33 +19,28 @@ public class AbsenceServiceImpl implements AbsenceService {
 
 	@Autowired
 	AbsenceRepository absenceRepository;
-	
+
 	@Autowired
 	StudentRepository studentRepository;
-	
+
 	@Autowired
 	SubjectRepository subjectRepository;
-	
+
 	@Override
 	public Iterable<AbsenceServiceModel> getAllAbsences() throws NotContentException {
 		Iterable<Absence> absences = absenceRepository.findAll();
 
 		List<AbsenceServiceModel> response = new ArrayList<AbsenceServiceModel>();
-		
-		
-		if (absences == null || absences.iterator().hasNext()==false) {
+
+		if (absences == null || absences.iterator().hasNext() == false) {
 			throw new NotContentException("No hay ediciones de ese grado");
 		}
-		
+
 		for (Absence absence : absences) {
-			response.add(new AbsenceServiceModel(
-					absence.getId(), 
-					absence.getStudentDni(),
-					absence.getSubjectId(),
-					absence.getId().getFoul().toString(),
-					absence.isJustified()
-					
-					));
+			response.add(new AbsenceServiceModel(absence.getId(), absence.getStudentDni(), absence.getSubjectId(),
+					absence.getId().getFoul().toString(), absence.isJustified()
+
+			));
 		}
 		return response;
 	}
@@ -54,96 +49,69 @@ public class AbsenceServiceImpl implements AbsenceService {
 	public Iterable<AbsenceServiceModel> getAllAbsencesByStudent(String studentDni) throws NotContentException {
 
 		Iterable<Absence> absences = absenceRepository.findByStudentDni(studentDni);
-		
+
 		List<AbsenceServiceModel> response = new ArrayList<AbsenceServiceModel>();
-		   
-		if (absences == null || absences.iterator().hasNext()==false) {
+
+		if (absences == null || absences.iterator().hasNext() == false) {
 			throw new NotContentException("No existe el estudiante");
 		}
-		
-	    for (Absence  absence : absences) {
-            response.add(
-                    new AbsenceServiceModel(
-                    		absence.getId(), 
-        					absence.getStudentDni(),
-        					absence.getSubjectId(),
-        					absence.getId().getFoul().toString(),
-        					absence.isJustified()
-                            )
-                     );
-        }
-		    return response;
+
+		for (Absence absence : absences) {
+			response.add(new AbsenceServiceModel(absence.getId(), absence.getStudentDni(), absence.getSubjectId(),
+					absence.getId().getFoul().toString(), absence.isJustified()));
+		}
+		return response;
 	}
 
 	@Override
-	public AbsenceServiceModel getAbsencesByStudentDniAndSubjectId(String studentDni, Integer subjectId) throws NotContentException {
-		
-		Absence absence = absenceRepository.findByStudentDniAndSubjectId(studentDni,subjectId);
-		
-		if (absence == null ) {
+	public AbsenceServiceModel getAbsencesByStudentDniAndSubjectId(String studentDni, Integer subjectId)
+			throws NotContentException {
+
+		Absence absence = absenceRepository.findByStudentDniAndSubjectId(studentDni, subjectId);
+
+		if (absence == null) {
 			throw new NotContentException("No existe el estudiante");
-		}else {
-			
-			AbsenceServiceModel response = new AbsenceServiceModel(
-            		absence.getId(), 
-					absence.getStudentDni(),
-					absence.getSubjectId(),
-					absence.getId().getFoul().toString(),
-					absence.isJustified()
-                    );
-             
-             return response;
+		} else {
+
+			AbsenceServiceModel response = new AbsenceServiceModel(absence.getId(), absence.getStudentDni(),
+					absence.getSubjectId(), absence.getId().getFoul().toString(), absence.isJustified());
+
+			return response;
 		}
 	}
 
 	@Override
-	public AbsenceServiceModel createAbsence(AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException {
-		Student student =  studentRepository.findByStudentDni(absencePostRequest.getStudentDni());
+	public AbsenceServiceModel createAbsence(AbsencePostRequest absencePostRequest)
+			throws ConflictException, NotContentException {
+		Student student = studentRepository.findByStudentDni(absencePostRequest.getStudentDni());
 		Subject subject = subjectRepository.findBySubjectId(absencePostRequest.getSubjectId());
-		
-		if(student == null || subject == null) {
-			
-			throw new NotContentException("El estudiante no se encuentra en el sistema por lo que no se puede crear una nota para el mismo");
-			
-		}else {
-			Absence absence = absenceRepository.findByStudentDniAndSubjectId(absencePostRequest.getStudentDni(),absencePostRequest.getSubjectId());
+
+		if (student == null || subject == null) {
+			throw new NotContentException(
+					"El estudiante no se encuentra en el sistema por lo que no se puede crear una nota para el mismo");
+		} else {
+			Absence absence = absenceRepository.findByStudentDniAndSubjectIdAndFoul(absencePostRequest.getStudentDni(),
+					absencePostRequest.getSubjectId(), Date.valueOf(absencePostRequest.getFoul()));
 			if (absence != null) {
 
 				throw new ConflictException("La falta ya esta registrado");
 
 			} else {
+				Date date = Date.valueOf(absencePostRequest.getFoul());
 
 				AbsenceId absenceId = new AbsenceId();
-				
+
 				absenceId.setStudentDni(absencePostRequest.getStudentDni());
 				absenceId.setSubjectId(absencePostRequest.getSubjectId());
-				absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
-				
+				absenceId.setFoul(date);
 
-				
-				
-				
-				
-				
-				absence = new Absence(
-						absenceId,
-						student,
-						absencePostRequest.getStudentDni(),
-						subject,
-						absencePostRequest.getSubjectId(),
-						Date.valueOf(absencePostRequest.getFoul()),
-						absencePostRequest.isJustified()
-						);
+				absence = new Absence(absenceId, student, absencePostRequest.getStudentDni(), subject,
+						absencePostRequest.getSubjectId(), date, absencePostRequest.isJustified());
 
 				absence = absenceRepository.save(absence);
-				
-				AbsenceServiceModel response = new AbsenceServiceModel(
-						absence.getId(), 
-						absence.getStudentDni(),
-						absence.getSubjectId(),
-						absence.getId().getFoul().toString(),
-						absence.isJustified()
-				);
+
+				AbsenceServiceModel response = new AbsenceServiceModel(absence.getId(), absence.getStudentDni(),
+						absence.getSubjectId(), absence.getId().getFoul().toString(), absence.isJustified());
 				return response;
 			}
 		}
@@ -152,55 +120,39 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Override
 	public AbsenceServiceModel updateAbsence(String studentDni, Integer subjectId, String dateString,
 			AbsencePostRequest absencePostRequest) throws NotContentException {
-		
-		Date date=Date.valueOf(dateString);
-		Absence absence = absenceRepository.findByStudentDniAndSubjectId(studentDni,subjectId);
+
+		Date date = Date.valueOf(dateString);
+		Absence absence = absenceRepository.findByStudentDniAndSubjectIdAndFoul(studentDni, subjectId, date);
 
 		if (absence == null) {
 
 			throw new NotContentException("El estudiante ya esta registrado");
 
 		} else {
-			
-			if(absencePostRequest.getFoul()!=null) {
-			//	absence.setId(Date.valueOf(absencePostRequest.getFoul()));
-//				AbsenceId absenceId = new AbsenceId();
-//				
-//				absenceId.setStudentDni(studentDni);
-//				absenceId.setSubjectId(subjectId);
-//				//absenceId.setFoul(Date.valueOf(absencePostRequest.getFoul()));
-//				absence.setId(absenceId);
-			}
-			if(absencePostRequest.isJustified() != absence.isJustified()) {
-				if(absencePostRequest.isJustified()==true) {
+
+			if (absencePostRequest.isJustified() != absence.isJustified()) {
+				if (absencePostRequest.isJustified() == true) {
 					absence.setJustified(true);
-					
-				}else {
+
+				} else {
 					absence.setJustified(false);
 				}
-				
+
 			}
-			
+
 			absence = absenceRepository.save(absence);
-			
-			AbsenceServiceModel response = new AbsenceServiceModel(
-					absence.getId(), 
-					studentDni,
-					subjectId,
-					absence.getId().getFoul().toString(),
-					absence.isJustified()
-			);
+
+			AbsenceServiceModel response = new AbsenceServiceModel(absence.getId(), studentDni, subjectId,
+					absence.getId().getFoul().toString(), absence.isJustified());
 			return response;
 		}
 	}
 
 	@Override
 	public Integer deleteAbsence(String studentDni, Integer subjectId, Date date) {
-		
-		Integer response = absenceRepository.deleteByStudentDniAndSubjectIdAndFoul(studentDni, subjectId,date);
+
+		Integer response = absenceRepository.deleteByStudentDniAndSubjectIdAndFoul(studentDni, subjectId, date);
 		return response;
 	}
-
-
 
 }

@@ -3,7 +3,10 @@ package com.grupo5.reto2.absence;
 import java.io.Serializable;
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
 
 @Embeddable
 public class AbsenceId implements Serializable {
@@ -12,6 +15,8 @@ public class AbsenceId implements Serializable {
 
 	private String studentDni;
 	private Integer subjectId;
+	@JoinColumn(name = "foul", foreignKey = @ForeignKey(name = "fk_foulAbsence"))
+	@Column(name = "foul", updatable = false, insertable = false)
 	private Date foul;
 
 	public AbsenceId() {
@@ -51,7 +56,9 @@ public class AbsenceId implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AbsenceId [studentDni=" + studentDni + ", subjectId=" + subjectId + "]";
+		return "AbsenceId [studentDni=" + studentDni + ", subjectId=" + subjectId + ", foul=" + foul + "]";
 	}
+
+
 
 }

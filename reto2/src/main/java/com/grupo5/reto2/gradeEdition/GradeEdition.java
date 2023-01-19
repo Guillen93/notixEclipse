@@ -51,7 +51,7 @@ public class GradeEdition {
 	@Column(name = "tutorDni", updatable = false, insertable = false)
 	private String tutorDni;
 	
-	@Column()
+	@Column(name="fecha_grado")
 	private Date fecha;
 	
 	@ManyToMany(mappedBy = "promotions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -147,9 +147,12 @@ public class GradeEdition {
 
 	@Override
 	public String toString() {
-		return "GradeEdition [gradeEdId=" + gradeEditionId + ", grade=" + grade + ", gradeId=" + gradeId + ", tutor=" + tutor
-				+ ", tutorDni=" + tutorDni + ", fecha=" + fecha + ", promotions=" + promotions + "]";
+		return "GradeEdition [gradeEditionId=" + gradeEditionId + ", grade=" + grade + ", gradeId=" + gradeId
+				+ ", tutor=" + tutor + ", tutorDni=" + tutorDni + ", fecha=" + fecha + ", promotions=" + promotions
+				+ "]";
 	}
+
+	
 
 
 }

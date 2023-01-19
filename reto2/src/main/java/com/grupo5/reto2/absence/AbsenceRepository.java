@@ -20,8 +20,8 @@ public interface AbsenceRepository extends CrudRepository<Absence,AbsenceId> {
 	@Transactional
 	Absence findByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
 	
-	//@Transactional
-	//Absence findByStudentDniAndSubjectIdAndFoul(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId,@Param("Date") Date date);
+	@Transactional
+	Absence findByStudentDniAndSubjectIdAndFoul(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId,@Param("Date") Date date);
 
 	@Transactional
 	@Modifying
