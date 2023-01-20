@@ -82,9 +82,7 @@ public class NoteServiceImpl implements NoteService {
 
 		Iterable<Subject> subjectsBD = subjectRepository.findByProfessorDni(professorDNI);
 		if (subjectsBD == null || subjectsBD.iterator().hasNext() == false) {
-
 			throw new NotContentException("Ese profesor no imparte asignaturas por tanto no tiene notas.");
-
 		} else {
 			List<SubjectServiceModel> asignaturas = new ArrayList<SubjectServiceModel>();
 
@@ -117,13 +115,9 @@ public class NoteServiceImpl implements NoteService {
 							note.getFinal2()
 							));
 				}
-
 			}
-
 			return ListNotes;
 		}
-
-		
 	}
 
 	@Override
