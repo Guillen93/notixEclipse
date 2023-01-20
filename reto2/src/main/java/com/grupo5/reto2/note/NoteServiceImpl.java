@@ -66,7 +66,7 @@ public class NoteServiceImpl implements NoteService {
 
 		List<NoteServiceModel> response = new ArrayList<NoteServiceModel>();
 
-		if (notes == null) {
+		if (notes == null || notes.iterator().hasNext() == false) {
 			throw new NotContentException("No existe el estudiante");
 		}
 
