@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 public interface ProfessorRepository extends CrudRepository<Professor, Integer> {
 	
 	Professor findByProfessorDni(String professorDni);
+	Boolean existsByProfessorDni(String professorDni);
 	
 	@Transactional
 	@Modifying

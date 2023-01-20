@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
-import com.grupo5.reto2.student.StudentService;
-import com.grupo5.reto2.student.StudentServiceModel;
 
 import jakarta.validation.Valid;
 
@@ -26,8 +24,6 @@ import jakarta.validation.Valid;
 public class ProfessorController {
 	@Autowired
 	ProfessorService professorService;
-	@Autowired
-	StudentService studentService;
 
 	@GetMapping("/professors")
 	public ResponseEntity<Iterable<ProfessorResponse>> getProfessors() throws NotContentException {
@@ -41,13 +37,12 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorResponse>(professorService.findByProfessorDni(professorDni), HttpStatus.OK);
 	}
 
-	@GetMapping("/professors/student/{professorDni}")
-	public ResponseEntity<Iterable<StudentServiceModel>>  getStudentsProfessorByDni(@PathVariable String professorDni)
+
+	@GetMapping("/professors/gradeEditionId/{gradeEditionId}")
+	public ResponseEntity<ProfessorResponse> getTutorByGradeEditionId(@PathVariable Integer gradeEditionId)
 			throws NotContentException {
 		
-		Iterable<StudentServiceModel> response = studentService.getStudentsbyProfessorDni(professorDni);
-		
-		return new ResponseEntity<Iterable<StudentServiceModel>>(response, HttpStatus.OK);
+		return new ResponseEntity<ProfessorResponse>(professorService.findTutorByGradeEditionId(gradeEditionId), HttpStatus.OK);
 	}
 
 	@PostMapping("/professors")

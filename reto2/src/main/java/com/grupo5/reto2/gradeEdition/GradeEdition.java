@@ -51,7 +51,7 @@ public class GradeEdition {
 	@Column(name = "tutorDni", updatable = false, insertable = false)
 	private String tutorDni;
 	
-	@Column(name="fecha_grado")
+	@Column()
 	private Date fecha;
 	
 	@ManyToMany(mappedBy = "promotions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

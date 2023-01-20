@@ -8,43 +8,39 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.gradeEdition.GradeEdition;
+import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
 import com.grupo5.reto2.student.Student;
 import com.grupo5.reto2.student.StudentRepository;
-import com.grupo5.reto2.user.User;
-import com.grupo5.reto2.user.UserRepository;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
 
 	@Autowired
 	ProfessorRepository professorRepository;
-	
+
 	@Autowired
 	StudentRepository studentRepository;
 
+	@Autowired
+	GradeEditionRepository gradeEditionRepository;
+
 	@Override
 	public Iterable<ProfessorResponse> findAll() throws NotContentException {
-		//return professorRepository.findAll();
-		
+		// return professorRepository.findAll();
+
 		Iterable<Professor> professors = professorRepository.findAll();
 
 		List<ProfessorResponse> response = new ArrayList<ProfessorResponse>();
-		
-		if (professors == null || professors.iterator().hasNext()==false) {
+
+		if (professors == null || professors.iterator().hasNext() == false) {
 			throw new NotContentException("No hay professores ");
 		}
-		
+
 		for (Professor professor : professors) {
-			response.add(new ProfessorResponse(
-					professor.getProfessorDni(),
-					professor.getName(),
-					professor.getSurname(),
-					professor.getEmail(),
-					professor.getPhoto(),
-					professor.getNationality(),
-					professor.getAddres()
-					));
-			}
+			response.add(new ProfessorResponse(professor.getProfessorDni(), professor.getName(), professor.getSurname(),
+					professor.getEmail(), professor.getPhoto(), professor.getNationality(), professor.getAddres()));
+		}
 
 		return response;
 	}
@@ -53,73 +49,56 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public ProfessorResponse findByProfessorDni(String professorDni) throws NotContentException {
 
 		Professor professor = professorRepository.findByProfessorDni(professorDni);
-		
-		
-		if (professor == null ) {
+
+		if (professor == null) {
 			throw new NotContentException("No hay professores ");
 		}
 
-		ProfessorResponse response = new ProfessorResponse(
-				professor.getProfessorDni(),
-				professor.getName(),
-				professor.getSurname(),
-				professor.getEmail(),
-				professor.getPhoto(),
-				professor.getNationality(),
-				professor.getAddres()
-				);
+		ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
+				professor.getSurname(), professor.getEmail(), professor.getPhoto(), professor.getNationality(),
+				professor.getAddres());
 		return response;
 
 	}
 
 	@Override
-	public ProfessorResponse createProfessor(ProfessorRequest professorRequest) throws ConflictException, NotContentException {
-		
+	public ProfessorResponse createProfessor(ProfessorRequest professorRequest)
+			throws ConflictException, NotContentException {
+
 		Student student = studentRepository.findByStudentDni(professorRequest.getProfessorDni());
-		
+
 		Professor professor = professorRepository.findByProfessorDni(professorRequest.getProfessorDni());
-		
-		if (student!=null || professor!=null) {
+
+		if (student != null || professor != null) {
 
 			throw new ConflictException("Usuario ya registrado");
 
 		} else {
-			
-			professor = new Professor(
-					professorRequest.getProfessorDni(),
-					professorRequest.getName(),
-					professorRequest.getSurname(),
-					professorRequest.getNationality(), 
-					professorRequest.getEmail(),
-					professorRequest.getAddres(), 
-					professorRequest.getPhoto()
-			);
+
+			professor = new Professor(professorRequest.getProfessorDni(), professorRequest.getName(),
+					professorRequest.getSurname(), professorRequest.getNationality(), professorRequest.getEmail(),
+					professorRequest.getAddres(), professorRequest.getPhoto());
 			professor = professorRepository.save(professor);
-			
-			ProfessorResponse response = new ProfessorResponse(
-					professor.getProfessorDni(),
-					professor.getName(),
-					professor.getSurname(),
-					professor.getEmail(),
-					professor.getPhoto(),
-					professor.getNationality(),
-					professor.getAddres()
-					);
-			
+
+			ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
+					professor.getSurname(), professor.getEmail(), professor.getPhoto(), professor.getNationality(),
+					professor.getAddres());
+
 			return response;
-			
+
 		}
 	}
 
 	@Override
-	public ProfessorResponse updateProfessor(String professorDni, ProfessorRequest professorRequest) throws NotContentException {
+	public ProfessorResponse updateProfessor(String professorDni, ProfessorRequest professorRequest)
+			throws NotContentException {
 
 		Professor professor = professorRepository.findByProfessorDni(professorDni);
-		
+
 		if (professor == null) {
 			throw new NotContentException("No existe el profesor");
-		}else {
-			
+		} else {
+
 			if (professorRequest.getProfessorDni() != null) {
 				professor.setProfessorDni(professorRequest.getProfessorDni());
 			}
@@ -143,10 +122,37 @@ public class ProfessorServiceImpl implements ProfessorService {
 			}
 
 			professor = professorRepository.save(professor);
-			
-			
+
+			ProfessorResponse response = new ProfessorResponse(professorDni, professor.getName(),
+					professor.getSurname(), professor.getEmail(), professor.getPhoto(), professor.getNationality(),
+					professor.getAddres());
+			return response;
+		}
+
+	}
+
+	@Override
+	public Integer deleteByProfessorDni(String professorDni) {
+		return professorRepository.deleteByProfessorDni(professorDni);
+	}
+
+	@Override
+	public ProfessorResponse findTutorByGradeEditionId(Integer gradeEditionId) throws NotContentException {
+
+		GradeEdition gradeEdition = gradeEditionRepository.findByGradeEditionId(gradeEditionId);
+
+		if (gradeEdition == null) {
+			throw new NotContentException("No existe esa edicion de grado ");
+
+		} else {
+			Professor professor = professorRepository.findByProfessorDni(gradeEdition.getTutorDni());
+
+			if (professor == null) {
+				throw new NotContentException("No hay professores ");
+			} 
+
 			ProfessorResponse response = new ProfessorResponse(
-					professorDni,
+					professor.getProfessorDni(),
 					professor.getName(),
 					professor.getSurname(),
 					professor.getEmail(),
@@ -156,12 +162,6 @@ public class ProfessorServiceImpl implements ProfessorService {
 					);
 			return response;
 		}
-		
-	}
 
-	@Override
-	public Integer deleteByProfessorDni(String professorDni) {
-		return professorRepository.deleteByProfessorDni(professorDni);
 	}
-
 }

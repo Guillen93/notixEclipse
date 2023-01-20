@@ -1,7 +1,5 @@
 package com.grupo5.reto2.student;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +27,9 @@ public class StudentController {
 
 	@Autowired
 	StudentService studentService;
-	
+
 	@Autowired
 	GradeEditionService gradeEditionService;
-
 
 	@GetMapping("/students")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudent() throws NotContentException {
@@ -49,13 +46,13 @@ public class StudentController {
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/students/subject/{subjectId}")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectId(@PathVariable Integer subjectId)
 			throws NotContentException {
 
-		
-		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.getStudentsBySubjectId(subjectId) , HttpStatus.OK);
+		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.getStudentsBySubjectId(subjectId),
+				HttpStatus.OK);
 
 	}
 
@@ -64,9 +61,18 @@ public class StudentController {
 			throws NotContentException {
 
 		Iterable<GradeEditionServiceModel> response = gradeEditionService.getGradeEditionByDni(studentDNI);
-		
+
 		return new ResponseEntity<Iterable<GradeEditionServiceModel>>(response, HttpStatus.OK);
 
+	}
+
+	@GetMapping("/students/professor/{professorDni}")
+	public ResponseEntity<Iterable<StudentServiceModel>> getStudentsProfessorByDni(@PathVariable String professorDni)
+			throws NotContentException {
+
+		Iterable<StudentServiceModel> response = studentService.getStudentsbyProfessorDni(professorDni);
+
+		return new ResponseEntity<Iterable<StudentServiceModel>>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/students")

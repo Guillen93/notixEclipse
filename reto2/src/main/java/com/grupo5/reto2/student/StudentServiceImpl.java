@@ -228,7 +228,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		Iterable<Subject> subjectsBD = subjectRepository.findByProfessorDni(professorDNI);
 		List<SubjectServiceModel> subjects = new ArrayList<SubjectServiceModel>();
-		if (subjects == null || subjects.iterator().hasNext()==false) {
+		if (subjectsBD == null || subjectsBD.iterator().hasNext()==false) {
 			throw new NotContentException("No hay asignatura ");
 		}
 
@@ -242,18 +242,38 @@ public class StudentServiceImpl implements StudentService {
 					subject.getDuration()
 					));
 		}
+
 		
-		
+		List<StudentServiceModel> listOfStudents = new ArrayList<StudentServiceModel>();
 		
 		for(int i = 0;i<subjects.size();i++) {
-			subjects.get(i).getSubjectId();
-			
-			//ge
+			Iterable<StudentServiceModel> listOfStudents1 =  getStudentsBySubjectId(subjects.get(i).getSubjectId());
+
+			for (StudentServiceModel student : listOfStudents1) {
+				
+				
+				listOfStudents.add(new StudentServiceModel(
+						student.getStudentDni(),
+						student.getName(),
+						student.getSurname(),
+						student.getBornDate().toString(),
+						student.getNationality(),
+						student.getEmail(),
+						student.getPhone(),
+						student.getPhoto()
+						));
+			}
 			
 		}
 		
+		if(listOfStudents.size()==0) {
+			throw new NotContentException("No hay alumnos para ese profesor ");
+		}else {
+			return listOfStudents;
+		}
 		
-		return null;
+		
+		
 	}
 
 	@Override
