@@ -72,7 +72,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	private UserDetails getUserDetails(String token) {
 		User userDetails = new User();
 		userDetails.setDni(jwtUtil.getSubject(token));
-		//userDetails.setRoles(jwtUtil.getUserRoles(token));
+		userDetails.setRoles(jwtUtil.getUserRoles(token));
 		return userDetails;
 	}
 }
