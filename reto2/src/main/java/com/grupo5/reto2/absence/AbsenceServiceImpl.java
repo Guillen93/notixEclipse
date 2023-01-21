@@ -155,4 +155,27 @@ public class AbsenceServiceImpl implements AbsenceService {
 		return response;
 	}
 
+	@Override
+	public Iterable<AbsenceServiceModel> getAAbsencesByStudentDniAndJustified(String studentDni)
+			throws NotContentException {
+		Iterable<Absence> absences = absenceRepository.findByStudentDniAndJustified(studentDni,true);
+
+		List<AbsenceServiceModel> response = new ArrayList<AbsenceServiceModel>();
+
+		if (absences == null || absences.iterator().hasNext() == false) {
+			throw new NotContentException("No existen faltas para ese  estudiante");
+		}
+
+		for (Absence absence : absences) {
+			response.add(new AbsenceServiceModel(
+					absence.getId(),
+					absence.getStudentDni(),
+					absence.getSubjectId(),
+					absence.getId().getFoul().toString(),
+					absence.isJustified()
+					));
+		}
+		return response;
+	}
+
 }

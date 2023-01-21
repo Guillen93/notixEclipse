@@ -50,6 +50,14 @@ public class AbsenceController {
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.OK);
 
 	}
+	@GetMapping("/absences/{studentDNI}/justified")
+	public ResponseEntity<Iterable<AbsenceServiceModel>> getAbsenceByStudentDniWhileJustifiedTrue(@PathVariable String studentDNI)
+			throws NotContentException {
+
+		Iterable<AbsenceServiceModel> response = absenceService.getAAbsencesByStudentDniAndJustified(studentDNI);
+		return new ResponseEntity<Iterable<AbsenceServiceModel>>(response, HttpStatus.OK);
+
+	}
 	
 	@PostMapping("/absences")
 	public ResponseEntity<AbsenceServiceModel> createNote(@Valid @RequestBody AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException {

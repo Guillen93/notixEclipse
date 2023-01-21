@@ -24,6 +24,10 @@ public interface AbsenceRepository extends CrudRepository<Absence,AbsenceId> {
 	Absence findByStudentDniAndSubjectIdAndFoul(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId,@Param("Date") Date date);
 
 	@Transactional
+	Iterable<Absence> findByStudentDniAndJustified(@Param("StudentDni") String studentDNI,@Param("Justified") Boolean justificado);
+
+	
+	@Transactional
 	@Modifying
 	Integer deleteByStudentDniAndSubjectIdAndFoul(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId,@Param("Date") Date date);
 
