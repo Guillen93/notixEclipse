@@ -68,10 +68,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/users/signup")
-	public ResponseEntity<?> signIn(@RequestBody UserRequest request) throws ConflictException, UserException {
-		User user = new User (request.getDni(), request.getPassword());
+	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {
+		
 
-			userService.signUp(user);
+			userService.signUp(request);
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

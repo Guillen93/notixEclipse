@@ -64,15 +64,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public User signUp(User user) throws UserException, ConflictException {
+	public User signUp(UserRequest request) throws UserException, ConflictException {
 		try {
 
-//			if (userRepository.findByDni(user.getDni()).get() != null) {
-//				throw new NoSuchElementException("el usuario ya existe");
-//			} else {
-//				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//				String password = passwordEncoder.encode(user.getPassword());
-//				user.setPassword(password);
+			User user = new User (request.getDni(), request.getPassword());
 
 			Boolean response = userRepository.existsByDni(user.getDni());
 
@@ -84,7 +79,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 				String password = passwordEncoder.encode(user.getPassword());
 				user.setPassword(password);
 
-				Role userRole = roleRepository.findByRole(Rol.Student.name()).get();
+//				Role userRole = roleRepository.findByRole(Rol.Student.name()).get();
+				Role userRole = roleRepository.findById(request.getRoleId()).get();
 				List<Role> roles = new ArrayList<Role>();
 				roles.add(userRole);
 
