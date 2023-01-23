@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 		User user = userRepository.findByDni(username).orElseThrow(() -> new NotContentException("No existe ese usuario"));
 
-			if (request.getPassword() == null) {
+			if (request.getPassword() != null ) {
 				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
 				String password = passwordEncoder.encode(request.getPassword());
 				user.setPassword(password);

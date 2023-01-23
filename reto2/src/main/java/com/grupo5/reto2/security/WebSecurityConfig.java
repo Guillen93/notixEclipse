@@ -46,8 +46,8 @@ public class WebSecurityConfig {
 						.requestMatchers("/api/students/**").permitAll()
 						.requestMatchers("/api/grades/**").permitAll()
 						.requestMatchers("/api/gradeEditions/**").permitAll()
-						.anyRequest().permitAll()
-//						.anyRequest().authenticated()
+//						.anyRequest().permitAll()
+						.anyRequest().authenticated()
 		);
 		
 		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
