@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,24 +80,24 @@ public class JwtTokenUtil {
 		return(Integer) claims.get(user_dni_claim);
 	}
 	
-	public List<Role> getUserRoles(String token) {
+	public Set<Role> getUserRoles(String token) {
 		Claims claims = parseClaims(token);
 		Object jsonObject = claims.get(roles_claim);
 	
-		List<Role> roles;
+		Set<Role> roles;
 		
 		try {
 			roles = jsonArrayToList(jsonObject, Role.class);
 			return roles;
 		} catch (IOException e) {
-			return new ArrayList<Role>();
+			return null;
 		}
 	}
 	
-	public static <T> List<T> jsonArrayToList(Object json, Class<T> elementClass) throws IOException {
+	public static <T> Set<T> jsonArrayToList(Object json, Class<T> elementClass) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(json);
-		CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elementClass);
+		CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(Set.class, elementClass);
 		return objectMapper.readValue(jsonString, listType);
 	}
 	
