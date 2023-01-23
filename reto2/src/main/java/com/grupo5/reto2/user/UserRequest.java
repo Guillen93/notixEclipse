@@ -1,7 +1,5 @@
 package com.grupo5.reto2.user;
 
-
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
@@ -11,16 +9,26 @@ public class UserRequest {
 	private String dni;
 	private String password;
 	private Integer roleId;
+	private boolean isEnabled;
 
 	public UserRequest() {
 	}
 
 	public UserRequest(@NotNull @Pattern(regexp = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z a-z]") String dni,
-			String password, Integer roleId) {
+			String password, Integer roleId, boolean isEnabled) {
 		super();
 		this.dni = dni;
 		this.password = password;
 		this.roleId = roleId;
+		this.isEnabled = isEnabled;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
 	public String getDni() {

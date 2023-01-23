@@ -92,6 +92,14 @@ public class UserController {
 		return new ResponseEntity<UserServiceModel>(userService.addRoles(userDni,request),HttpStatus.OK);
 	}
 	
+	@PutMapping("/users/{userDni}")
+	public ResponseEntity<UserServiceModel> updateuser(@PathVariable String userDni, @RequestBody UserRequest request) throws ConflictException, UserException, NotContentException {
+
+			
+		return new ResponseEntity<UserServiceModel>(userService.updateUser(userDni,request),HttpStatus.OK);
+	}
+	
+	
 	
 	// PUT 
 //	datos del usuario

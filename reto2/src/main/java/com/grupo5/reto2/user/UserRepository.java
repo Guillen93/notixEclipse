@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 
 
-public interface UserRepository extends CrudRepository< User, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 	Optional<User> findByDni(String DNI);
 	
 	Boolean existsByDni(String DNI);
