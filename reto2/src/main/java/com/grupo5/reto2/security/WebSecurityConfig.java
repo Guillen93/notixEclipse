@@ -41,13 +41,16 @@ public class WebSecurityConfig {
 				(authz) ->
 					authz
 						.requestMatchers("/api/users/signup").permitAll()
+						.requestMatchers("/api/users/Di").permitAll()
 						.requestMatchers("/api/users/login").permitAll()
+						.requestMatchers("/api/users/login/Di").permitAll()
+						.requestMatchers("/api/roles").permitAll()
 //						.requestMatchers("/api/professors/**").hasAnyAuthority(Rol.Admin.name(), Rol.Professor.name())
 						.requestMatchers("/api/students/**").permitAll()
 						.requestMatchers("/api/grades/**").permitAll()
 						.requestMatchers("/api/gradeEditions/**").permitAll()
-						.anyRequest().permitAll()
-//						.anyRequest().authenticated()
+//						.anyRequest().permitAll()
+						.anyRequest().authenticated()
 		);
 		
 		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());

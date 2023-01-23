@@ -41,6 +41,11 @@ public class UserController {
 		
 		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
 	}
+	@GetMapping("/users/Di")
+	public ResponseEntity<Iterable<UserServiceModel>> GetUsersDi() throws NotContentException {
+		
+		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
+	}
 	
 	@GetMapping("/users/{userDni}")
 	public ResponseEntity<UserServiceModel> GetUserbyDni(@PathVariable String userDni) throws NotContentException {
@@ -66,11 +71,23 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
+	@PostMapping("/users/login/Di")
+	public ResponseEntity<Integer> loginDi(@RequestBody UserRequest request) throws NotContentException {
+		Boolean result = userService.checkByRole(request);
+		
+		if (result) {
+		return new ResponseEntity<Integer>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity<Integer>(HttpStatus.UNAUTHORIZED);
+		}
+	
+	
+	
+	}
 	
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {
 		
-
 			userService.signUp(request);
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);

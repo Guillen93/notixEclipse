@@ -3,6 +3,7 @@ package com.grupo5.reto2.user;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 
 		for (User user : users) {
-			response.add(new UserServiceModel(user.getDni(), user.isEnabled(),user.getRoles()));
+			response.add(new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles()));
 		}
 
 		return response;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 			User user = userRepository.findByDni(userDni).get();
 
-			UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(),user.getRoles());
+			UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles());
 			return response;
 		} catch (NoSuchElementException e) {
 			throw new NotContentException("No hay usuarios ");
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User signUp(UserRequest request) throws UserException, ConflictException {
 		try {
 
-			User user = new User (request.getDni(), request.getPassword());
+			User user = new User(request.getDni(), request.getPassword());
 
 			Boolean response = userRepository.existsByDni(user.getDni());
 
@@ -115,24 +116,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public UserServiceModel addRoles(String userDni, UserRequest request) throws NotContentException {
-		
+
 		User user = userRepository.findByDni(userDni)
-		.orElseThrow(() -> new NotContentException("No existe ese usuario"));
-		
+				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
+
 		user = userRepository.save(user);
-		
-		
+
 		Role userRole = roleRepository.findById(request.getRoleId()).get();
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(userRole);
 		user.setRoles(roles);
 		userRepository.save(user);
-		
-		
-		UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(),user.getRoles());
-		
-		return response;
-		
-		}
 
+		UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles());
+
+		return response;
+
+	}
+
+	@Override
+	public Boolean checkByRole(UserRequest request) throws NotContentException {
+
+		Boolean response = false;
+		User user = userRepository.findByDni(request.getDni())
+				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
+		List<Role> roles = user.getRoles();
+		
+		for (Role role : roles) {
+			
+			if (role.getRoleID()==1) {
+				response = true;
+			}
+			
+		}
+		return response;
+	}
 }
