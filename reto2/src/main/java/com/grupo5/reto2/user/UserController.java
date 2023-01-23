@@ -101,7 +101,6 @@ public class UserController {
 		return new ResponseEntity<Integer>(HttpStatus.OK);
 	}
 	
-	
 	@PutMapping("/users/{userDni}/roles")
 	public ResponseEntity<UserServiceModel> addRoles(@PathVariable String userDni, @RequestBody UserRequest request) throws ConflictException, UserException, NotContentException {
 

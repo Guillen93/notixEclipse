@@ -11,11 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.grupo5.reto2.role.Rol;
 
 @Configuration
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer {
 
 	@Autowired 
 	private JwtTokenFilter jwtTokenFilter;
@@ -40,10 +42,10 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests(
 				(authz) ->
 					authz
-						.requestMatchers("/api/users/signup").permitAll()
-						.requestMatchers("/api/users/Di").permitAll()
+						
 						.requestMatchers("/api/users/login").permitAll()
-						.requestMatchers("/api/users/login/Di").permitAll()
+						.requestMatchers("/api/users/{userDni}").permitAll()
+						.requestMatchers("/api/usersDel/{userDni}").permitAll()
 						.requestMatchers("/api/roles").permitAll()
 //						.requestMatchers("/api/professors/**").hasAnyAuthority(Rol.Admin.name(), Rol.Professor.name())
 						.requestMatchers("/api/students/**").permitAll()
@@ -59,5 +61,10 @@ public class WebSecurityConfig {
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
+		
 	}
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*");
+    }
 }

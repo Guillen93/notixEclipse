@@ -1,9 +1,10 @@
 package com.grupo5.reto2.user;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
-import com.grupo5.reto2.role.Rol;
 import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.role.RoleRepository;
 import com.grupo5.reto2.security.HashPasswordEncoder;
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 //				Role userRole = roleRepository.findByRole(Rol.Student.name()).get();
 				Role userRole = roleRepository.findById(request.getRoleId()).get();
-				List<Role> roles = new ArrayList<Role>();
+				Set<Role> roles = new HashSet<>();
 				roles.add(userRole);
 
 				user.setEnabled(true);
@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		user = userRepository.save(user);
 
 		Role userRole = roleRepository.findById(request.getRoleId()).get();
-		List<Role> roles = new ArrayList<Role>();
+		Set<Role> roles = new HashSet<>();
 		roles.add(userRole);
 		user.setRoles(roles);
 		userRepository.save(user);
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		Boolean response = false;
 		User user = userRepository.findByDni(request.getDni())
 				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
-		List<Role> roles = user.getRoles();
+		Set<Role> roles = user.getRoles();
 		
 		for (Role role : roles) {
 			

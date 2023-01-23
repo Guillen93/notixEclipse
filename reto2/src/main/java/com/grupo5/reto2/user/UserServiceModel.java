@@ -1,6 +1,6 @@
 package com.grupo5.reto2.user;
 
-import java.util.List;
+import java.util.Set;
 
 import com.grupo5.reto2.role.Role;
 
@@ -8,14 +8,14 @@ public class UserServiceModel {
 
 	private String dni;
 	private boolean isEnabled;
-	private List<Role> roles ;
+	private Set<Role> roles ;
 
 	public UserServiceModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserServiceModel(String dni, boolean isEnabled, List<Role> roles) {
+	public UserServiceModel(String dni, boolean isEnabled, Set<Role> roles) {
 		super();
 		this.dni = dni;
 		this.isEnabled = isEnabled;
@@ -38,11 +38,11 @@ public class UserServiceModel {
 		this.isEnabled = isEnabled;
 	}
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 
