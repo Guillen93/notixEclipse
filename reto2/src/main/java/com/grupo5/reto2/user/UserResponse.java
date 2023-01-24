@@ -1,15 +1,22 @@
 package com.grupo5.reto2.user;
 
+import java.util.List;
+import java.util.Set;
+
+import com.grupo5.reto2.role.Role;
+
 public class UserResponse {
 	private String dni;
 	private String accessToken;
+	private Set<Role> roles;
 	
 	public UserResponse() {}
 
-	public UserResponse(String dni, String accessToken) {
+	public UserResponse(String dni, String accessToken,Set<Role> set) {
 		super();
 		this.dni = dni;
 		this.accessToken = accessToken;
+		this.roles = set;
 	}
 
 	public String getDni() {
@@ -26,6 +33,14 @@ public class UserResponse {
 
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override

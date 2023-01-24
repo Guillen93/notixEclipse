@@ -41,7 +41,11 @@ public class UserController {
 		
 		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
 	}
-	
+	@GetMapping("/users/di")
+	public ResponseEntity<Iterable<UserServiceModel>> GetUsersDi() throws NotContentException {
+		
+		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
+	}
 	@GetMapping("/users/{userDni}")
 	public ResponseEntity<UserServiceModel> GetUserbyDni(@PathVariable String userDni) throws NotContentException {
 		
@@ -58,7 +62,7 @@ public class UserController {
 			
 			User user = (User) authentication.getPrincipal();
 			String accessToken = jwtUtil.generateAccessToken(user);
-			UserResponse response = new UserResponse(user.getDni(), accessToken);
+			UserResponse response = new UserResponse(user.getDni(), accessToken ,user.getRoles());
 			
 			return ResponseEntity.ok().body(response);
 		
@@ -76,7 +80,7 @@ public class UserController {
 			
 			User user = (User) authentication.getPrincipal();
 			String accessToken = jwtUtil.generateAccessToken(user);
-			UserResponse response = new UserResponse(user.getDni(), accessToken);
+			UserResponse response = new UserResponse(user.getDni(), accessToken,user.getRoles());
 			
 			return ResponseEntity.ok().body(response);
 		

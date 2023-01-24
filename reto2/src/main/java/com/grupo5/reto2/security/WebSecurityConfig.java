@@ -42,11 +42,11 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 					authz
 						
 						.requestMatchers("/api/users/login").permitAll()
-						.requestMatchers("/api/users/login/di").hasAnyAuthority(Rol.Admin.name())
 						.requestMatchers("/api/users/{userDni}").permitAll()
 						.requestMatchers("/api/usersDel/{userDni}").permitAll()
 						.requestMatchers("/api/roles").permitAll()
 //						.requestMatchers("/api/professors/**").hasAnyAuthority(Rol.Admin.name(), Rol.Professor.name())
+						.requestMatchers("/api/professors/**").permitAll()
 						.requestMatchers("/api/students/**").permitAll()
 						.requestMatchers("/api/grades/**").permitAll()
 						.requestMatchers("/api/gradeEditions/**").permitAll()
