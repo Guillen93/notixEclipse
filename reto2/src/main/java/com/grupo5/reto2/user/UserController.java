@@ -41,17 +41,12 @@ public class UserController {
 		
 		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
 	}
-	@GetMapping("/users/di")
-	public ResponseEntity<Iterable<UserServiceModel>> GetUsersDi() throws NotContentException {
-		
-		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
-	}
+
 	@GetMapping("/users/{userDni}")
 	public ResponseEntity<UserServiceModel> GetUserbyDni(@PathVariable String userDni) throws NotContentException {
 		
 		return new ResponseEntity <UserServiceModel>(userService.GetUsersBydni(userDni), HttpStatus.OK);
 	}
-	
 	
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
@@ -70,25 +65,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
-	
-	@PostMapping("/users/login/di")
-	public ResponseEntity<?> loginDi(@RequestBody UserRequest request) {
-		try {
-			Authentication authentication = userManager.authenticate(
-					new UsernamePasswordAuthenticationToken(request.getDni(), request.getPassword())
-					);
-			
-			User user = (User) authentication.getPrincipal();
-			String accessToken = jwtUtil.generateAccessToken(user);
-			UserResponse response = new UserResponse(user.getDni(), accessToken,user.getRoles());
-			
-			return ResponseEntity.ok().body(response);
 		
-		} catch (BadCredentialsException ex) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-	}
-	
 	
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {

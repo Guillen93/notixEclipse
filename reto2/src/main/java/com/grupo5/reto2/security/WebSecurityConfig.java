@@ -47,12 +47,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 					authz
 						
 						.requestMatchers("/api/users/login").permitAll()
-						.requestMatchers("/api/users/{userDni}").authenticated()
-						.requestMatchers("/api/usersDel/{userDni}").authenticated()
-						.requestMatchers("/api/roles").permitAll()
+						.requestMatchers("/api/users/signup").permitAll()
 //						.requestMatchers("/api/professors/**").hasAnyAuthority(Rol.Admin.name(), Rol.Professor.name())
-						.requestMatchers("/api/professors/**").permitAll()
-						.requestMatchers("/api/students/**").permitAll()
+						.requestMatchers("/api/professors/create").permitAll()
+						.requestMatchers("/api/students/create").permitAll()
 						.requestMatchers("/api/grades/**").permitAll()
 						.requestMatchers("/api/gradeEditions/**").permitAll()
 //						.anyRequest().permitAll()
