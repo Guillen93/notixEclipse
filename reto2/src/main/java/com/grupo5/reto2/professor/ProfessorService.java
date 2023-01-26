@@ -11,4 +11,5 @@ public interface ProfessorService {
 	ProfessorResponse createProfessor(ProfessorRequest professorRequest) throws ConflictException, NotContentException;
 	ProfessorResponse updateProfessor(String professorDni, ProfessorRequest professorRequest) throws  NotContentException;
 	Integer deleteByProfessorDni(String professorDni);
+	Iterable<ProfessorResponse> getProfessorByStudentDni(String studentDni) throws NotContentException;
 }

@@ -159,4 +159,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		
 	}
 
+	@Override
+	public Iterable<UserServiceModel> getNotEnabledUsers() throws NotContentException {
+		
+		Iterable<User> users = userRepository.findNotEnabledUsers();
+		List<UserServiceModel> response = new ArrayList<UserServiceModel>();
+
+		if (users == null || users.iterator().hasNext() == false) {
+			throw new NotContentException("No hay usuarios ");
+		}
+
+		for (User user : users) {
+			response.add(new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles()));
+		}
+
+		return response;
+	}
+
 }

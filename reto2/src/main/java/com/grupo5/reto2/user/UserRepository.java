@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+
 import jakarta.transaction.Transactional;
 
 
@@ -18,5 +19,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Modifying
 	void deleteByDni(@Param("dni") String dni);
 	
+	@Transactional
+	@Query(value="select * from user where is_enabled = 0;",nativeQuery = true)
+	Iterable<User> findNotEnabledUsers();
 }
 

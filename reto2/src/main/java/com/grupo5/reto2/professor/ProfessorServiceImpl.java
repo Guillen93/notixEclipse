@@ -164,4 +164,24 @@ public class ProfessorServiceImpl implements ProfessorService {
 		}
 
 	}
+
+	@Override
+	public Iterable<ProfessorResponse> getProfessorByStudentDni(String studentDni) throws NotContentException {
+		
+		
+		Iterable<Professor> professors = professorRepository.findProfessorsByStudentDni(studentDni);
+
+		List<ProfessorResponse> response = new ArrayList<ProfessorResponse>();
+
+		if (professors == null || professors.iterator().hasNext() == false) {
+			throw new NotContentException("No hay professores ");
+		}
+
+		for (Professor professor : professors) {
+			response.add(new ProfessorResponse(professor.getProfessorDni(), professor.getName(), professor.getSurname(),
+					professor.getEmail(), professor.getPhoto(), professor.getNationality(), professor.getAddres()));
+		}
+
+		return response;
+	}
 }

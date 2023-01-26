@@ -48,6 +48,12 @@ public class UserController {
 		return new ResponseEntity <UserServiceModel>(userService.GetUsersBydni(userDni), HttpStatus.OK);
 	}
 	
+	@GetMapping("/users/notEnabled")
+	public ResponseEntity<Iterable<UserServiceModel>> GetNotEnabledUsers() throws NotContentException {
+		
+		return new ResponseEntity <Iterable<UserServiceModel>>(userService.getNotEnabledUsers(), HttpStatus.OK);
+	}
+	
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
 		try {

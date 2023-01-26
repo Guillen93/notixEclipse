@@ -1,7 +1,9 @@
 package com.grupo5.reto2.professor;
 
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
 
@@ -13,4 +15,9 @@ public interface ProfessorRepository extends CrudRepository<Professor, Integer> 
 	@Transactional
 	@Modifying
 	Integer deleteByProfessorDni(String professorDni);
+	
+	@Transactional
+	@Query(value="select * from professor where professor_dni in (select professor_dni from subject where subject_id in (select subject_id from note where student_dni = :student_dni ));",nativeQuery = true)
+	Iterable<Professor> findProfessorsByStudentDni(@Param("student_dni")String student_dni);	
+	
 }
