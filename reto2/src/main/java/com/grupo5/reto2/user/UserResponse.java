@@ -1,6 +1,5 @@
 package com.grupo5.reto2.user;
 
-import java.util.List;
 import java.util.Set;
 
 import com.grupo5.reto2.role.Role;

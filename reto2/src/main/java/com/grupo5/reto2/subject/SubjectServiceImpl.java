@@ -8,15 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
-import com.grupo5.reto2.grade.GradeRepository;
 import com.grupo5.reto2.gradeEdition.GradeEdition;
 import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
-import com.grupo5.reto2.note.Note;
-import com.grupo5.reto2.note.NoteRepository;
-import com.grupo5.reto2.note.NoteServiceModel;
 import com.grupo5.reto2.professor.Professor;
 import com.grupo5.reto2.professor.ProfessorRepository;
-import com.grupo5.reto2.student.StudentRepository;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -27,12 +22,6 @@ public class SubjectServiceImpl implements SubjectService {
 	ProfessorRepository professorRepository;
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
-	@Autowired
-	GradeRepository gradeRepository;
-	@Autowired
-	NoteRepository noteRepository;
-	@Autowired
-	StudentRepository studentRepository;
 
 	
 	@Override
@@ -80,61 +69,25 @@ public class SubjectServiceImpl implements SubjectService {
 	@Override
 	public Iterable<SubjectServiceModel> findSubjectsByStudentDni(String dni) throws NotContentException {
 		
-		Boolean studentExists = studentRepository.existsByStudentDni(dni);
-		
-		if(!studentExists) {
-			throw new NotContentException("No existe el estudiante");
-		}else {
-			Iterable<Note> notesBD = noteRepository.findByStudentDni(dni);
+		Iterable<Subject> subjects = subjectRepository.findSubjectByStudentDni(dni);
 
-			
-			List<NoteServiceModel> notes = new ArrayList<NoteServiceModel>();
-			   
-			if (notesBD == null || notesBD.iterator().hasNext()==false) {
-				throw new NotContentException("No existe el estudiante");
-			}
-			
-		    for (Note  note : notesBD) {
-		    	notes.add(
-	                    new NoteServiceModel(
-	                    		note.getId(),
-	                            note.getStudentDni(),
-	                            note.getSubjectId(),
-	                            note.getEva1(),
-	                            note.getEva2(),
-	                            note.getEva3(),
-	                            note.getFinal1(),
-	                            note.getFinal2()
-	                            )
-	                     );
-	        }
-		    
-		    ArrayList<Subject> ListsubjectsById = new ArrayList<Subject>();
-			
-		    for(int i = 0;i<notes.size();i++) {
-		    	
-		    	Subject subjectToBd = subjectRepository.findById(notes.get(i).getSubjectId()).get();
-		    	
-		    	
-		    	ListsubjectsById.add(subjectToBd);
-		    	
-		    	
-		    }
-			
-		    List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
+		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
 
-			for (Subject subject : ListsubjectsById) {
-				
-				response.add(new SubjectServiceModel(
-						subject.getSubjectId(),
-						subject.getGradeEdId(),
-						subject.getProfessorDni(),
-						subject.getName(),
-						subject.getDuration()
-						));
-			}
-			return response;
+		if (subjects == null || subjects.iterator().hasNext()==false) {
+			throw new NotContentException("No hay asignatura ");
 		}
+
+		for (Subject subject : subjects) {
+			
+			response.add(new SubjectServiceModel(
+					subject.getSubjectId(),
+					subject.getGradeEdId(),
+					subject.getProfessorDni(),
+					subject.getName(),
+					subject.getDuration()
+					));
+		}
+		return response;
 		
 		
 	}

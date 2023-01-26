@@ -80,12 +80,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 				String password = passwordEncoder.encode(user.getPassword());
 				user.setPassword(password);
 
-//				Role userRole = roleRepository.findByRole(Rol.Student.name()).get();
 				Role userRole = roleRepository.findById(request.getRoleId()).get();
 				Set<Role> roles = new HashSet<>();
 				roles.add(userRole);
 
-				//user.setEnabled(true);
 				user.setRoles(roles);
 
 				return userRepository.save(user);
