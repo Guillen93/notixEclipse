@@ -29,7 +29,7 @@ public interface NoteRepository extends CrudRepository<Note,NoteId> {
 	@Modifying
 	Integer deleteByStudentDniAndSubjectId(@Param("StudentDni") String studentDNI,@Param("SubjectId") Integer subjectId);
 
-	@Modifying
+	
 	@Query(value="select * from note where subject_id in ( select subject_id from subject where professor_dni = :professor_dni)",nativeQuery = true)
 	Iterable<Note> getNotesbyProfessorDni(@Param("professor_dni") String professor_dni );
 	

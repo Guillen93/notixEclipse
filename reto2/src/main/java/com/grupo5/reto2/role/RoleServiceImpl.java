@@ -63,15 +63,9 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public RoleServiceModel createRole(RolePostRequest rolePostRequest) throws NotContentException, ConflictException {
 		
-		Role role = roleRepository.findByRole(rolePostRequest.getRole()).get();
+	
 
-		if (role != null) {
-
-			throw new ConflictException("Rol ya registrado");
-
-		} else {
-
-			role = new Role(
+			Role role = new Role(
 					rolePostRequest.getRole()
 					);
 
@@ -83,7 +77,7 @@ public class RoleServiceImpl implements RoleService {
 					);
 			
 			return response;
-		}
+		
 	}
 
 	@Override

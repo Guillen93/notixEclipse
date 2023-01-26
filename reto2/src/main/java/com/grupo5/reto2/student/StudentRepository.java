@@ -25,6 +25,7 @@ public interface StudentRepository extends CrudRepository<Student, Integer> {
 	@Query(value="select * from student where student_dni in (select student_dni from promotion where grade_ed_id = :grade_ed_id);",nativeQuery = true)
 	Iterable<Student> findStudentByPromotionsGradeEditionId(@Param("grade_ed_id") Integer grade_ed_id);
 	
+	@Transactional
 	@Modifying
 	@Query(value="Insert into promotion (student_dni,grade_ed_id) values (:student_dni, :grade_ed_id)",nativeQuery = true)
 	public Integer savePromotions(@Param("student_dni") String student_dni , @Param("grade_ed_id") Integer grade_ed_id);

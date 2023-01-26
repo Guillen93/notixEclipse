@@ -54,7 +54,7 @@ public class SubjectController {
 	
 	
 	@GetMapping("/subjects/gradeEditionId/{gradeEditionId}")
-	public ResponseEntity<Iterable<SubjectServiceModel>> getSubjectByStudentDni(@PathVariable Integer gradeEditionId) throws NotContentException {
+	public ResponseEntity<Iterable<SubjectServiceModel>> getSubjectByGradeEditionId(@PathVariable Integer gradeEditionId) throws NotContentException {
 
 		Iterable<SubjectServiceModel> response = subjectService.findSubjectsByGradeEditionId(gradeEditionId);
 		

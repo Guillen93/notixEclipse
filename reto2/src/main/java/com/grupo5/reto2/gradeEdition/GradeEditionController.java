@@ -41,6 +41,17 @@ public class GradeEditionController {
 		return new ResponseEntity<GradeEditionServiceModel>(gradeEditionService.findByGradeEditionId(gradeEditionId),
 				HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/gradeEditions/students/{studentDNI}")
+	public ResponseEntity<Iterable<GradeEditionServiceModel>> getGradeEditionByDni(@PathVariable String studentDNI)
+			throws NotContentException {
+
+		Iterable<GradeEditionServiceModel> response = gradeEditionService.getGradeEditionByDni(studentDNI);
+
+		return new ResponseEntity<Iterable<GradeEditionServiceModel>>(response, HttpStatus.OK);
+
+	}
 
 	
 	@GetMapping("/gradeEditions/getLast")
