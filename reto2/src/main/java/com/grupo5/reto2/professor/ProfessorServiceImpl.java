@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
-import com.grupo5.reto2.gradeEdition.GradeEdition;
-import com.grupo5.reto2.gradeEdition.GradeEditionRepository;
 import com.grupo5.reto2.student.Student;
 import com.grupo5.reto2.student.StudentRepository;
 
@@ -22,12 +20,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Autowired
 	StudentRepository studentRepository;
 
-	@Autowired
-	GradeEditionRepository gradeEditionRepository;
-
 	@Override
 	public Iterable<ProfessorResponse> findAll() throws NotContentException {
-		// return professorRepository.findAll();
 
 		Iterable<Professor> professors = professorRepository.findAll();
 
@@ -139,36 +133,21 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public ProfessorResponse findTutorByGradeEditionId(Integer gradeEditionId) throws NotContentException {
 
-		GradeEdition gradeEdition = gradeEditionRepository.findByGradeEditionId(gradeEditionId);
+		Professor professor = professorRepository.findProfessorbyGradeEditionId(gradeEditionId);
 
-		if (gradeEdition == null) {
-			throw new NotContentException("No existe esa edicion de grado ");
-
-		} else {
-			Professor professor = professorRepository.findByProfessorDni(gradeEdition.getTutorDni());
-
-			if (professor == null) {
-				throw new NotContentException("No hay professores ");
-			} 
-
-			ProfessorResponse response = new ProfessorResponse(
-					professor.getProfessorDni(),
-					professor.getName(),
-					professor.getSurname(),
-					professor.getEmail(),
-					professor.getPhoto(),
-					professor.getNationality(),
-					professor.getAddres()
-					);
-			return response;
+		if (professor == null) {
+			throw new NotContentException("No hay tutor para esa edicion de grado o no existe esa edicion de grado");
 		}
 
+		ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
+				professor.getSurname(), professor.getEmail(), professor.getPhoto(), professor.getNationality(),
+				professor.getAddres());
+		return response;
 	}
 
 	@Override
 	public Iterable<ProfessorResponse> getProfessorByStudentDni(String studentDni) throws NotContentException {
-		
-		
+
 		Iterable<Professor> professors = professorRepository.findProfessorsByStudentDni(studentDni);
 
 		List<ProfessorResponse> response = new ArrayList<ProfessorResponse>();

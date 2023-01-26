@@ -12,7 +12,6 @@ import com.grupo5.reto2.student.Student;
 import com.grupo5.reto2.student.StudentRepository;
 import com.grupo5.reto2.subject.Subject;
 import com.grupo5.reto2.subject.SubjectRepository;
-import com.grupo5.reto2.subject.SubjectServiceModel;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -80,44 +79,21 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public Iterable<NoteServiceModel> getAllNotesByprofessorDni(String professorDNI) throws NotContentException {
 
-		Iterable<Subject> subjectsBD = subjectRepository.findByProfessorDni(professorDNI);
-		if (subjectsBD == null || subjectsBD.iterator().hasNext() == false) {
-			throw new NotContentException("Ese profesor no imparte asignaturas por tanto no tiene notas.");
-		} else {
-			List<SubjectServiceModel> asignaturas = new ArrayList<SubjectServiceModel>();
+		Iterable<Note> notes = noteRepository.getNotesbyProfessorDni(professorDNI);
 
-			for (Subject subject : subjectsBD) {
+		List<NoteServiceModel> response = new ArrayList<NoteServiceModel>();
 
-				asignaturas.add(new SubjectServiceModel(
-						subject.getSubjectId(),
-						subject.getGradeEdId(),
-						subject.getProfessorDni(),
-						subject.getName(),
-						subject.getDuration()
-						));
-			}
-
-			ArrayList<NoteServiceModel> ListNotes = new ArrayList<NoteServiceModel>();
-
-			for (int i = 0; i < asignaturas.size(); i++) {
-
-				Iterable<Note> noteToBD = noteRepository.findBySubjectId(asignaturas.get(i).getSubjectId());
-
-				for (Note note : noteToBD) {
-					ListNotes.add(new NoteServiceModel(
-							note.getId(),
-							note.getStudentDni(),
-							note.getSubjectId(),
-							note.getEva1(),
-							note.getEva2(),
-							note.getEva3(),
-							note.getFinal1(),
-							note.getFinal2()
-							));
-				}
-			}
-			return ListNotes;
+		if (notes == null || notes.iterator().hasNext() == false) {
+			throw new NotContentException("No hay notas de ese professor");
 		}
+
+		for (Note note : notes) {
+			response.add(new NoteServiceModel(note.getId(), note.getStudentDni(), note.getSubjectId(), note.getEva1(),
+					note.getEva2(), note.getEva3(), note.getFinal1(), note.getFinal2()
+
+			));
+		}
+		return response;
 	}
 
 	@Override

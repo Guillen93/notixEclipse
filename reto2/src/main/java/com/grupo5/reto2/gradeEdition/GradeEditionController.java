@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
-import com.grupo5.reto2.student.PromotionServiceModel;
 import com.grupo5.reto2.student.StudentService;
 
 import jakarta.validation.Valid;
@@ -43,13 +42,6 @@ public class GradeEditionController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping("/gradeEditions/{id}/student")
-	public ResponseEntity<Iterable<PromotionServiceModel>> getStudentsByGradeEdition(
-			@PathVariable("id") Integer gradeEditionId) throws NotContentException {
-
-		return new ResponseEntity<Iterable<PromotionServiceModel>>(
-				studentService.getStudentsByGradeEdition(gradeEditionId), HttpStatus.OK);
-	}
 	
 	@GetMapping("/gradeEditions/getLast")
 	public ResponseEntity<GradeEditionServiceModel> getLastGradeEdition() throws NotContentException {
