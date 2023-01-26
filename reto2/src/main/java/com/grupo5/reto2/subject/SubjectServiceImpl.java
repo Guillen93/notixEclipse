@@ -270,6 +270,34 @@ public class SubjectServiceImpl implements SubjectService {
 		return response;
 	}
 
+	@Override
+	public Iterable<SubjectServiceModel> findSubjectsByGradeEditionId(Integer gradeEditionId)
+			throws NotContentException {
+
+		
+		Iterable<Subject> subjects = subjectRepository.findByGradeEdId(gradeEditionId);
+
+		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
+
+		if (subjects == null || subjects.iterator().hasNext()==false) {
+			throw new NotContentException("No hay asignatura ");
+		}
+
+		for (Subject subject : subjects) {
+			
+			response.add(new SubjectServiceModel(
+					subject.getSubjectId(),
+					subject.getGradeEdId(),
+					subject.getProfessorDni(),
+					subject.getName(),
+					subject.getDuration()
+					));
+		}
+		return response;	
+	
+	
+	}
+
 
 
 }

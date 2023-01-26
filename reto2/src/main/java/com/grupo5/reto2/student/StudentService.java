@@ -10,6 +10,7 @@ public interface StudentService {
 	Iterable<StudentServiceModel> getStudentsbyProfessorDni(String professorDNI) throws NotContentException;
 	Iterable<PromotionServiceModel> getStudentsByGradeEdition(Integer GradeEditionId) throws NotContentException;
 	StudentServiceModel createStudent(StudentPostRequest student) throws  ConflictException, NotContentException;
+	Integer createPromotion(PromotionPostRequest promotionPostRequest) throws  ConflictException, NotContentException;
 	StudentServiceModel updateStudent(String studentDNI,StudentPostRequest student) throws ConflictException, NotContentException;
 	Integer deleteByStudentDni(String studentDNI);	
 	

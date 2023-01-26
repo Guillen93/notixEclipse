@@ -81,6 +81,17 @@ public class StudentController {
 		StudentServiceModel response = studentService.createStudent(studentPostRequest);
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.CREATED);
 	}
+	
+	
+	@PostMapping("/students/gradeEditions")
+	public ResponseEntity<Integer> givePromotionToStudent(@RequestBody PromotionPostRequest promotionPostRequest)
+			throws NotContentException, ConflictException {
+
+		Integer response = studentService.createPromotion(promotionPostRequest);
+		
+		return new ResponseEntity<Integer>(response, HttpStatus.CREATED);
+
+	}
 
 	@PutMapping("/students/{studentDNI}")
 	public ResponseEntity<StudentServiceModel> updateStudents(@PathVariable String studentDNI,

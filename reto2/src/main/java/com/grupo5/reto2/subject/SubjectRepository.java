@@ -11,6 +11,9 @@ public interface SubjectRepository extends CrudRepository<Subject, Integer> {
 	@Transactional
 	Iterable<Subject> findByProfessorDni(String dni);
 	
+	@Transactional
+	Iterable<Subject> findByGradeEdId(Integer gradeEditionId);
+	
 	Subject findByName(String name);
 	
 }

@@ -50,6 +50,14 @@ public class GradeEditionController {
 		return new ResponseEntity<Iterable<PromotionServiceModel>>(
 				studentService.getStudentsByGradeEdition(gradeEditionId), HttpStatus.OK);
 	}
+	
+	@GetMapping("/gradeEditions/getLast")
+	public ResponseEntity<GradeEditionServiceModel> getLastGradeEdition() throws NotContentException {
+		
+		GradeEditionServiceModel response = gradeEditionService.getLastGradeEdition();
+		return new ResponseEntity<GradeEditionServiceModel>(response, HttpStatus.OK);
+	}
+
 
 	@PostMapping("/gradeEditions")
 	public ResponseEntity<GradeEditionServiceModel> createGradeEdition(

@@ -308,4 +308,18 @@ public class StudentServiceImpl implements StudentService {
 		return listofStudents;
 	}
 
+	@Override
+	public Integer createPromotion(PromotionPostRequest promotionPostRequest)
+			throws ConflictException, NotContentException {
+		
+		Integer response = studentRepository.savePromotions(promotionPostRequest.getStudentDni(),promotionPostRequest.getGradeEditionId());
+		
+		
+		
+		
+		
+		
+		return response;
+	}
+
 }

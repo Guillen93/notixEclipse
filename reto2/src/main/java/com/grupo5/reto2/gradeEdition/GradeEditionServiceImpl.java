@@ -167,4 +167,20 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 	}
 
+	@Override
+	public GradeEditionServiceModel getLastGradeEdition() throws NotContentException {
+
+		GradeEdition gradeEdition = gradeEditionRepository.findLastgradeEdition();
+		
+		GradeEditionServiceModel response = new GradeEditionServiceModel(
+				gradeEdition.getGradeEdId(),
+				gradeEdition.getGradeId(),
+				gradeEdition.getTutorDni(),
+				gradeEdition.getFecha().toString()
+				);
+		
+		
+		return response;
+	}
+
 }

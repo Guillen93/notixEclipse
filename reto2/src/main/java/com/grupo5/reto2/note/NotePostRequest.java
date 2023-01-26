@@ -15,23 +15,18 @@ public class NotePostRequest {
 	private String studentDni;
 	@NotNull(message = "el campo no puede ser nulo")
 	private Integer subjectId;
-	@NotNull(message = "el campo no puede ser nulo")
 	@Min(0)
 	@Max(10)
 	private Float eva1;
-	@NotNull(message = "el campo no puede ser nulo")
 	@Min(0)
 	@Max(10)
 	private Float eva2;
-	@NotNull(message = "el campo no puede ser nulo")
 	@Min(0)
 	@Max(10)
 	private Float eva3;
-	@NotNull(message = "el campo no puede ser nulo")
 	@Min(0)
 	@Max(10)
 	private Integer final1;
-	@NotNull(message = "el campo no puede ser nulo")
 	@Min(0)
 	@Max(10)
 	private Integer final2;
