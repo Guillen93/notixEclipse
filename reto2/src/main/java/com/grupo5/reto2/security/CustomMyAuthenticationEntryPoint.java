@@ -15,9 +15,13 @@ public class CustomMyAuthenticationEntryPoint implements AuthenticationEntryPoin
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		
-		if (response.getStatus() == HttpServletResponse.SC_FORBIDDEN) {
-			// Si el token es valido pero el usuario no tiene permiso
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authorization Failed");
+		
+		if(response.getStatus() == 409) {
+			response.sendError(response.getStatus());
+			
+		}else if(response.getStatus() == 204) {
+			response.sendError(response.getStatus());
+			
 		} else {
 			// Si el token no es valido o no se envia
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization Failed");
