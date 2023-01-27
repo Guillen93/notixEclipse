@@ -70,7 +70,7 @@ public class StudentController {
 		return new ResponseEntity<Iterable<StudentServiceModel>>(response, HttpStatus.OK);
 	}
 
-	@PostMapping("/students")
+	@PostMapping("/students/create")
 	public ResponseEntity<StudentServiceModel> createStudents(@Valid @RequestBody StudentPostRequest studentPostRequest)
 			throws ConflictException, NotContentException {
 		StudentServiceModel response = studentService.createStudent(studentPostRequest);
