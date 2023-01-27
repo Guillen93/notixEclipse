@@ -30,6 +30,12 @@ public interface StudentRepository extends CrudRepository<Student, Integer> {
 	@Query(value="Insert into promotion (student_dni,grade_ed_id) values (:student_dni, :grade_ed_id)",nativeQuery = true)
 	public Integer savePromotions(@Param("student_dni") String student_dni , @Param("grade_ed_id") Integer grade_ed_id);
 	
+	
+	@Transactional
+	@Query(value="select count(*) from promotion where student_dni = :student_dni and grade_ed_id = :grade_ed_id",nativeQuery = true)
+	Integer findPromotionByStudentDniAndGradeEditionId(@Param("student_dni") String student_dni , @Param("grade_ed_id") Integer grade_ed_id);
+	
+	
 	@Transactional
 	@Query(value="select * from student where student_dni in (select student_dni from note where subject_id in (select subject_id from subject where professor_dni = :professor_dni));",nativeQuery = true)
 	Iterable<Student> findStudentByProfessorDni(@Param("professor_dni") String professor_dni);

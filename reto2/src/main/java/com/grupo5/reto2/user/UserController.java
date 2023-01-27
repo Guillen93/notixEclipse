@@ -104,24 +104,4 @@ public class UserController {
 	}
 	
 	
-	
-	// PUT 
-//	datos del usuario
-//	postRequest
-//	{
-//		id :1,
-//		name: mikel,
-//		roles: ["ADMIN"]
-//	}
-//	
-//	User user...
-//	<list>Role role = rolesService.findByNameIn(usuario.getRoles())
-//	user.setRoles(role)
-//	userRepo.save(user)
-	
-	
-	
-	
-
-	
 }

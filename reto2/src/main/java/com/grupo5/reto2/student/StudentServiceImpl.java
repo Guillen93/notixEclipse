@@ -202,10 +202,19 @@ public class StudentServiceImpl implements StudentService {
 	public Integer createPromotion(PromotionPostRequest promotionPostRequest)
 			throws ConflictException, NotContentException {
 
-		Integer response = studentRepository.savePromotions(promotionPostRequest.getStudentDni(),
-				promotionPostRequest.getGradeEditionId());
+		Integer exists = studentRepository.findPromotionByStudentDniAndGradeEditionId(
+				promotionPostRequest.getStudentDni(), promotionPostRequest.getGradeEditionId());
 
-		return response;
+		if (exists != 0) {
+
+			throw new ConflictException("Ya existe una promocion para ese dni con esa edicion de grado.");
+		} else {
+			Integer response = studentRepository.savePromotions(promotionPostRequest.getStudentDni(),
+					promotionPostRequest.getGradeEditionId());
+
+			return response;
+		}
+
 	}
 
 }
