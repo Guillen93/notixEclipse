@@ -1,5 +1,7 @@
 package com.grupo5.reto2.user;
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.security.EjemploRSA;
 import com.grupo5.reto2.security.JwtTokenUtil;
 
 @CrossOrigin
@@ -52,11 +55,25 @@ public class UserController {
 		return new ResponseEntity <Iterable<UserServiceModel>>(userService.getNotEnabledUsers(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/publicKey")
+	public String getPublicKey() throws NotContentException {
+		
+		return userService.getPublicKey();
+	}
+	
+	
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
 		try {
+			
+			EjemploRSA ejemploRSA = new EjemploRSA();
+
+			byte[] decoded = Base64.getDecoder().decode(request.getPassword());
+
+			String passDescifrada = new String(ejemploRSA.descifrarTexto(decoded));
+			
 			Authentication authentication = userManager.authenticate(
-					new UsernamePasswordAuthenticationToken(request.getDni(), request.getPassword())
+					new UsernamePasswordAuthenticationToken(request.getDni(), passDescifrada)
 					);
 			
 			User user = (User) authentication.getPrincipal();
@@ -74,7 +91,6 @@ public class UserController {
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {
 		
-
 			userService.signUp(request);
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);

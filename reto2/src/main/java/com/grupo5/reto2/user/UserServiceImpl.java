@@ -1,6 +1,10 @@
 package com.grupo5.reto2.user;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,6 +21,7 @@ import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.role.RoleRepository;
+import com.grupo5.reto2.security.EjemploRSA;
 import com.grupo5.reto2.security.HashPasswordEncoder;
 
 @Service("userDetailsService")
@@ -27,6 +32,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	private static final String PUBLIC_KEY_FILE_PATH = "EjemploRSA_Public.key";
 
 	@Override
 	public Iterable<UserServiceModel> GetUsers() throws NotContentException {
@@ -68,7 +75,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User signUp(UserRequest request) throws UserException, ConflictException {
 		try {
 
-			User user = new User(request.getDni(), request.getPassword());
+			EjemploRSA ejemploRSA = new EjemploRSA();
+
+			byte[] decoded = Base64.getDecoder().decode(request.getPassword());
+
+			String passDescifrada = new String(ejemploRSA.descifrarTexto(decoded));
+
+			User user = new User(request.getDni(), passDescifrada);
 
 			Boolean response = userRepository.existsByDni(user.getDni());
 
@@ -135,31 +148,37 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public UserServiceModel updateUser(String username, UserRequest request) throws NotContentException {
 
-		User user = userRepository.findByDni(username).orElseThrow(() -> new NotContentException("No existe ese usuario"));
+		User user = userRepository.findByDni(username)
+				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
 
-			if (request.getPassword() != null ) {
-				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
-				String password = passwordEncoder.encode(request.getPassword());
-				user.setPassword(password);
+		EjemploRSA a = new EjemploRSA();
 
-			}
-			if (request.isEnabled()!=user.isEnabled()) {
+		byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 
-				user.setEnabled(request.isEnabled());
-			}
+		String passDescifrada = new String(a.descifrarTexto(decoded));
 
-			user = userRepository.save(user);
+		if (request.getPassword() != null) {
+			HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+			String password = passwordEncoder.encode(passDescifrada);
+			user.setPassword(password);
 
-			UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles());
+		}
+		if (request.isEnabled() != user.isEnabled()) {
 
-			return response;
+			user.setEnabled(request.isEnabled());
+		}
 
-		
+		user = userRepository.save(user);
+
+		UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles());
+
+		return response;
+
 	}
 
 	@Override
 	public Iterable<UserServiceModel> getNotEnabledUsers() throws NotContentException {
-		
+
 		Iterable<User> users = userRepository.findNotEnabledUsers();
 		List<UserServiceModel> response = new ArrayList<UserServiceModel>();
 
@@ -172,6 +191,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 
 		return response;
+	}
+
+	@Override
+	public String getPublicKey() {
+		byte[] clavePublica = null;
+		try {
+			File ficheroPublica = new File(PUBLIC_KEY_FILE_PATH);
+			clavePublica = Files.readAllBytes(ficheroPublica.toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		byte[] encoded64 = Base64.getEncoder().encode(clavePublica);
+		String passBase64 = new String(encoded64);
+
+		return passBase64;
 	}
 
 }

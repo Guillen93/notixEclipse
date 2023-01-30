@@ -53,6 +53,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 						.requestMatchers("/api/grades/**").permitAll()
 						.requestMatchers("/api/gradeEditions/**").permitAll()
 						.requestMatchers("/api/sendMail").permitAll()
+						.requestMatchers("/api/publicKey").permitAll()
 //						.anyRequest().permitAll()
 						.anyRequest().authenticated()
 		);
