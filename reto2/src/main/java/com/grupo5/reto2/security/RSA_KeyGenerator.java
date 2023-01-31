@@ -30,7 +30,7 @@ import java.security.spec.X509EncodedKeySpec;
  * clase para crear la especificaci�n de clave privada es
  * <u>PKCS8EncodedKeySpec</u>, y para la p�blica es <u>X509EncodedKeySpec</u>.
  */
-public class EjemploRSA_KeyGenerator {
+public class RSA_KeyGenerator {
 
 	 private static final String PUBLIC_KEY_FILE_PATH = "EjemploRSA_Public.key";
 	 private static final String PRIVATE_KEY_FILE_PATH = "EjemploRSA_Private.key";

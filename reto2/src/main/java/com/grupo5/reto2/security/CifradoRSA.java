@@ -4,9 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
@@ -38,37 +36,10 @@ import javax.crypto.Cipher;
  * algoritmo se indica un relleno.</li>
  * </ul>
  */
-public class EjemploRSA {
+public class CifradoRSA {
 
-	 private static final String PUBLIC_KEY_FILE_PATH = "EjemploRSA_Public.key";
 	 private static final String PRIVATE_KEY_FILE_PATH = "EjemploRSA_Private.key";
 	 
-    /**
-     * Cifra un texto con RSA, modo ECB y padding PKCS1Padding (asim�trica) y lo
-     * retorna
-     * 
-     * @param mensaje El mensaje a cifrar
-     * @return El mensaje cifrado
-     */
-    public byte[] cifrarTexto(String mensaje) {
-        byte[] encodedMessage = null;
-        try {
-            // Clave publica
-    		File ficheroPublica = new File(PUBLIC_KEY_FILE_PATH);
-    		byte[] clavePublica = Files.readAllBytes(ficheroPublica.toPath());
-            
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(clavePublica);
-            PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
-
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            encodedMessage = cipher.doFinal(mensaje.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return encodedMessage;
-    }
 
     /**
      * Descifra un texto con RSA, modo ECB y padding PKCS1Padding (asim�trica) y lo

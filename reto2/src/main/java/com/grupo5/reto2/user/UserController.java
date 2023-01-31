@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
-import com.grupo5.reto2.security.EjemploRSA;
+import com.grupo5.reto2.security.CifradoRSA;
 import com.grupo5.reto2.security.JwtTokenUtil;
 
 @CrossOrigin
@@ -65,7 +65,7 @@ public class UserController {
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
 		try {
 
-			EjemploRSA ejemploRSA = new EjemploRSA();
+			CifradoRSA ejemploRSA = new CifradoRSA();
 
 			byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 

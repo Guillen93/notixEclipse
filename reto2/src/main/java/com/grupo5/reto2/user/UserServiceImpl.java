@@ -21,7 +21,7 @@ import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 import com.grupo5.reto2.role.Role;
 import com.grupo5.reto2.role.RoleRepository;
-import com.grupo5.reto2.security.EjemploRSA;
+import com.grupo5.reto2.security.CifradoRSA;
 import com.grupo5.reto2.security.HashPasswordEncoder;
 
 @Service("userDetailsService")
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User signUp(UserRequest request) throws UserException, ConflictException {
 		try {
 
-			EjemploRSA ejemploRSA = new EjemploRSA();
+			CifradoRSA ejemploRSA = new CifradoRSA();
 
 			byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 
@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		User user = userRepository.findByDni(username)
 				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
 
-		EjemploRSA a = new EjemploRSA();
+		CifradoRSA a = new CifradoRSA();
 
 		byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 
