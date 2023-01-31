@@ -146,7 +146,7 @@ public class UserController {
 	}
 	
 	
-	@PutMapping("/users/{userDni}/admin")
+	@PutMapping("/users/admin/{userDni}")
 	public ResponseEntity<UserServiceModel> updateuserAdmin(@PathVariable String userDni, @RequestBody UserRequest request)
 			throws ConflictException, UserException, NotContentException {
 

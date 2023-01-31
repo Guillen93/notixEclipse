@@ -44,7 +44,6 @@ public class Absence {
 	@Column(name = "subjectId", updatable = false, insertable = false)
 	private Integer subjectId;
 
-	
 	@Column(name = "foul", updatable = false, insertable = false)
 	private Date foul;
 

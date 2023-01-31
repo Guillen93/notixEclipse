@@ -158,7 +158,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	@Override
 	public Iterable<AbsenceServiceModel> getAAbsencesByStudentDniAndJustified(String studentDni)
 			throws NotContentException {
-		Iterable<Absence> absences = absenceRepository.findByStudentDniAndJustified(studentDni,true);
+		Iterable<Absence> absences = absenceRepository.findByStudentDniAndJustified(studentDni, true);
 
 		List<AbsenceServiceModel> response = new ArrayList<AbsenceServiceModel>();
 
@@ -167,13 +167,8 @@ public class AbsenceServiceImpl implements AbsenceService {
 		}
 
 		for (Absence absence : absences) {
-			response.add(new AbsenceServiceModel(
-					absence.getId(),
-					absence.getStudentDni(),
-					absence.getSubjectId(),
-					absence.getId().getFoul().toString(),
-					absence.isJustified()
-					));
+			response.add(new AbsenceServiceModel(absence.getId(), absence.getStudentDni(), absence.getSubjectId(),
+					absence.getId().getFoul().toString(), absence.isJustified()));
 		}
 		return response;
 	}

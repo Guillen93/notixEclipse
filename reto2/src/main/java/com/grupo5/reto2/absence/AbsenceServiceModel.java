@@ -14,9 +14,8 @@ public class AbsenceServiceModel {
 	public AbsenceServiceModel() {
 		super();
 	}
-	
-	public AbsenceServiceModel(AbsenceId id,  String studentDni, Integer subjectId,
-			String foul, boolean justified) {
+
+	public AbsenceServiceModel(AbsenceId id, String studentDni, Integer subjectId, String foul, boolean justified) {
 		super();
 		this.id = id;
 		this.studentDni = studentDni;
@@ -75,5 +74,10 @@ public class AbsenceServiceModel {
 		this.justified = justified;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "AbsenceServiceModel [id=" + id + ", studentDni=" + studentDni + ", subjectId=" + subjectId + ", foul="
+				+ foul + ", justified=" + justified + "]";
+	}
+
 }
