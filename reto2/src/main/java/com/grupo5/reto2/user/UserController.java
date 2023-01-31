@@ -64,7 +64,7 @@ public class UserController {
 	@GetMapping("/users/professor/student")
 	public ResponseEntity<Iterable<UserServiceModel>> GetUsersWithoutAdminRole() throws NotContentException {
 
-		return new ResponseEntity<Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
+		return new ResponseEntity<Iterable<UserServiceModel>>(userService.findUsersWithoutAdminRole(), HttpStatus.OK);
 	}
 
 
