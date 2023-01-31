@@ -43,11 +43,11 @@ public class AbsenceController {
 	}
 
 	@GetMapping("/absences/{studentDNI}/{subjetId}")
-	public ResponseEntity<AbsenceServiceModel> getNote(@PathVariable String studentDNI, @PathVariable Integer subjetId)
+	public ResponseEntity<Iterable<AbsenceServiceModel>> getNote(@PathVariable String studentDNI, @PathVariable Integer subjetId)
 			throws NotContentException {
 
-		AbsenceServiceModel response = absenceService.getAbsencesByStudentDniAndSubjectId(studentDNI, subjetId);
-		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.OK);
+		 
+		return new ResponseEntity<Iterable<AbsenceServiceModel>>(absenceService.getAbsencesByStudentDniAndSubjectId(studentDNI, subjetId), HttpStatus.OK);
 
 	}
 
@@ -55,7 +55,7 @@ public class AbsenceController {
 	public ResponseEntity<Iterable<AbsenceServiceModel>> getAbsenceByStudentDniWhileJustifiedTrue(
 			@PathVariable String studentDNI) throws NotContentException {
 
-		Iterable<AbsenceServiceModel> response = absenceService.getAAbsencesByStudentDniAndJustified(studentDNI);
+		Iterable<AbsenceServiceModel> response = absenceService.getAbsencesByStudentDniAndJustified(studentDNI);
 		return new ResponseEntity<Iterable<AbsenceServiceModel>>(response, HttpStatus.OK);
 
 	}

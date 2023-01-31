@@ -64,20 +64,24 @@ public class AbsenceServiceImpl implements AbsenceService {
 	}
 
 	@Override
-	public AbsenceServiceModel getAbsencesByStudentDniAndSubjectId(String studentDni, Integer subjectId)
+	public Iterable<AbsenceServiceModel> getAbsencesByStudentDniAndSubjectId(String studentDni, Integer subjectId)
 			throws NotContentException {
 
-		Absence absence = absenceRepository.findByStudentDniAndSubjectId(studentDni, subjectId);
+		Iterable<Absence> absences = absenceRepository.findByStudentDniAndSubjectId(studentDni,subjectId);
 
-		if (absence == null) {
-			throw new NotContentException("No existe el estudiante");
-		} else {
+		List<AbsenceServiceModel> response = new ArrayList<AbsenceServiceModel>();
 
-			AbsenceServiceModel response = new AbsenceServiceModel(absence.getId(), absence.getStudentDni(),
-					absence.getSubjectId(), absence.getId().getFoul().toString(), absence.isJustified());
-
-			return response;
+		if (absences == null || absences.iterator().hasNext() == false) {
+			throw new NotContentException("No hay ediciones de ese grado");
 		}
+
+		for (Absence absence : absences) {
+			response.add(new AbsenceServiceModel(absence.getId(), absence.getStudentDni(), absence.getSubjectId(),
+					absence.getId().getFoul().toString(), absence.isJustified()
+
+			));
+		}
+		return response;
 	}
 
 	@Override
@@ -156,7 +160,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	}
 
 	@Override
-	public Iterable<AbsenceServiceModel> getAAbsencesByStudentDniAndJustified(String studentDni)
+	public Iterable<AbsenceServiceModel> getAbsencesByStudentDniAndJustified(String studentDni)
 			throws NotContentException {
 		Iterable<Absence> absences = absenceRepository.findByStudentDniAndJustified(studentDni, true);
 

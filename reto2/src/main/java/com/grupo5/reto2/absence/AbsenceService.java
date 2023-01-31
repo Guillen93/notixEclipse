@@ -9,8 +9,8 @@ public interface AbsenceService {
 
 	Iterable<AbsenceServiceModel> getAllAbsences() throws NotContentException;
 	Iterable<AbsenceServiceModel> getAllAbsencesByStudent(String studentDni) throws NotContentException;
-	Iterable<AbsenceServiceModel> getAAbsencesByStudentDniAndJustified(String studentDni) throws NotContentException;
-	AbsenceServiceModel getAbsencesByStudentDniAndSubjectId(String StudentDni, Integer subjectId) throws NotContentException;
+	Iterable<AbsenceServiceModel> getAbsencesByStudentDniAndJustified(String studentDni) throws NotContentException;
+	Iterable<AbsenceServiceModel> getAbsencesByStudentDniAndSubjectId(String StudentDni, Integer subjectId) throws NotContentException;
 	AbsenceServiceModel createAbsence(AbsencePostRequest absencePostRequest) throws ConflictException, NotContentException;
 	AbsenceServiceModel updateAbsence(String studentDni, Integer subjectId ,String date ,AbsencePostRequest absencePostRequest) throws NotContentException;
 	Integer deleteAbsence(String StudentDni, Integer subjectId ,Date date);
