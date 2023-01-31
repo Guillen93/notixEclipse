@@ -84,11 +84,41 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
+	
+
 
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {
 
 		userService.signUp(request);
+
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	
+	@PostMapping("/users/loginSinCifrado")
+	public ResponseEntity<?> loginSinCifrado(@RequestBody UserRequest request) {
+		try {
+
+			Authentication authentication = userManager
+					.authenticate(new UsernamePasswordAuthenticationToken(request.getDni(), request.getPassword()));
+
+			User user = (User) authentication.getPrincipal();
+			String accessToken = jwtUtil.generateAccessToken(user);
+			UserResponse response = new UserResponse(user.getDni(), accessToken, user.getRoles());
+
+			return ResponseEntity.ok().body(response);
+
+		} catch (BadCredentialsException ex) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
+	
+	
+	@PostMapping("/users/signupSinCifrado")
+	public ResponseEntity<?> signUpSinCifrado(@RequestBody UserRequest request) throws ConflictException, UserException {
+
+		userService.signUpSinCifrado(request);
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -113,6 +143,14 @@ public class UserController {
 			throws ConflictException, UserException, NotContentException {
 
 		return new ResponseEntity<UserServiceModel>(userService.updateUser(userDni, request), HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/users/{userDni}/admin")
+	public ResponseEntity<UserServiceModel> updateuserAdmin(@PathVariable String userDni, @RequestBody UserRequest request)
+			throws ConflictException, UserException, NotContentException {
+
+		return new ResponseEntity<UserServiceModel>(userService.updateUserAdmin(userDni, request), HttpStatus.OK);
 	}
 
 }

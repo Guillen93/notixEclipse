@@ -111,6 +111,42 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 
 	}
+	
+	
+	@Override
+	public User signUpSinCifrado(UserRequest request) throws UserException, ConflictException {
+		try {
+
+			User user = new User(request.getDni(), request.getPassword());
+
+			Boolean response = userRepository.existsByDni(user.getDni());
+
+			if (response) {
+				throw new ConflictException("Ya existe el usuario");
+			} else {
+
+				HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+				String password = passwordEncoder.encode(user.getPassword());
+				user.setPassword(password);
+
+				Role userRole = roleRepository.findById(request.getRoleId()).get();
+				Set<Role> roles = new HashSet<>();
+				roles.add(userRole);
+
+				user.setRoles(roles);
+
+				return userRepository.save(user);
+
+			}
+
+		} catch (DataAccessException e) {
+			throw new UserException(e.getMessage());
+
+		} catch (NoSuchElementException e) {
+			throw new ConflictException("el usuario ya existe");
+		}
+
+	}
 
 	@Override
 	public Boolean deleteUser(String username) throws NotContentException {
@@ -160,6 +196,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		if (request.getPassword() != null) {
 			HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
 			String password = passwordEncoder.encode(passDescifrada);
+			user.setPassword(password);
+
+		}
+		if (request.isEnabled() != user.isEnabled()) {
+
+			user.setEnabled(request.isEnabled());
+		}
+
+		user = userRepository.save(user);
+
+		UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles());
+
+		return response;
+
+	}
+	
+	
+	@Override
+	public UserServiceModel updateUserAdmin(String username, UserRequest request) throws NotContentException {
+
+		User user = userRepository.findByDni(username)
+				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
+		
+
+		if (request.getPassword() != null) {
+			HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+			String password = passwordEncoder.encode(request.getPassword());
 			user.setPassword(password);
 
 		}
