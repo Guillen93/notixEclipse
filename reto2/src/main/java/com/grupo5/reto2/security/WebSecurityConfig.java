@@ -17,6 +17,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.grupo5.reto2.role.Rol;
+
 
 @Configuration
 public class WebSecurityConfig implements WebMvcConfigurer {
@@ -48,6 +50,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 						.requestMatchers("/api/users/login").permitAll()
 						.requestMatchers("/api/users/signup").permitAll()
 //						.requestMatchers("/api/professors/**").hasAnyAuthority(Rol.Admin.name(), Rol.Professor.name())
+						.requestMatchers("/api/users").hasAnyAuthority(Rol.Admin.name())
 						.requestMatchers("/api/professors/create").permitAll()
 						.requestMatchers("/api/students/create").permitAll()
 						.requestMatchers("/api/grades/**").permitAll()
