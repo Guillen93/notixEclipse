@@ -30,72 +30,69 @@ import com.grupo5.reto2.security.JwtTokenUtil;
 public class UserController {
 	@Autowired
 	AuthenticationManager userManager;
-	
+
 	@Autowired
 	JwtTokenUtil jwtUtil;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/users")
 	public ResponseEntity<Iterable<UserServiceModel>> GetUsers() throws NotContentException {
-		
-		return new ResponseEntity <Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
+
+		return new ResponseEntity<Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
 	}
 
 	@GetMapping("/users/{userDni}")
 	public ResponseEntity<UserServiceModel> GetUserbyDni(@PathVariable String userDni) throws NotContentException {
-		
-		return new ResponseEntity <UserServiceModel>(userService.GetUsersBydni(userDni), HttpStatus.OK);
+
+		return new ResponseEntity<UserServiceModel>(userService.GetUsersBydni(userDni), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/users/notEnabled")
 	public ResponseEntity<Iterable<UserServiceModel>> GetNotEnabledUsers() throws NotContentException {
-		
-		return new ResponseEntity <Iterable<UserServiceModel>>(userService.getNotEnabledUsers(), HttpStatus.OK);
+
+		return new ResponseEntity<Iterable<UserServiceModel>>(userService.getNotEnabledUsers(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/publicKey")
-	public String getPublicKey() throws NotContentException {
-		
-		return userService.getPublicKey();
+	public ResponseEntity<String> getPublicKey() throws NotContentException {
+
+		return new ResponseEntity<String>(userService.getPublicKey(), HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
 		try {
-			
+
 			EjemploRSA ejemploRSA = new EjemploRSA();
 
 			byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 
 			String passDescifrada = new String(ejemploRSA.descifrarTexto(decoded));
-			
-			Authentication authentication = userManager.authenticate(
-					new UsernamePasswordAuthenticationToken(request.getDni(), passDescifrada)
-					);
-			
+
+			Authentication authentication = userManager
+					.authenticate(new UsernamePasswordAuthenticationToken(request.getDni(), passDescifrada));
+
 			User user = (User) authentication.getPrincipal();
 			String accessToken = jwtUtil.generateAccessToken(user);
-			UserResponse response = new UserResponse(user.getDni(), accessToken ,user.getRoles());
-			
+			UserResponse response = new UserResponse(user.getDni(), accessToken, user.getRoles());
+
 			return ResponseEntity.ok().body(response);
-		
+
 		} catch (BadCredentialsException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
-		
-	
+
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {
-		
-			userService.signUp(request);
-		
+
+		userService.signUp(request);
+
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
+
 	@DeleteMapping("/users/{userDni}")
 	public ResponseEntity<Integer> deleteUser(@PathVariable String userDni) throws NotContentException {
 
@@ -103,21 +100,19 @@ public class UserController {
 
 		return new ResponseEntity<Integer>(HttpStatus.OK);
 	}
-	
-	
+
 	@PutMapping("/users/{userDni}/roles")
-	public ResponseEntity<UserServiceModel> addRoles(@PathVariable String userDni, @RequestBody UserRequest request) throws ConflictException, UserException, NotContentException {
+	public ResponseEntity<UserServiceModel> addRoles(@PathVariable String userDni, @RequestBody UserRequest request)
+			throws ConflictException, UserException, NotContentException {
 
-			
-		return new ResponseEntity<UserServiceModel>(userService.addRoles(userDni,request),HttpStatus.OK);
+		return new ResponseEntity<UserServiceModel>(userService.addRoles(userDni, request), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/users/{userDni}")
-	public ResponseEntity<UserServiceModel> updateuser(@PathVariable String userDni, @RequestBody UserRequest request) throws ConflictException, UserException, NotContentException {
+	public ResponseEntity<UserServiceModel> updateuser(@PathVariable String userDni, @RequestBody UserRequest request)
+			throws ConflictException, UserException, NotContentException {
 
-			
-		return new ResponseEntity<UserServiceModel>(userService.updateUser(userDni,request),HttpStatus.OK);
+		return new ResponseEntity<UserServiceModel>(userService.updateUser(userDni, request), HttpStatus.OK);
 	}
-	
-	
+
 }
