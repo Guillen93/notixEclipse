@@ -111,8 +111,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 
 	}
-	
-	
+
 	@Override
 	public User signUpSinCifrado(UserRequest request) throws UserException, ConflictException {
 		try {
@@ -211,14 +210,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return response;
 
 	}
-	
-	
+
 	@Override
 	public UserServiceModel updateUserAdmin(String username, UserRequest request) throws NotContentException {
 
 		User user = userRepository.findByDni(username)
 				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
-		
 
 		if (request.getPassword() != null) {
 			HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
@@ -270,6 +267,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		String passBase64 = new String(encoded64);
 
 		return passBase64;
+	}
+
+	@Override
+	public Iterable<UserServiceModel> findUsersWithoutAdminRole() throws NotContentException {
+		Iterable<User> users = userRepository.findUsersWithoutAdminRole();
+		List<UserServiceModel> response = new ArrayList<UserServiceModel>();
+
+		if (users == null || users.iterator().hasNext() == false) {
+			throw new NotContentException("No hay usuarios ");
+		}
+
+		for (User user : users) {
+			response.add(new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles()));
+		}
+
+		return response;
 	}
 
 }

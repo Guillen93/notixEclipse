@@ -22,5 +22,12 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Transactional
 	@Query(value="select * from user where is_enabled = 0;",nativeQuery = true)
 	Iterable<User> findNotEnabledUsers();
+
+	@Transactional
+	@Query(value="select * from user where dni in (select user_dni from user_role where role_id !=1)",nativeQuery = true)
+	Iterable<User> findUsersWithoutAdminRole();
+
+	
+
 }
 

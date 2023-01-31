@@ -60,6 +60,13 @@ public class UserController {
 
 		return new ResponseEntity<String>(userService.getPublicKey(), HttpStatus.OK);
 	}
+	
+	@GetMapping("/users/professor/student")
+	public ResponseEntity<Iterable<UserServiceModel>> GetUsersWithoutAdminRole() throws NotContentException {
+
+		return new ResponseEntity<Iterable<UserServiceModel>>(userService.GetUsers(), HttpStatus.OK);
+	}
+
 
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {

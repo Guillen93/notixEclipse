@@ -10,6 +10,7 @@ public interface UserService {
 	Iterable<UserServiceModel> GetUsers() throws NotContentException;
 
 	Iterable<UserServiceModel> getNotEnabledUsers() throws NotContentException;
+	Iterable<UserServiceModel> findUsersWithoutAdminRole() throws NotContentException;
 	
 	UserServiceModel GetUsersBydni(String username) throws NotContentException;
 	UserServiceModel updateUser(String username,UserRequest request) throws NotContentException;
