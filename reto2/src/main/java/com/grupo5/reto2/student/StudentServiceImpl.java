@@ -217,4 +217,27 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
+	@Override
+	public Iterable<StudentServiceModel> findStudentBySubjectIdAndProfessorDni(Integer Subject_id, String professorDNI)
+			throws NotContentException {
+		
+		Iterable<Student> students = studentRepository.findStudentBySubjectIdAndProfessorDni(Subject_id,professorDNI);
+
+		List<StudentServiceModel> response = new ArrayList<StudentServiceModel>();
+
+		if (students == null || students.iterator().hasNext() == false) {
+			throw new NotContentException("No hay estudiantes ");
+		}
+
+		for (Student student : students) {
+			response.add(new StudentServiceModel(student.getStudentDni(), student.getName(), student.getSurname(),
+					student.getBornDate().toString(), student.getNationality(), student.getEmail(), student.getPhone(),
+					student.getPhoto()));
+		}
+
+		return response;
+		
+		
+	}
+
 }

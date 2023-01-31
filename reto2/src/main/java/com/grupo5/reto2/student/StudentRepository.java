@@ -45,4 +45,10 @@ public interface StudentRepository extends CrudRepository<Student, Integer> {
 	@Query(value="select * from student where student_dni in (select student_dni from note where subject_id = :subject_id)",nativeQuery = true)
 	Iterable<Student> findStudentBySubjectId(@Param("subject_id") Integer subject_id);
 	
+	
+	
+	@Transactional
+	@Query(value="select * from student where student_dni in (select student_dni from note n join subject s on n.subject_id=s.subject_id where s.subject_id = :subject_id and s.professor_dni = :professor_dni);",nativeQuery = true)
+	Iterable<Student> findStudentBySubjectIdAndProfessorDni(@Param("subject_id") Integer subject_id,@Param("professor_dni") String professor_dni);
+	
 }
