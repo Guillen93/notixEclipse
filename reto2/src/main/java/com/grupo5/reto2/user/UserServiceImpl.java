@@ -186,11 +186,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		User user = userRepository.findByDni(username)
 				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
 
-		CifradoRSA a = new CifradoRSA();
-
+		CifradoRSA cifradoRSA = new CifradoRSA();
+		
 		byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 
-		String passDescifrada = new String(a.descifrarTexto(decoded));
+		String passDescifrada = new String(cifradoRSA.descifrarTexto(decoded));
 
 		if (request.getPassword() != null) {
 			HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
