@@ -1,5 +1,7 @@
 package com.grupo5.reto2.professor;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,21 +28,21 @@ public class ProfessorController {
 	ProfessorService professorService;
 
 	@GetMapping("/professors")
-	public ResponseEntity<Iterable<ProfessorResponse>> getProfessors() throws NotContentException {
+	public ResponseEntity<Iterable<ProfessorResponse>> getProfessors() throws NotContentException, IOException {
 		Iterable<ProfessorResponse> response = professorService.findAll();
 		return new ResponseEntity<Iterable<ProfessorResponse>>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/professors/{professorDni}")
 	public ResponseEntity<ProfessorResponse> getProfessorByDni(@PathVariable String professorDni)
-			throws NotContentException {
+			throws NotContentException, IOException {
 		return new ResponseEntity<ProfessorResponse>(professorService.findByProfessorDni(professorDni), HttpStatus.OK);
 	}
 
 	
 	@GetMapping("/professors/students/{studentDni}")
 	public  ResponseEntity<Iterable<ProfessorResponse>> getProfessorByStudentDni(@PathVariable String studentDni)
-			throws NotContentException {
+			throws NotContentException, IOException {
 		
 		
 		Iterable<ProfessorResponse> response=professorService.getProfessorByStudentDni(studentDni);
@@ -51,14 +53,14 @@ public class ProfessorController {
 
 	@GetMapping("/professors/gradeEditionId/{gradeEditionId}")
 	public ResponseEntity<ProfessorResponse> getTutorByGradeEditionId(@PathVariable Integer gradeEditionId)
-			throws NotContentException {
+			throws NotContentException, IOException {
 		
 		return new ResponseEntity<ProfessorResponse>(professorService.findTutorByGradeEditionId(gradeEditionId), HttpStatus.OK);
 	}
 
 	@PostMapping("/professors/create")
 	public ResponseEntity<ProfessorResponse> createProfessor(@Valid @RequestBody ProfessorRequest professorRequest)
-			throws ConflictException, NotContentException {
+			throws ConflictException, NotContentException, IOException {
 
 		ProfessorResponse response = professorService.createProfessor(professorRequest);
 		return new ResponseEntity<ProfessorResponse>(response, HttpStatus.CREATED);

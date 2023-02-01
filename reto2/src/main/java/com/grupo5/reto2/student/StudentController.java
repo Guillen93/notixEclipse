@@ -1,5 +1,7 @@
 package com.grupo5.reto2.student;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,7 @@ public class StudentController {
 
 
 	@GetMapping("/students")
-	public ResponseEntity<Iterable<StudentServiceModel>> getStudent() throws NotContentException {
+	public ResponseEntity<Iterable<StudentServiceModel>> getStudent() throws NotContentException, IOException {
 
 		Iterable<StudentServiceModel> response = studentService.findAllStudents();
 		return new ResponseEntity<Iterable<StudentServiceModel>>(response, HttpStatus.OK);
@@ -36,7 +38,7 @@ public class StudentController {
 
 	@GetMapping("/students/{studentDNI}")
 	public ResponseEntity<StudentServiceModel> getStudentById(@PathVariable String studentDNI)
-			throws NotContentException {
+			throws NotContentException, IOException {
 
 		StudentServiceModel response = studentService.findByStudentDni(studentDNI);
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
@@ -45,7 +47,7 @@ public class StudentController {
 
 	@GetMapping("/students/subject/{subjectId}")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectId(@PathVariable Integer subjectId)
-			throws NotContentException {
+			throws NotContentException,IOException {
 
 		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.getStudentsBySubjectId(subjectId),
 				HttpStatus.OK);
@@ -55,7 +57,7 @@ public class StudentController {
 	
 	@GetMapping("/students/subjects/{subjectId}/professorDni/{professorDni}")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectIdAndProfessorDni(@PathVariable Integer subjectId,@PathVariable String professorDni)
-			throws NotContentException {
+			throws NotContentException ,IOException{
 
 		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.findStudentBySubjectIdAndProfessorDni(subjectId,professorDni),
 				HttpStatus.OK);
@@ -72,7 +74,7 @@ public class StudentController {
 
 	@GetMapping("/students/professor/{professorDni}")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentsProfessorByDni(@PathVariable String professorDni)
-			throws NotContentException {
+			throws NotContentException, IOException {
 
 		Iterable<StudentServiceModel> response = studentService.getStudentsbyProfessorDni(professorDni);
 
@@ -81,7 +83,7 @@ public class StudentController {
 
 	@PostMapping("/students/create")
 	public ResponseEntity<StudentServiceModel> createStudents(@Valid @RequestBody StudentPostRequest studentPostRequest)
-			throws ConflictException, NotContentException {
+			throws ConflictException, NotContentException, IOException {
 		StudentServiceModel response = studentService.createStudent(studentPostRequest);
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.CREATED);
 	}

@@ -1,7 +1,15 @@
 package com.grupo5.reto2.professor;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +29,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 	StudentRepository studentRepository;
 
 	@Override
-	public Iterable<ProfessorResponse> findAll() throws NotContentException {
+	public Iterable<ProfessorResponse> findAll() throws NotContentException, IOException {
 
 		Iterable<Professor> professors = professorRepository.findAll();
 
@@ -32,15 +40,24 @@ public class ProfessorServiceImpl implements ProfessorService {
 		}
 
 		for (Professor professor : professors) {
+			String photoBase = "";
+
+			if (professor.getPhoto() != null || professor.getPhoto().isEmpty() == false) {
+
+				File file = new File(professor.getPhoto());
+				byte[] fileContent = Files.readAllBytes(file.toPath());
+				photoBase = Base64.getEncoder().encodeToString(fileContent);
+
+			}
 			response.add(new ProfessorResponse(professor.getProfessorDni(), professor.getName(), professor.getSurname(),
-					professor.getEmail(), professor.getPhoto(), professor.getNationality(), professor.getAddres()));
+					professor.getEmail(), photoBase, professor.getNationality(), professor.getAddres()));
 		}
 
 		return response;
 	}
 
 	@Override
-	public ProfessorResponse findByProfessorDni(String professorDni) throws NotContentException {
+	public ProfessorResponse findByProfessorDni(String professorDni) throws NotContentException, IOException {
 
 		Professor professor = professorRepository.findByProfessorDni(professorDni);
 
@@ -48,8 +65,18 @@ public class ProfessorServiceImpl implements ProfessorService {
 			throw new NotContentException("No hay professores ");
 		}
 
+		String photoBase = "";
+
+		if (professor.getPhoto() != null) {
+
+			File file = new File(professor.getPhoto());
+			byte[] fileContent = Files.readAllBytes(file.toPath());
+			photoBase = Base64.getEncoder().encodeToString(fileContent);
+
+		}
+
 		ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
-				professor.getSurname(), professor.getEmail(), professor.getPhoto(), professor.getNationality(),
+				professor.getSurname(), professor.getEmail(), photoBase, professor.getNationality(),
 				professor.getAddres());
 		return response;
 
@@ -57,7 +84,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 	@Override
 	public ProfessorResponse createProfessor(ProfessorRequest professorRequest)
-			throws ConflictException, NotContentException {
+			throws ConflictException, NotContentException, IOException {
 
 		Student student = studentRepository.findByStudentDni(professorRequest.getProfessorDni());
 
@@ -68,10 +95,19 @@ public class ProfessorServiceImpl implements ProfessorService {
 			throw new ConflictException("Usuario ya registrado");
 
 		} else {
+			
+			String extensionArchivo = detectMimeType(professorRequest.getPhoto());
+			String fileName = professorRequest.getProfessorDni() + extensionArchivo;
+			String outputFile = "src/main/resources/static/images/" + fileName;
+
+			byte[] decodedImg = Base64.getDecoder().decode(professorRequest.getPhoto());
+			Path destinatioFile = Paths.get(outputFile);
+			Files.write(destinatioFile, decodedImg);
 
 			professor = new Professor(professorRequest.getProfessorDni(), professorRequest.getName(),
 					professorRequest.getSurname(), professorRequest.getNationality(), professorRequest.getEmail(),
-					professorRequest.getAddres(), professorRequest.getPhoto());
+					professorRequest.getAddres(), outputFile);
+			
 			professor = professorRepository.save(professor);
 
 			ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
@@ -111,9 +147,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 			if (professorRequest.getAddres() != null) {
 				professor.setAddres(professorRequest.getAddres());
 			}
-			if (professorRequest.getPhoto() != null) {
-				professor.setPhoto(professorRequest.getPhoto());
-			}
+			
 
 			professor = professorRepository.save(professor);
 
@@ -131,7 +165,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 
 	@Override
-	public ProfessorResponse findTutorByGradeEditionId(Integer gradeEditionId) throws NotContentException {
+	public ProfessorResponse findTutorByGradeEditionId(Integer gradeEditionId) throws NotContentException, IOException {
 
 		Professor professor = professorRepository.findProfessorbyGradeEditionId(gradeEditionId);
 
@@ -139,14 +173,24 @@ public class ProfessorServiceImpl implements ProfessorService {
 			throw new NotContentException("No hay tutor para esa edicion de grado o no existe esa edicion de grado");
 		}
 
+		String photoBase = "";
+
+		if (professor.getPhoto() != null) {
+
+			File file = new File(professor.getPhoto());
+			byte[] fileContent = Files.readAllBytes(file.toPath());
+			photoBase = Base64.getEncoder().encodeToString(fileContent);
+
+		}
+
 		ProfessorResponse response = new ProfessorResponse(professor.getProfessorDni(), professor.getName(),
-				professor.getSurname(), professor.getEmail(), professor.getPhoto(), professor.getNationality(),
+				professor.getSurname(), professor.getEmail(), photoBase, professor.getNationality(),
 				professor.getAddres());
 		return response;
 	}
 
 	@Override
-	public Iterable<ProfessorResponse> getProfessorByStudentDni(String studentDni) throws NotContentException {
+	public Iterable<ProfessorResponse> getProfessorByStudentDni(String studentDni) throws NotContentException, IOException {
 
 		Iterable<Professor> professors = professorRepository.findProfessorsByStudentDni(studentDni);
 
@@ -157,10 +201,49 @@ public class ProfessorServiceImpl implements ProfessorService {
 		}
 
 		for (Professor professor : professors) {
+			String photoBase = "";
+
+			if (professor.getPhoto() != null) {
+
+				File file = new File(professor.getPhoto());
+				byte[] fileContent = Files.readAllBytes(file.toPath());
+				photoBase = Base64.getEncoder().encodeToString(fileContent);
+
+			}
 			response.add(new ProfessorResponse(professor.getProfessorDni(), professor.getName(), professor.getSurname(),
-					professor.getEmail(), professor.getPhoto(), professor.getNationality(), professor.getAddres()));
+					professor.getEmail(), photoBase, professor.getNationality(), professor.getAddres()));
 		}
 
 		return response;
 	}
+
+	
+	private String detectMimeType(String base64Content) {
+
+		HashMap<String, String> signatures = new HashMap<String, String>();
+		signatures.put("JVBERi0", ".pdf");
+		signatures.put("R0lGODdh", ".gif");
+		signatures.put("R0lGODdh", ".gif");
+		signatures.put("iVBORw0KGgo", ".png");
+		signatures.put("/9j/", ".jpg");
+		String response = "";
+
+		for (Map.Entry<String, String> entry : signatures.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (base64Content.indexOf(key) == 0) {
+
+				response = entry.getValue();
+
+			}
+
+		}
+
+		return response;
+
+	}
+	
+
+
 }
