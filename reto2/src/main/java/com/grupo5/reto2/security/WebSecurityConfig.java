@@ -55,6 +55,9 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 				.requestMatchers("/api/students/create").permitAll()
 				.requestMatchers("/api/sendMail").permitAll()
 				.requestMatchers("/api/publicKey").permitAll()
+				.requestMatchers("/v3/api-docs").permitAll()
+				.requestMatchers("/v3/api-docs/**").permitAll()
+				.requestMatchers("/swagger-ui/**").permitAll()				
 				.anyRequest().authenticated());
 
 		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
