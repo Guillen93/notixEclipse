@@ -42,7 +42,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 		for (Professor professor : professors) {
 			String photoBase = "";
 
-			if (professor.getPhoto() != null || professor.getPhoto().isEmpty() == false) {
+			if (professor.getPhoto() != null && professor.getPhoto().length()!=0) {
 
 				File file = new File(professor.getPhoto());
 				byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -67,7 +67,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 		String photoBase = "";
 
-		if (professor.getPhoto() != null) {
+		if (professor.getPhoto() != null && professor.getPhoto().length()!=0) {
 
 			File file = new File(professor.getPhoto());
 			byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -95,14 +95,17 @@ public class ProfessorServiceImpl implements ProfessorService {
 			throw new ConflictException("Usuario ya registrado");
 
 		} else {
-			
-			String extensionArchivo = detectMimeType(professorRequest.getPhoto());
-			String fileName = professorRequest.getProfessorDni() + extensionArchivo;
-			String outputFile = "src/main/resources/static/images/" + fileName;
+			String outputFile="";
+			if(professorRequest.getPhoto()!=null) {
+				String extensionArchivo = detectMimeType(professorRequest.getPhoto());
+				String fileName = professorRequest.getProfessorDni() + extensionArchivo;
+				outputFile = "src/main/resources/static/images/" + fileName;
 
-			byte[] decodedImg = Base64.getDecoder().decode(professorRequest.getPhoto());
-			Path destinatioFile = Paths.get(outputFile);
-			Files.write(destinatioFile, decodedImg);
+				byte[] decodedImg = Base64.getDecoder().decode(professorRequest.getPhoto());
+				Path destinatioFile = Paths.get(outputFile);
+				Files.write(destinatioFile, decodedImg);
+			}
+			
 
 			professor = new Professor(professorRequest.getProfessorDni(), professorRequest.getName(),
 					professorRequest.getSurname(), professorRequest.getNationality(), professorRequest.getEmail(),
@@ -175,7 +178,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 		String photoBase = "";
 
-		if (professor.getPhoto() != null) {
+		if (professor.getPhoto() != null && professor.getPhoto().length()!=0) {
 
 			File file = new File(professor.getPhoto());
 			byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -203,7 +206,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 		for (Professor professor : professors) {
 			String photoBase = "";
 
-			if (professor.getPhoto() != null) {
+			if (professor.getPhoto() != null && professor.getPhoto().length()!=0) {
 
 				File file = new File(professor.getPhoto());
 				byte[] fileContent = Files.readAllBytes(file.toPath());

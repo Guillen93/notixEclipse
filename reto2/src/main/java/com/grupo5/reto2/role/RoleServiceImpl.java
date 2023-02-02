@@ -47,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
 			RoleServiceModel response = new RoleServiceModel(role.getRoleID(), role.getRole());
 
 			return response;
-
+		
 		}
 
 	}

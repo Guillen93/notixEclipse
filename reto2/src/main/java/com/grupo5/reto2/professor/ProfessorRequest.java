@@ -27,8 +27,7 @@ public class ProfessorRequest {
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
 	private String addres;
-	@NotNull(message = "el campo no puede ser nulo")
-	@NotEmpty(message = "el campo no puede estar vacio")
+	
 	private String photo;
 
 	public ProfessorRequest() {

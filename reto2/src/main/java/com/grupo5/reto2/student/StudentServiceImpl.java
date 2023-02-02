@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 
 		for (Student student : students) {
 			String photoBase = "";
-			if (student.getPhoto() != null) {
+			if (student.getPhoto() != null && student.getPhoto().length() != 0) {
 
 				File file = new File(student.getPhoto());
 				byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -64,7 +64,7 @@ public class StudentServiceImpl implements StudentService {
 			throw new NotContentException("No existe el estudiante");
 		}
 		String photoBase = "";
-		if (student.getPhoto() != null) {
+		if (student.getPhoto() != null && student.getPhoto().length() != 0) {
 
 			File file = new File(student.getPhoto());
 			byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -92,15 +92,16 @@ public class StudentServiceImpl implements StudentService {
 			throw new ConflictException("Usuario ya registrado");
 
 		} else {
-
+			String outputFile="";
+			if(studentPostRequest.getPhoto()!=null) {
 			String extensionArchivo = detectMimeType(studentPostRequest.getPhoto());
 			String fileName = studentPostRequest.getStudentDni() + extensionArchivo;
-			String outputFile = "src/main/resources/static/images/" + fileName;
+			outputFile = "src/main/resources/static/images/" + fileName;
 
 			byte[] decodedImg = Base64.getDecoder().decode(studentPostRequest.getPhoto());
 			Path destinatioFile = Paths.get(outputFile);
 			Files.write(destinatioFile, decodedImg);
-
+			}
 			student = new Student(studentPostRequest.getStudentDni(), studentPostRequest.getName(),
 					studentPostRequest.getSurname(), Date.valueOf(studentPostRequest.getBornDate()),
 					studentPostRequest.getNationality(), studentPostRequest.getEmail(), studentPostRequest.getPhone(),
@@ -166,7 +167,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Iterable<StudentServiceModel> getStudentsByGradeEdition(Integer GradeEditionId) throws NotContentException {
+	public Iterable<StudentServiceModel> getStudentsByGradeEdition(Integer GradeEditionId)
+			throws NotContentException, IOException {
 
 		Iterable<Student> students = studentRepository.findStudentByPromotionsGradeEditionId(GradeEditionId);
 
@@ -174,15 +176,23 @@ public class StudentServiceImpl implements StudentService {
 
 		if (students == null || students.iterator().hasNext() == false) {
 			throw new NotContentException("No hay estudiantes ");
-		} else {
-			for (Student student : students) {
-				response.add(new StudentServiceModel(student.getStudentDni(), student.getName(), student.getSurname(),
-						student.getBornDate().toString(), student.getNationality(), student.getEmail(),
-						student.getPhone(), student.getPhoto()));
-			}
-
-			return response;
 		}
+
+		for (Student student : students) {
+			String photoBase = "";
+			if (student.getPhoto() != null && student.getPhoto().length() != 0) {
+
+				File file = new File(student.getPhoto());
+				byte[] fileContent = Files.readAllBytes(file.toPath());
+				photoBase = Base64.getEncoder().encodeToString(fileContent);
+
+			}
+			response.add(new StudentServiceModel(student.getStudentDni(), student.getName(), student.getSurname(),
+					student.getBornDate().toString(), student.getNationality(), student.getEmail(), student.getPhone(),
+					photoBase));
+		}
+
+		return response;
 
 	}
 
@@ -201,7 +211,7 @@ public class StudentServiceImpl implements StudentService {
 		for (Student student : students) {
 
 			String photoBase = "";
-			if (student.getPhoto() != null) {
+			if (student.getPhoto() != null && student.getPhoto().length() != 0) {
 
 				File file = new File(student.getPhoto());
 				byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -232,7 +242,7 @@ public class StudentServiceImpl implements StudentService {
 		for (Student student : students) {
 
 			String photoBase = "";
-			if (student.getPhoto() != null) {
+			if (student.getPhoto() != null && student.getPhoto().length() != 0) {
 
 				File file = new File(student.getPhoto());
 				byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -280,7 +290,7 @@ public class StudentServiceImpl implements StudentService {
 		for (Student student : students) {
 
 			String photoBase = "";
-			if (student.getPhoto() != null) {
+			if (student.getPhoto() != null && student.getPhoto().length() != 0) {
 
 				File file = new File(student.getPhoto());
 				byte[] fileContent = Files.readAllBytes(file.toPath());

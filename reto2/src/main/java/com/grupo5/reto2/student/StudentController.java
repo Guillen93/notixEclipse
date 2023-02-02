@@ -65,7 +65,7 @@ public class StudentController {
 
 	@GetMapping("/gradeEditions/{id}/student")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentsByGradeEdition(
-			@PathVariable("id") Integer gradeEditionId) throws NotContentException {
+			@PathVariable("id") Integer gradeEditionId) throws NotContentException, IOException {
 
 		return new ResponseEntity<Iterable<StudentServiceModel>>(
 				studentService.getStudentsByGradeEdition(gradeEditionId), HttpStatus.OK);

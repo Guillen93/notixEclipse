@@ -34,8 +34,7 @@ public class StudentPostRequest {
 	@Pattern(regexp = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]", message = "Formato telefono incorrecto")
 	@Size(max = 9, min = 9)
 	private String phone;
-	@NotNull(message = "Campo no nulo")
-	@NotEmpty(message = "Campo no puede ser vacio")
+
 	private String photo;
 
 	public StudentPostRequest() {
