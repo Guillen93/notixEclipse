@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Pattern;
 
 public class GradePostRequest {
 
-
 	private Integer gradeId;
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
@@ -28,7 +27,6 @@ public class GradePostRequest {
 		this.name = name;
 		this.language = language;
 	}
-
 
 	public GradePostRequest(String name, String language) {
 		super();

@@ -33,7 +33,8 @@ public class NoteController {
 	}
 
 	@GetMapping("/notes/{studentDNI}/{subjetId}")
-	public ResponseEntity<NoteServiceModel> getNote(@PathVariable String studentDNI, @PathVariable Integer subjetId) throws NotContentException {
+	public ResponseEntity<NoteServiceModel> getNote(@PathVariable String studentDNI, @PathVariable Integer subjetId)
+			throws NotContentException {
 
 		NoteServiceModel response = noteService.getAllNoteById(studentDNI, subjetId);
 		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.OK);
@@ -41,43 +42,45 @@ public class NoteController {
 	}
 
 	@GetMapping("/notes/student/{studentDNI}")
-	public ResponseEntity<Iterable<NoteServiceModel>> getNote(@PathVariable String studentDNI ) throws NotContentException {
+	public ResponseEntity<Iterable<NoteServiceModel>> getNote(@PathVariable String studentDNI)
+			throws NotContentException {
 
 		Iterable<NoteServiceModel> response = noteService.getAllNotesByStudentDni(studentDNI);
 		return new ResponseEntity<Iterable<NoteServiceModel>>(response, HttpStatus.OK);
-		    
+
 	}
-	
+
 	@GetMapping("/notes/professor/{professorDNI}")
-	public ResponseEntity<Iterable<NoteServiceModel>> getNotesByProfessorDni(@PathVariable String professorDNI ) throws NotContentException {
+	public ResponseEntity<Iterable<NoteServiceModel>> getNotesByProfessorDni(@PathVariable String professorDNI)
+			throws NotContentException {
 
 		Iterable<NoteServiceModel> response = noteService.getAllNotesByprofessorDni(professorDNI);
 		return new ResponseEntity<Iterable<NoteServiceModel>>(response, HttpStatus.OK);
-		    
+
 	}
 
 	@PostMapping("/notes")
-	public ResponseEntity<NoteServiceModel> createNote(@Valid @RequestBody NotePostRequest notePostRequest) throws ConflictException, NotContentException {
-		
+	public ResponseEntity<NoteServiceModel> createNote(@Valid @RequestBody NotePostRequest notePostRequest)
+			throws ConflictException, NotContentException {
+
 		NoteServiceModel response = noteService.createNotes(notePostRequest);
 		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/notes/{studentDNI}/{subjetId}")
-	public ResponseEntity<NoteServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI , @PathVariable Integer subjetId, @RequestBody NotePostRequest notePostRequest  ) throws NotContentException{
+	public ResponseEntity<NoteServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI,
+			@PathVariable Integer subjetId, @RequestBody NotePostRequest notePostRequest) throws NotContentException {
 
-		NoteServiceModel response = noteService.updateNotes(studentDNI, subjetId,notePostRequest);
+		NoteServiceModel response = noteService.updateNotes(studentDNI, subjetId, notePostRequest);
 
 		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.OK);
 	}
 
-
-
 	@DeleteMapping("/notes/{studentDNI}/{subjetId}")
-	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI,
-			@PathVariable Integer subjetId) throws NotContentException {
+	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI, @PathVariable Integer subjetId)
+			throws NotContentException {
 
-		Integer response = noteService.deleteNotesById(studentDNI,subjetId);
+		Integer response = noteService.deleteNotesById(studentDNI, subjetId);
 
 		if (response == 0) {
 			throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");

@@ -1,8 +1,5 @@
 package com.grupo5.reto2.note;
 
-
-
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

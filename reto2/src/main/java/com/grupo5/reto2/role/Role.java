@@ -8,25 +8,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="role")
+@Table(name = "role")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer roleID;
-	
+
 	@Column()
 	private String role;
-	
+
 	public Role() {
 		super();
 	}
-	
-	public Role( String role) {
+
+	public Role(String role) {
 		super();
 		this.role = role;
 	}
 
-	
 	public Role(Integer roleID, String role) {
 		super();
 		this.roleID = roleID;
@@ -53,6 +52,5 @@ public class Role {
 	public String toString() {
 		return "Role [roleID=" + roleID + ", role=" + role + "]";
 	}
-	
-	
+
 }

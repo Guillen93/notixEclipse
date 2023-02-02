@@ -1,6 +1,5 @@
 package com.grupo5.reto2.user;
 
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 

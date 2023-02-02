@@ -1,13 +1,14 @@
 package com.grupo5.reto2.grade;
 
 public class GradeServiceModel {
-	
+
 	private Integer gradeId;
 	private String name;
 	private String language;
-	
-	public GradeServiceModel() {}
-	
+
+	public GradeServiceModel() {
+	}
+
 	public GradeServiceModel(Integer gradeId, String name, String language) {
 		super();
 		this.gradeId = gradeId;
@@ -43,5 +44,5 @@ public class GradeServiceModel {
 	public String toString() {
 		return "GradeServiceModel [gradeId=" + gradeId + ", name=" + name + ", language=" + language + "]";
 	}
-	
+
 }

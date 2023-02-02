@@ -10,112 +10,88 @@ import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
 
 @Service
-public class GradeServiceImpl implements GradeService{
+public class GradeServiceImpl implements GradeService {
 
 	@Autowired
 	GradeRepository gradeRepository;
-	
+
 	@Override
 	public List<GradeServiceModel> findAllGrades() throws NotContentException {
-	Iterable<Grade> grades = gradeRepository.findAll();
-		
+		Iterable<Grade> grades = gradeRepository.findAll();
+
 		List<GradeServiceModel> response = new ArrayList<GradeServiceModel>();
-		
-		if (grades == null || grades.iterator().hasNext()==false) {
+
+		if (grades == null || grades.iterator().hasNext() == false) {
 			throw new NotContentException("No hay estudiantes ");
 		}
-		
+
 		for (Grade grade : grades) {
-			response.add(
-					new GradeServiceModel(
-							grade.getGradeId(),
-							grade.getName(),
-							grade.getLanguage()
-							)
-					 );
+			response.add(new GradeServiceModel(grade.getGradeId(), grade.getName(), grade.getLanguage()));
 		}
 		return response;
 	}
 
 	@Override
 	public GradeServiceModel findByGradeId(Integer gradeId) throws NotContentException {
-		
+
 		Grade grade = gradeRepository.findById(gradeId)
-		.orElseThrow(() -> new NotContentException("No existe el estudiante"));
-		
-		GradeServiceModel response = new GradeServiceModel(
-				grade.getGradeId(),
-				grade.getName(),
-				grade.getLanguage()
-				);
-		
+				.orElseThrow(() -> new NotContentException("No existe el estudiante"));
+
+		GradeServiceModel response = new GradeServiceModel(grade.getGradeId(), grade.getName(), grade.getLanguage());
+
 		return response;
 	}
 
 	@Override
 	public GradeServiceModel createGrade(GradePostRequest gradePostRequest) throws ConflictException {
-		
-		Grade gradeBd = gradeRepository.findByNameAndLanguage(gradePostRequest.getName(),gradePostRequest.getLanguage());
-		
-		if(gradeBd != null) {
+
+		Grade gradeBd = gradeRepository.findByNameAndLanguage(gradePostRequest.getName(),
+				gradePostRequest.getLanguage());
+
+		if (gradeBd != null) {
 			throw new ConflictException("El estudiante ya esta registrado");
-		}else {
-			Grade grade = new Grade(
-					gradePostRequest.getGradeId(),
-					gradePostRequest.getName(),
-					gradePostRequest.getLanguage()
-					);
-			
+		} else {
+			Grade grade = new Grade(gradePostRequest.getGradeId(), gradePostRequest.getName(),
+					gradePostRequest.getLanguage());
+
 			grade = gradeRepository.save(grade);
-		
-			GradeServiceModel response = new GradeServiceModel(
-					grade.getGradeId(),
-					grade.getName(),
-					grade.getLanguage()
-					);
-			
+
+			GradeServiceModel response = new GradeServiceModel(grade.getGradeId(), grade.getName(),
+					grade.getLanguage());
+
 			return response;
 		}
 	}
 
 	@Override
-	public GradeServiceModel updateGrade(Integer gradeId, GradePostRequest gradePostRequest) throws NotContentException {
-		 
+	public GradeServiceModel updateGrade(Integer gradeId, GradePostRequest gradePostRequest)
+			throws NotContentException {
+
 		Boolean existe = gradeRepository.existsById(gradeId);
-		
-		
-		if(!existe) {
+
+		if (!existe) {
 			throw new NotContentException("No existe el estudiante");
 		} else {
 			Grade grade = gradeRepository.findById(gradeId).get();
-			if(gradePostRequest.getName() != null && gradePostRequest.getName() != "") {
+			if (gradePostRequest.getName() != null && gradePostRequest.getName() != "") {
 				grade.setName(gradePostRequest.getName());
 			}
-			if(gradePostRequest.getLanguage() != null && gradePostRequest.getLanguage() != "") {
+			if (gradePostRequest.getLanguage() != null && gradePostRequest.getLanguage() != "") {
 				grade.setLanguage(gradePostRequest.getLanguage());
 			}
-			
+
 			grade = gradeRepository.save(grade);
-		
-			
-			GradeServiceModel response = new GradeServiceModel(
-					gradeId,
-					grade.getName(),
-					grade.getLanguage()
-					);
+
+			GradeServiceModel response = new GradeServiceModel(gradeId, grade.getName(), grade.getLanguage());
 			return response;
 		}
-		
-		
-		
+
 	}
 
 	@Override
-	public Integer  deleteByGradeId(Integer gradeId) {
-		
+	public Integer deleteByGradeId(Integer gradeId) {
+
 		return gradeRepository.deleteByGradeId(gradeId);
-		}
-
-
+	}
 
 }

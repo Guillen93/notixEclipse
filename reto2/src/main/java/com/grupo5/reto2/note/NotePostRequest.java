@@ -118,4 +118,10 @@ public class NotePostRequest {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "NotePostRequest [id=" + id + ", studentDni=" + studentDni + ", subjectId=" + subjectId + ", eva1="
+				+ eva1 + ", eva2=" + eva2 + ", eva3=" + eva3 + ", final1=" + final1 + ", final2=" + final2 + "]";
+	}
+
 }

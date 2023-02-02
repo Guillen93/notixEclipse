@@ -39,23 +39,21 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorResponse>(professorService.findByProfessorDni(professorDni), HttpStatus.OK);
 	}
 
-	
 	@GetMapping("/professors/students/{studentDni}")
-	public  ResponseEntity<Iterable<ProfessorResponse>> getProfessorByStudentDni(@PathVariable String studentDni)
+	public ResponseEntity<Iterable<ProfessorResponse>> getProfessorByStudentDni(@PathVariable String studentDni)
 			throws NotContentException, IOException {
-		
-		
-		Iterable<ProfessorResponse> response=professorService.getProfessorByStudentDni(studentDni);
-		
+
+		Iterable<ProfessorResponse> response = professorService.getProfessorByStudentDni(studentDni);
+
 		return new ResponseEntity<Iterable<ProfessorResponse>>(response, HttpStatus.OK);
 	}
-
 
 	@GetMapping("/professors/gradeEditionId/{gradeEditionId}")
 	public ResponseEntity<ProfessorResponse> getTutorByGradeEditionId(@PathVariable Integer gradeEditionId)
 			throws NotContentException, IOException {
-		
-		return new ResponseEntity<ProfessorResponse>(professorService.findTutorByGradeEditionId(gradeEditionId), HttpStatus.OK);
+
+		return new ResponseEntity<ProfessorResponse>(professorService.findTutorByGradeEditionId(gradeEditionId),
+				HttpStatus.OK);
 	}
 
 	@PostMapping("/professors/create")

@@ -28,7 +28,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="subject")
+@Table(name = "subject")
 public class Subject {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,35 +36,35 @@ public class Subject {
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "gradeEdId", foreignKey=@ForeignKey(name = "fk_gradeEdId"))
+	@JoinColumn(name = "gradeEdId", foreignKey = @ForeignKey(name = "fk_gradeEdId"))
 	@JsonManagedReference
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private GradeEdition gradeEdition;
-	@Column(name = "gradeEdId", updatable = false, insertable = false )
+	@Column(name = "gradeEdId", updatable = false, insertable = false)
 	private Integer gradeEdId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "professorDni", foreignKey=@ForeignKey(name = "fk_professorDni"))
+	@JoinColumn(name = "professorDni", foreignKey = @ForeignKey(name = "fk_professorDni"))
 	@JsonManagedReference
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Professor professor;
 	@Column(name = "professorDni", updatable = false, insertable = false)
 	private String professorDni;
-	
+
 	@Column(length = 100)
 	private String name;
-	
+
 	@Column()
 	private Integer duration;
 
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Set<Note> notes = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Set<Absence> absences = new HashSet<>();
-	
+
 	public Subject() {
 		super();
 	}
@@ -82,9 +82,7 @@ public class Subject {
 		this.notes = notes;
 		this.absences = absences;
 	}
-	
 
-	
 	public Subject(GradeEdition grade, Integer gradeId, Professor professor, String professorDni, String name,
 			Integer duration) {
 		super();
@@ -104,8 +102,8 @@ public class Subject {
 		this.name = name;
 		this.duration = duration;
 	}
-	
-	public Subject( Integer gradeId, String professorDni, String name, Integer duration) {
+
+	public Subject(Integer gradeId, String professorDni, String name, Integer duration) {
 		super();
 		this.gradeEdId = gradeId;
 		this.professorDni = professorDni;
@@ -187,12 +185,9 @@ public class Subject {
 
 	@Override
 	public String toString() {
-		return "Subject [subjectId=" + subjectId + ", grade=" + gradeEdition + ", gradeEdId=" + gradeEdId + ", professor="
-				+ professor + ", professorDni=" + professorDni + ", name=" + name + ", duration=" + duration
-				+ ", notes=" + notes + ", absences=" + absences + "]";
+		return "Subject [subjectId=" + subjectId + ", grade=" + gradeEdition + ", gradeEdId=" + gradeEdId
+				+ ", professor=" + professor + ", professorDni=" + professorDni + ", name=" + name + ", duration="
+				+ duration + ", notes=" + notes + ", absences=" + absences + "]";
 	}
 
-
-	
-	
 }

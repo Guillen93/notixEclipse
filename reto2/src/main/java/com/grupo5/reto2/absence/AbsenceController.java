@@ -43,11 +43,11 @@ public class AbsenceController {
 	}
 
 	@GetMapping("/absences/{studentDNI}/{subjetId}")
-	public ResponseEntity<Iterable<AbsenceServiceModel>> getNote(@PathVariable String studentDNI, @PathVariable Integer subjetId)
-			throws NotContentException {
+	public ResponseEntity<Iterable<AbsenceServiceModel>> getNote(@PathVariable String studentDNI,
+			@PathVariable Integer subjetId) throws NotContentException {
 
-		 
-		return new ResponseEntity<Iterable<AbsenceServiceModel>>(absenceService.getAbsencesByStudentDniAndSubjectId(studentDNI, subjetId), HttpStatus.OK);
+		return new ResponseEntity<Iterable<AbsenceServiceModel>>(
+				absenceService.getAbsencesByStudentDniAndSubjectId(studentDNI, subjetId), HttpStatus.OK);
 
 	}
 

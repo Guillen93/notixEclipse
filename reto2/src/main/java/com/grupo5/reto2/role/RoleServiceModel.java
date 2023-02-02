@@ -8,7 +8,6 @@ public class RoleServiceModel {
 
 	public RoleServiceModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public RoleServiceModel(Integer roleID, String role) {

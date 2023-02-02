@@ -1,6 +1,5 @@
 package com.grupo5.reto2.user;
 
-
 import java.util.Set;
 
 import java.util.ArrayList;
@@ -24,36 +23,28 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ForeignKey;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User implements UserDetails {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private String dni;
-	
+
 	@Column(length = 100)
 	private String password;
-	
+
 	@Column(columnDefinition = "boolean default true")
 	private boolean isEnabled;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "user_role",
-		joinColumns = @JoinColumn(
-				name = "userDni", referencedColumnName = "dni", foreignKey = @ForeignKey(name = "fk_userDni")
-		),
-		inverseJoinColumns = @JoinColumn(
-				name = "roleId", referencedColumnName = "roleId", foreignKey = @ForeignKey(name = "fk_roleId")
-		)
-	)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userDni", referencedColumnName = "dni", foreignKey = @ForeignKey(name = "fk_userDni")), inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId", foreignKey = @ForeignKey(name = "fk_roleId")))
 	private Set<Role> roles;
-	
+
 	public User() {
 		super();
 	}
-	
+
 	public User(String dni, String password) {
 		super();
 		this.dni = dni;
@@ -71,21 +62,27 @@ public class User implements UserDetails {
 	public String getDni() {
 		return dni;
 	}
+
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
+
 	public void setRoles(Set<Role> roles2) {
 		this.roles = roles2;
 	}
+
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
@@ -103,7 +100,7 @@ public class User implements UserDetails {
 	public String getUsername() {
 		return dni;
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -126,11 +123,10 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return isEnabled;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User [dni=" + dni + ", password=" + password + ", roles=" + roles + "]";
 	}
-	
 
 }

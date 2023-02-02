@@ -8,11 +8,10 @@ public class UserServiceModel {
 
 	private String dni;
 	private boolean isEnabled;
-	private Set<Role> roles ;
+	private Set<Role> roles;
 
 	public UserServiceModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public UserServiceModel(String dni, boolean isEnabled, Set<Role> roles) {

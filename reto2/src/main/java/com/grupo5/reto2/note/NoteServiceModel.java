@@ -1,13 +1,9 @@
 package com.grupo5.reto2.note;
 
-
-
 public class NoteServiceModel {
 
 	private NoteId id = new NoteId();
-	// private StudentServiceModel studentServiceModel;
 	private String studentDni;
-	// private SubjectServiceModel subjectServiceModel;
 	private Integer subjectId;
 
 	private Float eva1;
@@ -22,7 +18,6 @@ public class NoteServiceModel {
 
 	public NoteServiceModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public NoteServiceModel(NoteId id, String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3,
@@ -37,9 +32,9 @@ public class NoteServiceModel {
 		this.final1 = final1;
 		this.final2 = final2;
 	}
-	
-	public NoteServiceModel( String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3,
-			Integer final1, Integer final2) {
+
+	public NoteServiceModel(String studentDni, Integer subjectId, Float eva1, Float eva2, Float eva3, Integer final1,
+			Integer final2) {
 		super();
 		this.studentDni = studentDni;
 		this.subjectId = subjectId;
@@ -49,7 +44,6 @@ public class NoteServiceModel {
 		this.final1 = final1;
 		this.final2 = final2;
 	}
-
 
 	public NoteId getId() {
 		return id;
@@ -113,6 +107,12 @@ public class NoteServiceModel {
 
 	public void setFinal2(Integer final2) {
 		this.final2 = final2;
+	}
+
+	@Override
+	public String toString() {
+		return "NoteServiceModel [id=" + id + ", studentDni=" + studentDni + ", subjectId=" + subjectId + ", eva1="
+				+ eva1 + ", eva2=" + eva2 + ", eva3=" + eva3 + ", final1=" + final1 + ", final2=" + final2 + "]";
 	}
 
 }

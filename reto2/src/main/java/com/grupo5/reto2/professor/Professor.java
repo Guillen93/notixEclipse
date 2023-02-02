@@ -15,37 +15,37 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="professor")
+@Table(name = "professor")
 public class Professor {
 	@Id
 	private String professorDni;
-	
+
 	@Column()
 	private String name;
-	
+
 	@Column()
 	private String surname;
-	
+
 	@Column()
 	private String nationality;
-	
+
 	@Column()
 	private String email;
-	
+
 	@Column()
 	private String addres;
-	
+
 	@Column()
 	private String photo;
-	
+
 	@OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private List<GradeEdition> gradeEditions;
-	
+
 	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonBackReference
 	private List<Subject> subjects;
-	
+
 	public Professor() {
 		super();
 	}
@@ -84,8 +84,6 @@ public class Professor {
 		this.subjects = subjects;
 	}
 
-	
-
 	public Professor(String name) {
 		super();
 		this.name = name;
@@ -94,54 +92,71 @@ public class Professor {
 	public String getProfessorDni() {
 		return professorDni;
 	}
+
 	public void setProfessorDni(String professorDni) {
 		this.professorDni = professorDni;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSurname() {
 		return surname;
 	}
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 	public String getNationality() {
 		return nationality;
 	}
+
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getAddres() {
 		return addres;
 	}
+
 	public void setAddres(String addres) {
 		this.addres = addres;
 	}
+
 	public String getPhoto() {
 		return photo;
 	}
+
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+
 	public List<GradeEdition> getGradeEditions() {
 		return gradeEditions;
 	}
+
 	public void setGradeEditions(List<GradeEdition> gradeEditions) {
 		this.gradeEditions = gradeEditions;
 	}
+
 	public List<Subject> getSubjects() {
 		return subjects;
 	}
+
 	public void setSubjects(List<Subject> subjects) {
 		this.subjects = subjects;
 	}
@@ -152,5 +167,5 @@ public class Professor {
 				+ nationality + ", email=" + email + ", addres=" + addres + ", photo=" + photo + ", gradeEditions="
 				+ gradeEditions + ", subjects=" + subjects + "]";
 	}
-	
+
 }

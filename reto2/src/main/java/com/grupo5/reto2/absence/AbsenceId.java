@@ -59,6 +59,4 @@ public class AbsenceId implements Serializable {
 		return "AbsenceId [studentDni=" + studentDni + ", subjectId=" + subjectId + ", foul=" + foul + "]";
 	}
 
-
-
 }

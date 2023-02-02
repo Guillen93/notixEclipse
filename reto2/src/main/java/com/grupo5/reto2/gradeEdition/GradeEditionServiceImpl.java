@@ -14,7 +14,6 @@ import com.grupo5.reto2.grade.GradeRepository;
 import com.grupo5.reto2.professor.Professor;
 import com.grupo5.reto2.professor.ProfessorRepository;
 import com.grupo5.reto2.student.StudentRepository;
-import com.grupo5.reto2.user.UserRepository;
 
 @Service
 public class GradeEditionServiceImpl implements GradeEditionService {
@@ -30,9 +29,6 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 	@Autowired
 	StudentRepository studentRepository;
-	
-	@Autowired
-	UserRepository userRepository;
 
 	@Override
 	public Iterable<GradeEditionServiceModel> findAllGradeEditions() throws NotContentException {
@@ -80,11 +76,8 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 			Grade grade = gradeRepository.findById(gradeEditionPostRequest.getGradeId()).get();
 			Professor professor = professorRepository.findByProfessorDni(gradeEditionPostRequest.getTutorDni());
 
-			gradeEdition = new GradeEdition(gradeEditionPostRequest.getGradeEdId(),
-					grade,
-					gradeEditionPostRequest.getGradeId(), 
-					professor, 
-					gradeEditionPostRequest.getTutorDni(),
+			gradeEdition = new GradeEdition(gradeEditionPostRequest.getGradeEdId(), grade,
+					gradeEditionPostRequest.getGradeId(), professor, gradeEditionPostRequest.getTutorDni(),
 					Date.valueOf(gradeEditionPostRequest.getFecha())
 
 			);
@@ -153,10 +146,11 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 
 		} else {
 
-			Iterable<GradeEdition> gradeEditions = gradeEditionRepository.findGradeEditionByPromotionsStudentDni(studentDNI);
+			Iterable<GradeEdition> gradeEditions = gradeEditionRepository
+					.findGradeEditionByPromotionsStudentDni(studentDNI);
 
 			List<GradeEditionServiceModel> response = new ArrayList<GradeEditionServiceModel>();
-			
+
 			for (GradeEdition gradeEdition : gradeEditions) {
 				response.add(new GradeEditionServiceModel(gradeEdition.getGradeEdId(), gradeEdition.getGradeId(),
 						gradeEdition.getTutorDni(), gradeEdition.getFecha().toString()));
@@ -171,15 +165,10 @@ public class GradeEditionServiceImpl implements GradeEditionService {
 	public GradeEditionServiceModel getLastGradeEdition() throws NotContentException {
 
 		GradeEdition gradeEdition = gradeEditionRepository.findLastgradeEdition();
-		
-		GradeEditionServiceModel response = new GradeEditionServiceModel(
-				gradeEdition.getGradeEdId(),
-				gradeEdition.getGradeId(),
-				gradeEdition.getTutorDni(),
-				gradeEdition.getFecha().toString()
-				);
-		
-		
+
+		GradeEditionServiceModel response = new GradeEditionServiceModel(gradeEdition.getGradeEdId(),
+				gradeEdition.getGradeId(), gradeEdition.getTutorDni(), gradeEdition.getFecha().toString());
+
 		return response;
 	}
 

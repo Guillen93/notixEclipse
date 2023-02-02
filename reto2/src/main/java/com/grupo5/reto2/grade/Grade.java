@@ -8,22 +8,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="grade")
+@Table(name = "grade")
 public class Grade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer gradeId;
-	
+
 	@Column()
 	private String name;
-	
+
 	@Column()
 	private String language;
-	
+
 	public Grade() {
 		super();
 	}
-	
+
 	public Grade(Integer gradeId, String name, String language) {
 		super();
 		this.gradeId = gradeId;
@@ -34,18 +34,23 @@ public class Grade {
 	public Integer getGradeId() {
 		return gradeId;
 	}
+
 	public void setGradeId(Integer gradeId) {
 		this.gradeId = gradeId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getLanguage() {
 		return language;
 	}
+
 	public void setLanguage(String language) {
 		this.language = language;
 	}
@@ -54,6 +59,5 @@ public class Grade {
 	public String toString() {
 		return "Grade [gradeId=" + gradeId + ", name=" + name + ", language=" + language + "]";
 	}
-	
-	
+
 }

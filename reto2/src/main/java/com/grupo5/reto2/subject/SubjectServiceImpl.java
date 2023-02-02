@@ -23,26 +23,20 @@ public class SubjectServiceImpl implements SubjectService {
 	@Autowired
 	GradeEditionRepository gradeEditionRepository;
 
-	
 	@Override
 	public Iterable<SubjectServiceModel> findAllSubject() throws NotContentException {
 		Iterable<Subject> subjects = subjectRepository.findAll();
 
 		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
 
-		if (subjects == null || subjects.iterator().hasNext()==false) {
+		if (subjects == null || subjects.iterator().hasNext() == false) {
 			throw new NotContentException("No hay asignatura ");
 		}
 
 		for (Subject subject : subjects) {
-			
-			response.add(new SubjectServiceModel(
-					subject.getSubjectId(),
-					subject.getGradeEdId(),
-					subject.getProfessorDni(),
-					subject.getName(),
-					subject.getDuration()
-					));
+
+			response.add(new SubjectServiceModel(subject.getSubjectId(), subject.getGradeEdId(),
+					subject.getProfessorDni(), subject.getName(), subject.getDuration()));
 		}
 		return response;
 
@@ -54,121 +48,82 @@ public class SubjectServiceImpl implements SubjectService {
 		if (subject == null) {
 			throw new NotContentException("No existe el estudiante");
 		}
-		
-		SubjectServiceModel response = new SubjectServiceModel(
-				subject.getSubjectId(),
-				subject.getGradeEdId(),
-				subject.getProfessorDni(),
-				subject.getName(),
-				subject.getDuration()
-		);
+
+		SubjectServiceModel response = new SubjectServiceModel(subject.getSubjectId(), subject.getGradeEdId(),
+				subject.getProfessorDni(), subject.getName(), subject.getDuration());
 
 		return response;
 	}
 
 	@Override
 	public Iterable<SubjectServiceModel> findSubjectsByStudentDni(String dni) throws NotContentException {
-		
+
 		Iterable<Subject> subjects = subjectRepository.findSubjectByStudentDni(dni);
 
 		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
 
-		if (subjects == null || subjects.iterator().hasNext()==false) {
+		if (subjects == null || subjects.iterator().hasNext() == false) {
 			throw new NotContentException("No hay asignatura ");
 		}
 
 		for (Subject subject : subjects) {
-			
-			response.add(new SubjectServiceModel(
-					subject.getSubjectId(),
-					subject.getGradeEdId(),
-					subject.getProfessorDni(),
-					subject.getName(),
-					subject.getDuration()
-					));
+
+			response.add(new SubjectServiceModel(subject.getSubjectId(), subject.getGradeEdId(),
+					subject.getProfessorDni(), subject.getName(), subject.getDuration()));
 		}
 		return response;
-		
-		
+
 	}
-	
+
 	@Override
 	public Iterable<SubjectServiceModel> findSubjectsByProfessorDni(String dni) throws NotContentException {
-		
-		
+
 		Iterable<Subject> subjects = subjectRepository.findByProfessorDni(dni);
 
 		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
 
-		if (subjects == null || subjects.iterator().hasNext()==false) {
+		if (subjects == null || subjects.iterator().hasNext() == false) {
 			throw new NotContentException("No hay asignatura ");
 		}
 
 		for (Subject subject : subjects) {
-			
-			response.add(new SubjectServiceModel(
-					subject.getSubjectId(),
-					subject.getGradeEdId(),
-					subject.getProfessorDni(),
-					subject.getName(),
-					subject.getDuration()
-					));
+
+			response.add(new SubjectServiceModel(subject.getSubjectId(), subject.getGradeEdId(),
+					subject.getProfessorDni(), subject.getName(), subject.getDuration()));
 		}
 		return response;
 	}
-	
+
 	@Override
 	public SubjectServiceModel createSubject(SubjectPostRequest subjectPostRequest)
 			throws ConflictException, NotContentException {
-		
+
 		Subject subject = subjectRepository.findByName(subjectPostRequest.getName());
-		
+
 		if (subject != null) {
 			throw new ConflictException("La asignatura ya esta creada");
-		}else {
-			
-			
+		} else {
+
 			Professor professorbd = professorRepository.findByProfessorDni(subjectPostRequest.getProfessorDni());
-			
+
 			GradeEdition gradeEditionbd = gradeEditionRepository.findById(subjectPostRequest.getGradeEditionId()).get();
-			
-			Professor professor = new Professor(
-					professorbd.getProfessorDni(),
-					professorbd.getName(),
-					professorbd.getSurname(),
-					professorbd.getNationality(),
-					professorbd.getEmail(),
-					professorbd.getAddres(),
-					professorbd.getPhoto()
-					);
-			
-			GradeEdition grade = new GradeEdition(
-					gradeEditionbd.getGradeEdId(),
-					gradeEditionbd.getGradeId(),
-					gradeEditionbd.getTutorDni(),
-					gradeEditionbd.getFecha()
-					);
-			
-			
-			 subject = new Subject(
-					grade,
-					subjectPostRequest.getGradeEditionId(),
-					professor,
-					subjectPostRequest.getProfessorDni(),
-					subjectPostRequest.getName(),
-					subjectPostRequest.getDuration()
-					);
-					
-			subject = subjectRepository.save(subject);	
-					
-			SubjectServiceModel response = new SubjectServiceModel(
-					subject.getSubjectId(),
-					subject.getGradeEdId(),
-					subject.getProfessorDni(),
-					subject.getName(),
-					subject.getDuration()
-					);
-			
+
+			Professor professor = new Professor(professorbd.getProfessorDni(), professorbd.getName(),
+					professorbd.getSurname(), professorbd.getNationality(), professorbd.getEmail(),
+					professorbd.getAddres(), professorbd.getPhoto());
+
+			GradeEdition grade = new GradeEdition(gradeEditionbd.getGradeEdId(), gradeEditionbd.getGradeId(),
+					gradeEditionbd.getTutorDni(), gradeEditionbd.getFecha());
+
+			subject = new Subject(grade, subjectPostRequest.getGradeEditionId(), professor,
+					subjectPostRequest.getProfessorDni(), subjectPostRequest.getName(),
+					subjectPostRequest.getDuration());
+
+			subject = subjectRepository.save(subject);
+
+			SubjectServiceModel response = new SubjectServiceModel(subject.getSubjectId(), subject.getGradeEdId(),
+					subject.getProfessorDni(), subject.getName(), subject.getDuration());
+
 			return response;
 		}
 	}
@@ -176,9 +131,9 @@ public class SubjectServiceImpl implements SubjectService {
 	@Override
 	public SubjectServiceModel updateSubject(Integer subjectId, SubjectPostRequest subjectPostRequest)
 			throws ConflictException, NotContentException {
-		
+
 		Subject subject = subjectRepository.findBySubjectId(subjectId);
-		
+
 		if (subject == null) {
 			throw new NotContentException("No existe la asignatura");
 		} else {
@@ -197,29 +152,24 @@ public class SubjectServiceImpl implements SubjectService {
 			}
 
 			subject = subjectRepository.save(subject);
-			
-			SubjectServiceModel response = new SubjectServiceModel(
-					subjectId,
-					subject.getGradeEdId(),
-					subject.getProfessorDni(),
-					subject.getName(),
-					subject.getDuration()
-			);	
+
+			SubjectServiceModel response = new SubjectServiceModel(subjectId, subject.getGradeEdId(),
+					subject.getProfessorDni(), subject.getName(), subject.getDuration());
 			return response;
 		}
 	}
 
 	@Override
 	public Boolean deleteSubject(Integer subjectId) throws NotContentException {
-		
+
 		Boolean response = subjectRepository.existsById(subjectId);
 
 		if (!response) {
 			throw new NotContentException("No existe esa asignatura");
-		}else {
+		} else {
 			subjectRepository.deleteById(subjectId);
 		}
-			
+
 		return response;
 	}
 
@@ -227,30 +177,21 @@ public class SubjectServiceImpl implements SubjectService {
 	public Iterable<SubjectServiceModel> findSubjectsByGradeEditionId(Integer gradeEditionId)
 			throws NotContentException {
 
-		
 		Iterable<Subject> subjects = subjectRepository.findByGradeEdId(gradeEditionId);
 
 		List<SubjectServiceModel> response = new ArrayList<SubjectServiceModel>();
 
-		if (subjects == null || subjects.iterator().hasNext()==false) {
+		if (subjects == null || subjects.iterator().hasNext() == false) {
 			throw new NotContentException("No hay asignatura ");
 		}
 
 		for (Subject subject : subjects) {
-			
-			response.add(new SubjectServiceModel(
-					subject.getSubjectId(),
-					subject.getGradeEdId(),
-					subject.getProfessorDni(),
-					subject.getName(),
-					subject.getDuration()
-					));
+
+			response.add(new SubjectServiceModel(subject.getSubjectId(), subject.getGradeEdId(),
+					subject.getProfessorDni(), subject.getName(), subject.getDuration()));
 		}
-		return response;	
-	
-	
+		return response;
+
 	}
-
-
 
 }

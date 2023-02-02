@@ -1,22 +1,22 @@
 package com.grupo5.reto2.gradeEdition;
 
 public class GradeEditionServiceModel {
-	
+
 	private Integer gradeEditionId;
 	private Integer gradeId;
 	private String tutorDni;
 	private String fecha;
-	
+
 	public GradeEditionServiceModel() {
 		super();
 	}
-	
+
 	public GradeEditionServiceModel(Integer gradeEdId, Integer gradeId, String tutorDni, String date) {
 		super();
 		this.gradeEditionId = gradeEdId;
 		this.gradeId = gradeId;
 		this.tutorDni = tutorDni;
-		this.fecha =  date;
+		this.fecha = date;
 	}
 
 	public Integer getGradeEdId() {
@@ -53,8 +53,8 @@ public class GradeEditionServiceModel {
 
 	@Override
 	public String toString() {
-		return "GradeEditionServiceModel [gradeEdId=" + gradeEditionId + ", gradeId=" + gradeId + ", tutorDni=" + tutorDni
-				+ ", fecha=" + fecha + "]";
+		return "GradeEditionServiceModel [gradeEdId=" + gradeEditionId + ", gradeId=" + gradeId + ", tutorDni="
+				+ tutorDni + ", fecha=" + fecha + "]";
 	}
 
 }

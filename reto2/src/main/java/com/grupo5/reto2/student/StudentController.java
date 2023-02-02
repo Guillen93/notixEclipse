@@ -28,7 +28,6 @@ public class StudentController {
 	@Autowired
 	StudentService studentService;
 
-
 	@GetMapping("/students")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudent() throws NotContentException, IOException {
 
@@ -47,23 +46,23 @@ public class StudentController {
 
 	@GetMapping("/students/subject/{subjectId}")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectId(@PathVariable Integer subjectId)
-			throws NotContentException,IOException {
+			throws NotContentException, IOException {
 
 		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.getStudentsBySubjectId(subjectId),
 				HttpStatus.OK);
 
 	}
 
-	
 	@GetMapping("/students/subjects/{subjectId}/professorDni/{professorDni}")
-	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectIdAndProfessorDni(@PathVariable Integer subjectId,@PathVariable String professorDni)
-			throws NotContentException ,IOException{
+	public ResponseEntity<Iterable<StudentServiceModel>> getStudentBySubjectIdAndProfessorDni(
+			@PathVariable Integer subjectId, @PathVariable String professorDni)
+			throws NotContentException, IOException {
 
-		return new ResponseEntity<Iterable<StudentServiceModel>>(studentService.findStudentBySubjectIdAndProfessorDni(subjectId,professorDni),
-				HttpStatus.OK);
+		return new ResponseEntity<Iterable<StudentServiceModel>>(
+				studentService.findStudentBySubjectIdAndProfessorDni(subjectId, professorDni), HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/gradeEditions/{id}/student")
 	public ResponseEntity<Iterable<StudentServiceModel>> getStudentsByGradeEdition(
 			@PathVariable("id") Integer gradeEditionId) throws NotContentException {
@@ -87,14 +86,13 @@ public class StudentController {
 		StudentServiceModel response = studentService.createStudent(studentPostRequest);
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.CREATED);
 	}
-	
-	
+
 	@PostMapping("/students/gradeEditions")
 	public ResponseEntity<Integer> givePromotionToStudent(@RequestBody PromotionPostRequest promotionPostRequest)
 			throws NotContentException, ConflictException {
 
 		Integer response = studentService.createPromotion(promotionPostRequest);
-		
+
 		return new ResponseEntity<Integer>(response, HttpStatus.CREATED);
 
 	}

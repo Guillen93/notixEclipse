@@ -1,6 +1,5 @@
 package com.grupo5.reto2.student;
 
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -42,8 +41,6 @@ public class StudentPostRequest {
 	public StudentPostRequest() {
 		super();
 	}
-
-
 
 	public String getStudentDni() {
 		return studentDni;
@@ -109,4 +106,13 @@ public class StudentPostRequest {
 		this.photo = photo;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentPostRequest [studentDni=" + studentDni + ", name=" + name + ", surname=" + surname
+				+ ", bornDate=" + bornDate + ", nationality=" + nationality + ", email=" + email + ", phone=" + phone
+				+ ", photo=" + photo + "]";
+	}
+
+	
+	
 }

@@ -12,9 +12,11 @@ import jakarta.transaction.Transactional;
 
 
 public interface UserRepository extends CrudRepository<User, Integer> {
+	
 	Optional<User> findByDni(String DNI);
 	
 	Boolean existsByDni(String DNI);
+	
 	@Transactional
 	@Modifying
 	void deleteByDni(@Param("dni") String dni);

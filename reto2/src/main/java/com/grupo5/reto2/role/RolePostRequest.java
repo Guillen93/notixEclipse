@@ -36,8 +36,5 @@ public class RolePostRequest {
 	public String toString() {
 		return "RolePostRequest [roleID=" + roleID + ", role=" + role + "]";
 	}
-	
-	
-	
-	
+
 }

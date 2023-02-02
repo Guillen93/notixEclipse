@@ -17,8 +17,7 @@ public class AbsencePostRequest {
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
 	private String foul;
-	
-	
+
 	private boolean justified = false;
 
 	public AbsencePostRequest() {
@@ -83,8 +82,5 @@ public class AbsencePostRequest {
 		return "AbsencePostRequest [id=" + id + ", studentDni=" + studentDni + ", subjectId=" + subjectId + ", foul="
 				+ foul + ", justified=" + justified + "]";
 	}
-
-
-
 
 }

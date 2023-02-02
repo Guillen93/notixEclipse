@@ -11,7 +11,7 @@ public class NoteId implements Serializable {
 
 	private String studentDni;
 	private Integer subjectId;
-	
+
 	public NoteId() {
 		super();
 	}
@@ -42,6 +42,5 @@ public class NoteId implements Serializable {
 	public String toString() {
 		return "NoteId [studentDni=" + studentDni + ", subjectId=" + subjectId + "]";
 	}
-	
-	
+
 }

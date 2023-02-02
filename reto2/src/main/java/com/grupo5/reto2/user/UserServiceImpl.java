@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
 
 		CifradoRSA cifradoRSA = new CifradoRSA();
-		
+
 		byte[] decoded = Base64.getDecoder().decode(request.getPassword());
 
 		String passDescifrada = new String(cifradoRSA.descifrarTexto(decoded));

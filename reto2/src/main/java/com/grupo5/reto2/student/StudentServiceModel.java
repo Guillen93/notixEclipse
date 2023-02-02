@@ -92,4 +92,11 @@ public class StudentServiceModel {
 		this.photo = photo;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentServiceModel [studentDni=" + studentDni + ", name=" + name + ", surname=" + surname
+				+ ", bornDate=" + bornDate + ", nationality=" + nationality + ", email=" + email + ", phone=" + phone
+				+ ", photo=" + photo + "]";
+	}
+
 }

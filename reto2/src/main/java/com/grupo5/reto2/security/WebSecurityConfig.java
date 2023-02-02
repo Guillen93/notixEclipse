@@ -87,10 +87,5 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 		return source;
 	}
 
-//en el filterChain, antes de hacer el return http.build(); añadir la línea
 
-//	@Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**").allowedMethods("*");
-//    }
 }

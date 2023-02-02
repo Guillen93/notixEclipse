@@ -8,10 +8,11 @@ public class UserResponse {
 	private String dni;
 	private String accessToken;
 	private Set<Role> roles;
-	
-	public UserResponse() {}
 
-	public UserResponse(String dni, String accessToken,Set<Role> set) {
+	public UserResponse() {
+	}
+
+	public UserResponse(String dni, String accessToken, Set<Role> set) {
 		super();
 		this.dni = dni;
 		this.accessToken = accessToken;
@@ -46,5 +47,5 @@ public class UserResponse {
 	public String toString() {
 		return "UserResponse [dni=" + dni + ", accessToken=" + accessToken + "]";
 	}
-	
+
 }

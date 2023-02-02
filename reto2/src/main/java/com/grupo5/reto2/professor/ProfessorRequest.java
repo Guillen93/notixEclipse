@@ -22,7 +22,7 @@ public class ProfessorRequest {
 	private String nationality;
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
-	@Email(message="El campo debe ser un email")
+	@Email(message = "El campo debe ser un email")
 	private String email;
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
@@ -30,7 +30,7 @@ public class ProfessorRequest {
 	@NotNull(message = "el campo no puede ser nulo")
 	@NotEmpty(message = "el campo no puede estar vacio")
 	private String photo;
-		
+
 	public ProfessorRequest() {
 		super();
 	}
@@ -50,42 +50,55 @@ public class ProfessorRequest {
 	public String getProfessorDni() {
 		return professorDni;
 	}
+
 	public void setProfessorDni(String professorDni) {
 		this.professorDni = professorDni;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSurname() {
 		return surname;
 	}
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 	public String getNationality() {
 		return nationality;
 	}
+
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getAddres() {
 		return addres;
 	}
+
 	public void setAddres(String addres) {
 		this.addres = addres;
 	}
+
 	public String getPhoto() {
 		return photo;
 	}
+
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}

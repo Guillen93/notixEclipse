@@ -27,42 +27,42 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="grade_edition")
+@Table(name = "grade_edition")
 public class GradeEdition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer gradeEditionId;
-	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "gradeId", foreignKey=@ForeignKey(name = "fk_gradeId"))
+	@JoinColumn(name = "gradeId", foreignKey = @ForeignKey(name = "fk_gradeId"))
 	@JsonManagedReference
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Grade grade;
 	@Column(name = "gradeId", updatable = false, insertable = false)
 	private Integer gradeId;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "tutorDni", foreignKey=@ForeignKey(name = "fk_tutorDni"))
+	@JoinColumn(name = "tutorDni", foreignKey = @ForeignKey(name = "fk_tutorDni"))
 	@JsonManagedReference
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Professor tutor;
 	@Column(name = "tutorDni", updatable = false, insertable = false)
 	private String tutorDni;
-	
+
 	@Column()
 	private Date fecha;
-	
+
 	@ManyToMany(mappedBy = "promotions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<Student> promotions = new HashSet<>();
-	
+
 	public GradeEdition() {
 		super();
 	}
-	
-	public GradeEdition(Integer gradeEdId,  Integer gradeId, Professor tutor, String tutorDni, Date fecha) {
+
+	public GradeEdition(Integer gradeEdId, Integer gradeId, Professor tutor, String tutorDni, Date fecha) {
 		super();
 		this.gradeEditionId = gradeEdId;
 		this.gradeId = gradeId;
@@ -70,7 +70,6 @@ public class GradeEdition {
 		this.tutorDni = tutorDni;
 		this.fecha = fecha;
 	}
-
 
 	public GradeEdition(Integer gradeEdId, Grade grade, Integer gradeId, Professor tutor, String tutorDni, Date fecha) {
 		super();
@@ -105,42 +104,55 @@ public class GradeEdition {
 	public Integer getGradeEdId() {
 		return gradeEditionId;
 	}
+
 	public void setGradeEdId(Integer gradeEdId) {
 		this.gradeEditionId = gradeEdId;
 	}
+
 	public Grade getGrade() {
 		return grade;
 	}
+
 	public void setGrade(Grade grade) {
 		this.grade = grade;
 	}
+
 	public Integer getGradeId() {
 		return gradeId;
 	}
+
 	public void setGradeId(Integer gradeId) {
 		this.gradeId = gradeId;
 	}
+
 	public Professor getTutor() {
 		return tutor;
 	}
+
 	public void setTutor(Professor tutor) {
 		this.tutor = tutor;
 	}
+
 	public String getTutorDni() {
 		return tutorDni;
 	}
+
 	public void setTutorDni(String tutorDni) {
 		this.tutorDni = tutorDni;
 	}
+
 	public Date getFecha() {
 		return fecha;
 	}
+
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+
 	public Set<Student> getPromotions() {
 		return promotions;
 	}
+
 	public void setPromotions(Set<Student> promotions) {
 		this.promotions = promotions;
 	}
@@ -151,8 +163,5 @@ public class GradeEdition {
 				+ ", tutor=" + tutor + ", tutorDni=" + tutorDni + ", fecha=" + fecha + ", promotions=" + promotions
 				+ "]";
 	}
-
-	
-
 
 }

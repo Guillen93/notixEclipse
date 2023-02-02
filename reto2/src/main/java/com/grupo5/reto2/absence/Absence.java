@@ -86,11 +86,6 @@ public class Absence {
 		this.justified = justified;
 	}
 
-	public Absence(Object setId, Student student2, String studentDni2, Subject subject2, Integer subjectId2,
-			boolean justified2) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public AbsenceId getId() {
 		return id;
 	}
@@ -138,8 +133,6 @@ public class Absence {
 	public void setJustified(boolean justified) {
 		this.justified = justified;
 	}
-	
-	
 
 	public Date getFoul() {
 		return foul;
@@ -154,7 +147,5 @@ public class Absence {
 		return "Absence [id=" + id + ", student=" + student + ", studentDni=" + studentDni + ", subject=" + subject
 				+ ", subjectId=" + subjectId + ", foul=" + foul + ", justified=" + justified + "]";
 	}
-
-	
 
 }

@@ -67,7 +67,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 	public Iterable<AbsenceServiceModel> getAbsencesByStudentDniAndSubjectId(String studentDni, Integer subjectId)
 			throws NotContentException {
 
-		Iterable<Absence> absences = absenceRepository.findByStudentDniAndSubjectId(studentDni,subjectId);
+		Iterable<Absence> absences = absenceRepository.findByStudentDniAndSubjectId(studentDni, subjectId);
 
 		List<AbsenceServiceModel> response = new ArrayList<AbsenceServiceModel>();
 
