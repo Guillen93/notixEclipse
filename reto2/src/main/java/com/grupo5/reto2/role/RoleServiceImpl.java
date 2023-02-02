@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public RoleServiceModel getRoleById(Integer roleId) throws NotContentException {
 
-		Role role = roleRepository.findById(roleId).get();
+		Role role = roleRepository.findById(roleId).orElseThrow(() -> new NotContentException("Role not found"));
 
 		if (role == null) {
 			throw new NotContentException("No hay rol con esa id ");
