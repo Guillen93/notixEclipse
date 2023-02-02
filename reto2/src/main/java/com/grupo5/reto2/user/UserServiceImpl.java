@@ -198,10 +198,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			user.setPassword(password);
 
 		}
-		if (request.isEnabled() != user.isEnabled()) {
-
-			user.setEnabled(request.isEnabled());
-		}
+		
 
 		user = userRepository.save(user);
 
