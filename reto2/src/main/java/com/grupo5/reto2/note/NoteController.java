@@ -59,7 +59,7 @@ public class NoteController {
 
 	}
 
-	@PostMapping("/notes")
+	@PostMapping("/notesUpdate/create")
 	public ResponseEntity<NoteServiceModel> createNote(@Valid @RequestBody NotePostRequest notePostRequest)
 			throws ConflictException, NotContentException {
 
@@ -67,7 +67,7 @@ public class NoteController {
 		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/notes/{studentDNI}/{subjetId}")
+	@PutMapping("/notesUpdate/{studentDNI}/{subjetId}")
 	public ResponseEntity<NoteServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI,
 			@PathVariable Integer subjetId, @RequestBody NotePostRequest notePostRequest) throws NotContentException {
 
@@ -76,7 +76,7 @@ public class NoteController {
 		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/notes/{studentDNI}/{subjetId}")
+	@DeleteMapping("/notesUpdate/{studentDNI}/{subjetId}")
 	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI, @PathVariable Integer subjetId)
 			throws NotContentException {
 

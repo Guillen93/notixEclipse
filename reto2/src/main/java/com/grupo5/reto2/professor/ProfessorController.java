@@ -65,7 +65,7 @@ public class ProfessorController {
 
 	}
 
-	@PutMapping("/professors/{professorDni}")
+	@PutMapping("/professorsUpdate/{professorDni}")
 	public ResponseEntity<ProfessorResponse> updateProfessor(@PathVariable String professorDni,
 			@RequestBody ProfessorRequest professorRequest) throws NotContentException {
 

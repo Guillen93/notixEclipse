@@ -68,7 +68,7 @@ public class AbsenceController {
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/absences/{studentDNI}/{subjetId}/{dateString}")
+	@PutMapping("/absencesUpdate/{studentDNI}/{subjetId}/{dateString}")
 	public ResponseEntity<AbsenceServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI,
 			@PathVariable Integer subjetId, @PathVariable String dateString,
 			@RequestBody AbsencePostRequest absencePostRequest) throws NotContentException {
@@ -79,7 +79,7 @@ public class AbsenceController {
 		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/absences/{studentDNI}/{subjetId}/{dateString}")
+	@DeleteMapping("/absencesDelete/{studentDNI}/{subjetId}/{dateString}")
 	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI, @PathVariable Integer subjetId,
 			@PathVariable String dateString) throws NotContentException {
 		Date date = Date.valueOf(dateString);

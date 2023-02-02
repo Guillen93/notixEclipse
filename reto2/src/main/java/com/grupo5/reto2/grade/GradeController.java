@@ -39,14 +39,14 @@ public class GradeController {
 		return new ResponseEntity<GradeServiceModel>(gradeService.findByGradeId(gradeId), HttpStatus.OK);
 	}
 
-	@PostMapping("/grades")
+	@PostMapping("/gradesAdmin/create")
 	public ResponseEntity<GradeServiceModel> createGrade(@Valid @RequestBody GradePostRequest gradePostRequest)
 			throws ConflictException {
 		GradeServiceModel response = gradeService.createGrade(gradePostRequest);
 		return new ResponseEntity<GradeServiceModel>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/grades/{id}")
+	@PutMapping("/gradesAdmin/{id}")
 	public ResponseEntity<GradeServiceModel> updateGrade(@PathVariable("id") Integer gradeId,
 			@RequestBody GradePostRequest gradePostRequest) throws NotContentException {
 
@@ -55,7 +55,7 @@ public class GradeController {
 		return new ResponseEntity<GradeServiceModel>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/grades/{id}")
+	@DeleteMapping("/gradesAdmin/{id}")
 	public ResponseEntity<Integer> deleteGradeById(@PathVariable("id") Integer gradeId) throws NotContentException {
 
 		Integer response = gradeService.deleteByGradeId(gradeId);

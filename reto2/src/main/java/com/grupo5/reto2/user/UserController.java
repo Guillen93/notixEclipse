@@ -54,7 +54,7 @@ public class UserController {
 
 		return new ResponseEntity<Iterable<UserServiceModel>>(userService.getNotEnabledUsers(), HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/publicKey")
 	public ResponseEntity<String> getPublicKey() throws NotContentException {
 

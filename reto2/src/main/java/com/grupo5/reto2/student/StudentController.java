@@ -97,7 +97,7 @@ public class StudentController {
 
 	}
 
-	@PutMapping("/students/{studentDNI}")
+	@PutMapping("/studentsUpdate/{studentDNI}")
 	public ResponseEntity<StudentServiceModel> updateStudents(@PathVariable String studentDNI,
 			@RequestBody StudentPostRequest studentPostRequest) throws ConflictException, NotContentException {
 
