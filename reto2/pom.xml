@@ -11,11 +11,7 @@
 	<artifactId>reto2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>reto2</name>
-<<<<<<< HEAD
-	<description>Grupo5 Reto 2 Server</description>
-=======
-	<description>Demo project for Spring Boot</description>
->>>>>>> refs/remotes/origin/master
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -43,7 +39,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-<<<<<<< HEAD
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
@@ -72,7 +68,7 @@
       <version>2.0.2</version>
    </dependency>
 
-=======
+
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -81,7 +77,7 @@
 		</dependency>
 		
 		
->>>>>>> refs/remotes/origin/master
+
 	</dependencies>
 
 	<build>
