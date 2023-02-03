@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.user.User;
 
 import jakarta.validation.Valid;
 
@@ -66,16 +68,22 @@ public class ProfessorController {
 	}
 
 	@PutMapping("/professorsUpdate/{professorDni}")
-	public ResponseEntity<ProfessorResponse> updateProfessor(@PathVariable String professorDni,
+	public ResponseEntity<ProfessorResponse> updateProfessor(Authentication authentication,@PathVariable String professorDni,
 			@RequestBody ProfessorRequest professorRequest) throws NotContentException {
 
-		ProfessorResponse response = professorService.updateProfessor(professorDni, professorRequest);
-
-		return new ResponseEntity<ProfessorResponse>(response, HttpStatus.OK);
+		User userDetails = (User) authentication.getPrincipal();
+		
+		if(professorDni.equals(userDetails.getDni())) {
+			
+			return new ResponseEntity<ProfessorResponse>(professorService.updateProfessor(professorDni, professorRequest), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<ProfessorResponse>(HttpStatus.UNAUTHORIZED);
+					
+		}
 
 	}
 
-	@DeleteMapping("/professorsUpdate/{professorDni}")
+	@DeleteMapping("/professorsDelete/{professorDni}")
 	public ResponseEntity<Integer> deleteProfessor(@PathVariable String professorDni) throws NotContentException {
 
 		Integer response = professorService.deleteByProfessorDni(professorDni);
@@ -85,7 +93,6 @@ public class ProfessorController {
 		} else {
 			return new ResponseEntity<Integer>(HttpStatus.OK);
 		}
-
 	}
 
 }

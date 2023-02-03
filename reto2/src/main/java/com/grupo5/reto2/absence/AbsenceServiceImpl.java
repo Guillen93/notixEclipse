@@ -130,7 +130,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 
 		if (absence == null) {
 
-			throw new NotContentException("El estudiante ya esta registrado");
+			throw new NotContentException("No existe falta para ese usuario");
 
 		} else {
 

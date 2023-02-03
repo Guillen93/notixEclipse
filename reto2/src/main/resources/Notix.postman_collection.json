@@ -1,0 +1,1650 @@
+{
+	"info": {
+		"_postman_id": "089355ab-fb92-4da2-b27b-077f727075f1",
+		"name": "Notix",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Absense",
+			"item": [
+				{
+					"name": "Absences",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/absences",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AbsencesByStudentDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/absences/44444444P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absences",
+								"44444444P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AbsencesByStudentAndSubjectId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/absences/44444444P/2",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absences",
+								"44444444P",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAbsencesByDniAndJustifiedTrue",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/absences/44444444P/justified",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absences",
+								"44444444P",
+								"justified"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateAbsences",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n        \"studentDni\": \"44444444P\",\r\n        \"subjectId\": 2,\r\n        \"foul\": \"2001-01-02\",\r\n        \"justified\": true\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/absences",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAbsences",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"justified\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/absencesUpdate/44444444P/1/2001-01-01",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absencesUpdate",
+								"44444444P",
+								"1",
+								"2001-01-01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletebasences",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/absencesDelete/44444444P/1/2001-01-02",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"absencesDelete",
+								"44444444P",
+								"1",
+								"2001-01-02"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Grade",
+			"item": [
+				{
+					"name": "Grades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/grades",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"grades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GradesById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/grades/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"grades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateGrade",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"DUMIO\",\r\n        \"language\": \"IN\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/gradesAdmin/create",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradesAdmin",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateGrade",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"name\": \"DUMIO\",\r\n    \"language\": \"ES\"\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/gradesAdmin/4",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradesAdmin",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteGrade",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradesAdmin/4",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradesAdmin",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GradeEdition",
+			"item": [
+				{
+					"name": "GradeEditions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradeEditions",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradeEditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GradeEditionById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradeEditions/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradeEditions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGradeEditionByStudentDNI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradeEditions/students/44444444P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradeEditions",
+								"students",
+								"44444444P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLastGradeEdition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradeEditions/getLast",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradeEditions",
+								"getLast"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateGradeEdition",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gradeId\": 2,\r\n    \"tutorDni\": \"11111111P\",\r\n    \"fecha\": \"2023-01-01\"\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/gradeEditions/create",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradeEditions",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateGradeEdition",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"tutorDni\": \"11111111P\",\r\n    \"fecha\": \"2022-02-01\"\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/gradesEditionsAdmin/2",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradesEditionsAdmin",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteGradeEdition",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradesEditionsAdmin/4",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradesEditionsAdmin",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mail",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipient\":\"itsasneosteicoechea@gmail.com\",\r\n    \"msgBody\":\"Arigato la pixa un gato\",\r\n    \"subject\":\"Arigato la pixa un gato\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/sendMail",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"sendMail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/notes",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NotesByDniAndSubjectId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/notes/44444444P/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notes",
+								"44444444P",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NotesByStudentDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/notes/student/44444444P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notes",
+								"student",
+								"44444444P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNotesByProfessorDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/notes/professor/11111111P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notes",
+								"professor",
+								"11111111P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateNotes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "      {\r\n        \"studentDni\": \"44444444P\",\r\n        \"subjectId\": 7\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/notesUpdate/create",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notesUpdate",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateNotes",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n        \"eva1\": 9.0,\r\n        \"eva2\": 5.0,\r\n        \"eva3\": 5.0,\r\n        \"final1\": 5,\r\n        \"final2\": 5\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/notesUpdate/44444444P/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notesUpdate",
+								"44444444P",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteNote",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/notesUpdate/44444444P/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"notesUpdate",
+								"44444444P",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Professor",
+			"item": [
+				{
+					"name": "professors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/professors",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProfessorByDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/professors/11111111P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professors",
+								"11111111P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfessorByStudentDNi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/professors/students/44444444P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professors",
+								"students",
+								"44444444P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTutorByGradeEditionId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/professors/gradeEditionId/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professors",
+								"gradeEditionId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateProfessor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"professorDni\": \"22345678A\",\r\n        \"name\": \"aLFREDA\",\r\n        \"surname\": \"Saiz\",\r\n        \"nationality\": \"Spain\",\r\n        \"email\": \"antonio@elorrieta.com\",\r\n        \"addres\": \"Bilbao\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/professors/create",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professors",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProfessor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"pepe\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/professorsUpdate/22345678A",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professorsUpdate",
+								"22345678A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProfessor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6IkFEVERBTSIsImlhdCI6MTY3NTQ0ODM5OSwiZXhwIjoxNjc1NTM0Nzk5LCJ1c2VyRG5pIjoiYWRtaW4iLCJyb2xlcyI6W3sicm9sZUlEIjoxLCJyb2xlIjoiQWRtaW4ifV19.jld8ySFbKTdaxVkcYqepEcehgL3njut9wkqFKSdbeBoyhfBm084jekJVpEY8yV6qneKDlwnbnt2531Yf1RQUIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/professorsDelete/22345678A",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"professorsDelete",
+								"22345678A"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rol",
+			"item": [
+				{
+					"name": "getRoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/roles",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRolesById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/roles/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createRole",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"A\"\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/roles",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateRole",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"ANDALUCIA\"\r\n}"
+						},
+						"url": {
+							"raw": "{{API_URI}}/roles/4",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"roles",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteRole",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URI}}/roles/4",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"roles",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/students",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "StudentByDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/students/44444444P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students",
+								"44444444P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "StudentBySubjectId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/students/subject/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students",
+								"subject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStudentBySubjectIdAndProfessorDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/students/subjects/1/professorDni/11111111P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students",
+								"subjects",
+								"1",
+								"professorDni",
+								"11111111P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStudentPromotionByGradeEditionId(Promotion)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/gradeEditions/1/student",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"gradeEditions",
+								"1",
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStudentsByProfessorDNi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/students/professor/11111111P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students",
+								"professor",
+								"11111111P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateStudents",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"studentDni\": \"12345678A\",\r\n        \"name\": \"Daniel\",\r\n        \"surname\": \"Guillen\",\r\n        \"bornDate\": \"1993-03-02\",\r\n        \"nationality\": \"Guillen\",\r\n        \"email\": \"guillen@elorrieta.com\",\r\n        \"phone\": \"123456789\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/students/create",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPromotion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"studentDni\": \"12345678A\",\r\n        \"gradeEditionId\": 3\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/students/gradeEditions",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"students",
+								"gradeEditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStudent",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"pepe\",\r\n        \"nationality\": \"españa\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/studentsUpdate/12345678A",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"studentsUpdate",
+								"12345678A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteStudent",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/studentsDelete/12345678A",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"studentsDelete",
+								"12345678A"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subject",
+			"item": [
+				{
+					"name": "Subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/subjects",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubjectById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/subjects/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubjectsByStudentDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/subjects/student/44444444P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjects",
+								"student",
+								"44444444P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubjectByGradeEditionId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/subjects/gradeEditionId/1",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjects",
+								"gradeEditionId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubjectsByProfessorDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/subjects/professor/11111111P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjects",
+								"professor",
+								"11111111P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateSubjects",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"gradeEditionId\": 1,\r\n        \"professorDni\": \"11111111P\",\r\n        \"name\": \"PMDA\",\r\n        \"duration\": 200\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/subjectsCreate",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjectsCreate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStudent",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"gradeEditionId\": 2,\r\n        \"professorDni\": \"X1111111P\",\r\n        \"name\": \"EnEkItA\",\r\n        \"duration\": 200\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/subjectsUpdate/10",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjectsUpdate",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSubjects",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URI}}/subjectsDelete/10",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"subjectsDelete",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{API_URI}}/users",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userByDni",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\": \"X0000000P\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/00000000P",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"00000000P"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsersByNotEnabled",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\": \"X0000000P\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/notEnabled",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"notEnabled"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsersWithoutAdminRole",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6IkFEVERBTSIsImlhdCI6MTY3NTQ1MDE2NywiZXhwIjoxNjc1NTM2NTY3LCJ1c2VyRG5pIjoiYWRtaW4iLCJyb2xlcyI6W3sicm9sZUlEIjoxLCJyb2xlIjoiQWRtaW4ifV19.IyZ9cSVJKr6aHnA2VtEELLsgFmwu0gy1CPRCcO1_p-rDAYBJ6TsYmH-tme7d_cQ7Y0bVfYGvnmZA9I-OeEnRkg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\": \"X0000000P\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/professor/student",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"professor",
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginUserSinCifrado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"dni\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/loginSinCifrado",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"loginSinCifrado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserSinCifrado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\": \"22345678A\",\r\n    \"password\": \"12345\",\r\n    \"roleId\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/signupSinCifrado",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"signupSinCifrado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addRoles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {   \r\n                \"roleId\": 1\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/99999999P/roles",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"99999999P",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEnabled",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ4MDc1MDUsImV4cCI6MTY3NDg5MzkwNSwidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.C1IDQydaCwpC2FNwefJjaB8oblcm8dyCsEnVhZeGLpcW24JVPVV-kgWrANr2hN1_J8IyzWWu2AvrUwRhqRsx-A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   { \r\n        \"password\":\"12345\",\r\n        \"enabled\": true\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/96385214A",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"96385214A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\": \"X0000000P\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/96385214A",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"96385214A"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMTExMTExMVAiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzU0NDgyNDYsImV4cCI6MTY3NTUzNDY0NiwidXNlckRuaSI6IjExMTExMTExUCIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.Ttw9v1XEJFuDuY5cSpcSOCL4jlvcBNxOdBOelfMEn1aQWXME4GvcZyQhGSvVBthH9GCsnLoq9J2rF6DYsJyq8Q",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URI",
+			"value": "http://localhost:8082/api",
+			"type": "default"
+		}
+	]
+}

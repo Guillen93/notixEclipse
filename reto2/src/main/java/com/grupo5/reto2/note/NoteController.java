@@ -3,6 +3,7 @@ package com.grupo5.reto2.note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.subject.Subject;
+import com.grupo5.reto2.subject.SubjectRepository;
+import com.grupo5.reto2.user.User;
 
 import jakarta.validation.Valid;
 
@@ -25,6 +29,9 @@ public class NoteController {
 
 	@Autowired
 	NoteService noteService;
+
+	@Autowired
+	SubjectRepository subjectRepository;
 
 	@GetMapping("/notes")
 	public ResponseEntity<Iterable<NoteServiceModel>> getNote() throws NotContentException {
@@ -68,25 +75,45 @@ public class NoteController {
 	}
 
 	@PutMapping("/notesUpdate/{studentDNI}/{subjetId}")
-	public ResponseEntity<NoteServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI,
-			@PathVariable Integer subjetId, @RequestBody NotePostRequest notePostRequest) throws NotContentException {
+	public ResponseEntity<NoteServiceModel> updateNoteByDoubleId(Authentication authentication,
+			@PathVariable String studentDNI, @PathVariable Integer subjetId,
+			@RequestBody NotePostRequest notePostRequest) throws NotContentException {
+		
+		User userDetails = (User) authentication.getPrincipal();
+		
+		Subject subject = subjectRepository.findBySubjectId(subjetId);
 
-		NoteServiceModel response = noteService.updateNotes(studentDNI, subjetId, notePostRequest);
+		
+		if (subject.getProfessorDni().equals(userDetails.getDni())) {
+			NoteServiceModel response = noteService.updateNotes(studentDNI, subjetId, notePostRequest);
 
-		return new ResponseEntity<NoteServiceModel>(response, HttpStatus.OK);
+			return new ResponseEntity<NoteServiceModel>(response, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<NoteServiceModel>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@DeleteMapping("/notesUpdate/{studentDNI}/{subjetId}")
-	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI, @PathVariable Integer subjetId)
-			throws NotContentException {
+	public ResponseEntity<Integer> deleteNoteByDoubleId(Authentication authentication, @PathVariable String studentDNI,
+			@PathVariable Integer subjetId) throws NotContentException {
+		
+		User userDetails = (User) authentication.getPrincipal();
+		
+		Subject subject = subjectRepository.findBySubjectId(subjetId);
 
-		Integer response = noteService.deleteNotesById(studentDNI, subjetId);
+		if (subject.getProfessorDni().equals(userDetails.getDni())) {
 
-		if (response == 0) {
-			throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");
+			Integer response = noteService.deleteNotesById(studentDNI, subjetId);
+
+			if (response == 0) {
+				throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");
+			} else {
+				return new ResponseEntity<Integer>(HttpStatus.OK);
+			}
 		} else {
-			return new ResponseEntity<Integer>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
+
 	}
 
 }

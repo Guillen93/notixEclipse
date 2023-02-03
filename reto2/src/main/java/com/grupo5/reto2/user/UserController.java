@@ -54,7 +54,8 @@ public class UserController {
 
 		return new ResponseEntity<Iterable<UserServiceModel>>(userService.getNotEnabledUsers(), HttpStatus.OK);
 	}
-	
+
+	// endpoint para devolucion de clave para cifrado de android
 	@GetMapping("/publicKey")
 	public ResponseEntity<String> getPublicKey() throws NotContentException {
 
@@ -67,6 +68,7 @@ public class UserController {
 		return new ResponseEntity<Iterable<UserServiceModel>>(userService.findUsersWithoutAdminRole(), HttpStatus.OK);
 	}
 
+	// requiere cifrado
 	@PostMapping("/users/login")
 	public ResponseEntity<?> login(@RequestBody UserRequest request) {
 		try {
@@ -91,6 +93,7 @@ public class UserController {
 		}
 	}
 
+	// requiere cifrado
 	@PostMapping("/users/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequest request) throws ConflictException, UserException {
 
@@ -126,14 +129,6 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/users/{userDni}")
-	public ResponseEntity<Integer> deleteUser(@PathVariable String userDni) throws NotContentException {
-
-		userService.deleteUser(userDni);
-
-		return new ResponseEntity<Integer>(HttpStatus.OK);
-	}
-
 	@PutMapping("/users/{userDni}/roles")
 	public ResponseEntity<UserServiceModel> addRoles(@PathVariable String userDni, @RequestBody UserRequest request)
 			throws ConflictException, UserException, NotContentException {
@@ -141,6 +136,7 @@ public class UserController {
 		return new ResponseEntity<UserServiceModel>(userService.addRoles(userDni, request), HttpStatus.OK);
 	}
 
+	// requiere cifrado
 	@PutMapping("/users/updatePass/{userDni}")
 	public ResponseEntity<UserServiceModel> updateuser(@PathVariable String userDni, @RequestBody UserRequest request)
 			throws ConflictException, UserException, NotContentException {
@@ -153,6 +149,14 @@ public class UserController {
 			@RequestBody UserRequest request) throws ConflictException, UserException, NotContentException {
 
 		return new ResponseEntity<UserServiceModel>(userService.updateUserAdmin(userDni, request), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/users/{userDni}")
+	public ResponseEntity<Integer> deleteUser(@PathVariable String userDni) throws NotContentException {
+
+		userService.deleteUser(userDni);
+
+		return new ResponseEntity<Integer>(HttpStatus.OK);
 	}
 
 }

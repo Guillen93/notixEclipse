@@ -5,6 +5,7 @@ import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.subject.Subject;
+import com.grupo5.reto2.subject.SubjectRepository;
+import com.grupo5.reto2.user.User;
 
 import jakarta.validation.Valid;
 
@@ -27,6 +31,8 @@ public class AbsenceController {
 
 	@Autowired
 	AbsenceService absenceService;
+	@Autowired
+	SubjectRepository subjectRepository;
 
 	@GetMapping("/absences")
 	public ResponseEntity<Iterable<AbsenceServiceModel>> getAbsence() throws NotContentException {
@@ -69,27 +75,46 @@ public class AbsenceController {
 	}
 
 	@PutMapping("/absencesUpdate/{studentDNI}/{subjetId}/{dateString}")
-	public ResponseEntity<AbsenceServiceModel> updateNoteByDoubleId(@PathVariable String studentDNI,
-			@PathVariable Integer subjetId, @PathVariable String dateString,
+	public ResponseEntity<AbsenceServiceModel> updateNoteByDoubleId(Authentication authentication,
+			@PathVariable String studentDNI, @PathVariable Integer subjetId, @PathVariable String dateString,
 			@RequestBody AbsencePostRequest absencePostRequest) throws NotContentException {
 
-		AbsenceServiceModel response = absenceService.updateAbsence(studentDNI, subjetId, dateString,
-				absencePostRequest);
+		User userDetails = (User) authentication.getPrincipal();
 
-		return new ResponseEntity<AbsenceServiceModel>(response, HttpStatus.OK);
+		Subject subject = subjectRepository.findBySubjectId(subjetId);
+
+		if (subject.getProfessorDni().equals(userDetails.getDni())) {
+
+			return new ResponseEntity<AbsenceServiceModel>(
+					absenceService.updateAbsence(studentDNI, subjetId, dateString, absencePostRequest), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<AbsenceServiceModel>(HttpStatus.UNAUTHORIZED);
+		}
+
 	}
 
 	@DeleteMapping("/absencesDelete/{studentDNI}/{subjetId}/{dateString}")
-	public ResponseEntity<Integer> deleteNoteByDoubleId(@PathVariable String studentDNI, @PathVariable Integer subjetId,
-			@PathVariable String dateString) throws NotContentException {
-		Date date = Date.valueOf(dateString);
-		Integer response = absenceService.deleteAbsence(studentDNI, subjetId, date);
+	public ResponseEntity<Integer> deleteNoteByDoubleId(Authentication authentication, @PathVariable String studentDNI,
+			@PathVariable Integer subjetId, @PathVariable String dateString) throws NotContentException {
 
-		if (response == 0) {
-			throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");
+		User userDetails = (User) authentication.getPrincipal();
+
+		Subject subject = subjectRepository.findBySubjectId(subjetId);
+
+		if (subject.getProfessorDni().equals(userDetails.getDni())) {
+
+			Date date = Date.valueOf(dateString);
+			Integer response = absenceService.deleteAbsence(studentDNI, subjetId, date);
+
+			if (response == 0) {
+				throw new NotContentException("No existe nota con ID o Estudiante con ese DNI");
+			} else {
+				return new ResponseEntity<Integer>(HttpStatus.OK);
+			}
 		} else {
-			return new ResponseEntity<Integer>(HttpStatus.OK);
+			return new ResponseEntity<Integer>(HttpStatus.UNAUTHORIZED);
 		}
+
 	}
 
 }

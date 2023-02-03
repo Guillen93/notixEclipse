@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo5.reto2.exceptions.ConflictException;
 import com.grupo5.reto2.exceptions.NotContentException;
+import com.grupo5.reto2.user.User;
 
 import jakarta.validation.Valid;
 
@@ -98,15 +100,19 @@ public class StudentController {
 	}
 
 	@PutMapping("/studentsUpdate/{studentDNI}")
-	public ResponseEntity<StudentServiceModel> updateStudents(@PathVariable String studentDNI,
+	public ResponseEntity<StudentServiceModel> updateStudents(Authentication authentication,@PathVariable String studentDNI,
 			@RequestBody StudentPostRequest studentPostRequest) throws ConflictException, NotContentException {
 
-		StudentServiceModel response = studentService.updateStudent(studentDNI, studentPostRequest);
+		User userDetails = (User) authentication.getPrincipal();
+		if(studentDNI.equals(userDetails.getDni())) {
 
-		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
+		return new ResponseEntity<StudentServiceModel>(studentService.updateStudent(studentDNI, studentPostRequest), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<StudentServiceModel>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
-	@DeleteMapping("/studentsUpdate/{studentDNI}")
+	@DeleteMapping("/studentsDelete/{studentDNI}")
 	public ResponseEntity<Integer> deleteStudents(@PathVariable String studentDNI) throws NotContentException {
 
 		Integer response = studentService.deleteByStudentDni(studentDNI);
