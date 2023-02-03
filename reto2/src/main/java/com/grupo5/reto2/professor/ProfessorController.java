@@ -75,7 +75,7 @@ public class ProfessorController {
 
 	}
 
-	@DeleteMapping("/professors/{professorDni}")
+	@DeleteMapping("/professorsUpdate/{professorDni}")
 	public ResponseEntity<Integer> deleteProfessor(@PathVariable String professorDni) throws NotContentException {
 
 		Integer response = professorService.deleteByProfessorDni(professorDni);

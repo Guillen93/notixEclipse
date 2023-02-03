@@ -70,7 +70,7 @@ public class SubjectController {
 		return new ResponseEntity<Iterable<SubjectServiceModel>>(response, HttpStatus.OK);
 	}
 
-	@PostMapping("/subjects")
+	@PostMapping("/subjectsUpdate")
 	public ResponseEntity<SubjectServiceModel> createSubject(@Valid @RequestBody SubjectPostRequest subjectPostRequest)
 			throws ConflictException, NotContentException {
 
@@ -79,7 +79,7 @@ public class SubjectController {
 		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/subjects/{subjectId}")
+	@PutMapping("/subjectsUpdate/{subjectId}")
 	public ResponseEntity<SubjectServiceModel> updateSubject(@PathVariable Integer subjectId,
 			@RequestBody SubjectPostRequest subjectPostRequest) throws ConflictException, NotContentException {
 
@@ -88,7 +88,7 @@ public class SubjectController {
 		return new ResponseEntity<SubjectServiceModel>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/subjects/{subjectId}")
+	@DeleteMapping("/subjectsUpdate/{subjectId}")
 	public ResponseEntity<Integer> deleteSubject(@PathVariable Integer subjectId) throws NotContentException {
 
 		subjectService.deleteSubject(subjectId);

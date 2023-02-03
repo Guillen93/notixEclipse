@@ -106,7 +106,7 @@ public class StudentController {
 		return new ResponseEntity<StudentServiceModel>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/students/{studentDNI}")
+	@DeleteMapping("/studentsUpdate/{studentDNI}")
 	public ResponseEntity<Integer> deleteStudents(@PathVariable String studentDNI) throws NotContentException {
 
 		Integer response = studentService.deleteByStudentDni(studentDNI);
