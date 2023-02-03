@@ -1,0 +1,78 @@
+# notixEclipse
+servidor springboot en eclipse para reto 2 grupo5
+
+Recursos necesarios para la ejecucion y prueba del servidor:
+
+En la carpeta src/main/resources se encuentra :
+
+   -->la carpeta /static/images con las imagenes de prueba y donde se alojan las imagenes que vienen de android 
+   -->el script de prueba de la base de datos.
+   -->la libreria de postman.
+   -->los archivos de user y password del email para la parte de correo electronico.
+
+<--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+Instrucciones de implementacion:
+
+   -->crear la base de datos vacia en Mysql con el nombre de g5r2
+   -->descargar el servidor de github en eclipse.
+   -->ejecutar el servidor para que hibernate te genere las tablas y relacciones.
+   -->ejecutar el script de bases de datos para rellenar las tablas de la base de datos con datos de prueba.
+   -->Importar la libreria de postman para poder realizar las pruebas.
+   -->tener en cuenta que nuestro servidor trabaja en el puerto 8082.
+
+<--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+Contexto de la aplicación
+
+Notix es una aplicacion diseñada para profesores y alumnos, para mejorar la gestion y la entrega de notas.
+Consiguiendo de esta manera que la comunicacion profesor estudiante sea lo mas directa y rapida posible. 
+  
+La aplicacion contara con tres tipos de usuarios:
+    --> Admin: Sera el encargado de administrar a los usuarios, asi como de activarlos una vez el usuario haya sido registrado.
+    --> Profesor: son usuarios con el rol de profesor, podra realizar las acciones permitidas para rol profesor y las permitidas para todos.
+    --> Estudiante: son usuarios con el rol de estudiante, podra realizar las acciones permitidas para rol estudiante y las permitidas para todos..
+    
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+Android:
+
+Desde android, tanto como profesor y alumno tendran la posibilidad de registrarse.
+Una vez registrados desde DI deberan ser establecidos en el sistema como habilitados y mandará un email diciendo que el usuario ha sido activado y asi podran logearse en el sistema. 
+
+Una vez logeados los alumnos tendran las siguientes funciones:
+
+--> Podran ver sus notas por evaluaciones y un resumen de todo, ver sus asignaturas, ver sus faltas, ver sus datos personales, podra solicitar una reunion con su profesor via email.
+  
+Para los profesores contaremos con las siguientes funciones:
+
+--> Ver los alumnos a los que imparten clase, las asignaturas, introducir, ver,modificar y borrar notas por alumnos o por asignatura, ver y añadir faltas a un alumno, 
+finalmente podra concertar una reunion con sus alumnos enviando un email. 
+ 
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+Di:
+
+En di, solamente los usuarios con el rol admin podran logearse, dado que son los encargados de gestionar los demas usuarios.
+
+Una vez dentro del sistema podra ver, añadir, borrar, y editarusuarios, profesores y estudiantes.
+ademas podra habilitar los usuarios para posteriormente entar en android 
+,enviará un correo al usuario informandole de que ya ha sido habilitado desabilitado segun convenga.
+
+<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+Server Spring-boot :
+
+
+Se ha realizado un servidor con Spring Boot en MySql utilizando hibernate. Se han utilizado las 3 capas (Controlador, Servicios y Repositorios).
+
+En la base de datos se van a registrar los usuarios que van a utilizar la aplicación (Alumno y profesor), aparte de los diferentes elementos de la aplicación (Notas, faltas, etc).
+
+  -->No se podrá realizar ninguna consulta sin estar previamente logeado.
+
+  -->Las notas y ausencias solo podran ser modificadas o eliminadas por el profesor que imparta la asignatura de la misma, ademas del administrador, no implementado por falta de tiempo.
+
+  -->Profesores y alumnos solo podran ser modificados por ellos mismos o por el administrador. Solo el administrador tendra permisos para eliminarlos.
+
+  -->Los usuarios solo pordran ser listados por el administrador.
+
+  -->El administrador será el que active al usuario para poder hacer login.
+
+  -->Hay endpoints diferentes para login , signup , update user ya que se necesita cifrar en android y no en Di. por lo tanto en postman se usara loginSincifrado , signupCincifrado ,UpdateUserPassSinCifrado.
+
+<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
