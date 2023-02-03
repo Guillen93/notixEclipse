@@ -75,4 +75,15 @@ En la base de datos se van a registrar los usuarios que van a utilizar la aplica
 
   -->Hay endpoints diferentes para login , signup , update user ya que se necesita cifrar en android y no en Di. por lo tanto en postman se usara loginSincifrado , signupCincifrado ,UpdateUserPassSinCifrado.
 
+
+		--> Usuarios:
+			Rol Profesor: UserDni:11111111P 
+						  Pass:12345
+						  
+			Rol Student:  UserDni:66666666P 
+						  Pass:12345
+						  
+			Rol Admin:    UserDni:admin 
+						  Pass:admin
+						  
 <----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
