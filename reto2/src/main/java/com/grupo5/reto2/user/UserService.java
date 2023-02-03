@@ -11,6 +11,7 @@ public interface UserService {
 	Iterable<UserServiceModel> findUsersWithoutAdminRole() throws NotContentException;
 	UserServiceModel GetUsersBydni(String username) throws NotContentException;
 	UserServiceModel updateUser(String username,UserRequest request) throws NotContentException;
+	UserServiceModel updateUserPassSinCifrado(String username,UserRequest request) throws NotContentException;
 	UserServiceModel updateUserAdmin(String username,UserRequest request) throws NotContentException;
 	Boolean deleteUser(String username) throws NotContentException;
 	UserServiceModel addRoles(String userDni, UserRequest request) throws NotContentException;

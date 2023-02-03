@@ -207,6 +207,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return response;
 
 	}
+	
+	@Override
+	public UserServiceModel updateUserPassSinCifrado(String username, UserRequest request) throws NotContentException {
+
+		User user = userRepository.findByDni(username)
+				.orElseThrow(() -> new NotContentException("No existe ese usuario"));
+
+
+		if (request.getPassword() != null) {
+			HashPasswordEncoder passwordEncoder = new HashPasswordEncoder();
+			String password = passwordEncoder.encode(request.getPassword());
+			user.setPassword(password);
+
+		}
+		
+
+		user = userRepository.save(user);
+
+		UserServiceModel response = new UserServiceModel(user.getDni(), user.isEnabled(), user.getRoles());
+
+		return response;
+
+	}
 
 	@Override
 	public UserServiceModel updateUserAdmin(String username, UserRequest request) throws NotContentException {

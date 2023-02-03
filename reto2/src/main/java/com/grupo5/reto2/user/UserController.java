@@ -143,6 +143,15 @@ public class UserController {
 
 		return new ResponseEntity<UserServiceModel>(userService.updateUser(userDni, request), HttpStatus.OK);
 	}
+	
+	@PutMapping("/users/updatePassSinCifrado/Me")
+	public ResponseEntity<UserServiceModel> updateuserSinCifrado(Authentication authentication, @RequestBody UserRequest request)
+			throws ConflictException, UserException, NotContentException {
+
+		User userDetails = (User) authentication.getPrincipal();
+		
+		return new ResponseEntity<UserServiceModel>(userService.updateUserPassSinCifrado(userDetails.getDni(), request), HttpStatus.OK);
+	}
 
 	@PutMapping("/users/admin/{userDni}")
 	public ResponseEntity<UserServiceModel> updateuserAdmin(@PathVariable String userDni,
