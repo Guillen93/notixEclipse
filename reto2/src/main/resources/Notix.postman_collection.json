@@ -750,16 +750,6 @@
 				{
 					"name": "DeleteProfessor",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6IkFEVERBTSIsImlhdCI6MTY3NTQ0ODM5OSwiZXhwIjoxNjc1NTM0Nzk5LCJ1c2VyRG5pIjoiYWRtaW4iLCJyb2xlcyI6W3sicm9sZUlEIjoxLCJyb2xlIjoiQWRtaW4ifV19.jld8ySFbKTdaxVkcYqepEcehgL3njut9wkqFKSdbeBoyhfBm084jekJVpEY8yV6qneKDlwnbnt2531Yf1RQUIQ",
-									"type": "string"
-								}
-							]
-						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -1324,16 +1314,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -1364,16 +1344,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -1404,16 +1374,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6IkFEVERBTSIsImlhdCI6MTY3NTQ1MDE2NywiZXhwIjoxNjc1NTM2NTY3LCJ1c2VyRG5pIjoiYWRtaW4iLCJyb2xlcyI6W3sicm9sZUlEIjoxLCJyb2xlIjoiQWRtaW4ifV19.IyZ9cSVJKr6aHnA2VtEELLsgFmwu0gy1CPRCcO1_p-rDAYBJ6TsYmH-tme7d_cQ7Y0bVfYGvnmZA9I-OeEnRkg",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -1473,7 +1433,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"dni\": \"22345678A\",\r\n    \"password\": \"12345\",\r\n    \"roleId\": \"2\"\r\n}",
+							"raw": "{\r\n    \"dni\": \"52366325A\",\r\n    \"password\": \"12345\",\r\n    \"roleId\": \"2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1496,16 +1456,6 @@
 				{
 					"name": "addRoles",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [
 							{
@@ -1535,16 +1485,6 @@
 				{
 					"name": "updateEnabled",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ4MDc1MDUsImV4cCI6MTY3NDg5MzkwNSwidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.C1IDQydaCwpC2FNwefJjaB8oblcm8dyCsEnVhZeGLpcW24JVPVV-kgWrANr2hN1_J8IyzWWu2AvrUwRhqRsx-A",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [
 							{
@@ -1571,6 +1511,45 @@
 					"response": []
 				},
 				{
+					"name": "updatePassSinCifrado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMTExMTExMVAiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzU0NTQ2NDUsImV4cCI6MTY3NTU0MTA0NSwidXNlckRuaSI6IjExMTExMTExUCIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.aYbLoBBI2a49KNfcsgNHVQypglGtsTF42_hYZi-8OyI2T2CCjX1wn3GMithZWBI0vK5FXFVfIl-cHrGo3mvLNg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   { \r\n        \"password\":\"prueba\"\r\n    }"
+						},
+						"url": {
+							"raw": "{{API_URI}}/users/updatePassSinCifrado/Me",
+							"host": [
+								"{{API_URI}}"
+							],
+							"path": [
+								"users",
+								"updatePassSinCifrado",
+								"Me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "deleteUser",
 					"request": {
 						"auth": {
@@ -1578,7 +1557,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjM4NTIxNEEiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzQ3NzY4MjMsImV4cCI6MTY3NDg2MzIyMywidXNlckRuaSI6Ijk2Mzg1MjE0QSIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.UzxKQG0YXh25Gov2JJI-nIKg-3rBj6D2zY4VCKDB5EqSTii7x8wZCP46P-p9LtcDyc2eF0WsqYvGf9ZMVEUh7Q",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6IkFEVERBTSIsImlhdCI6MTY3NTQ1MTQ2MCwiZXhwIjoxNjc1NTM3ODYwLCJ1c2VyRG5pIjoiYWRtaW4iLCJyb2xlcyI6W3sicm9sZUlEIjoxLCJyb2xlIjoiQWRtaW4ifV19.2AGhgE_OOOan_0XwHw8QCfIWEVKS4Ajgzv9RKWzfVyNEDC2-mgQeymkXBocfCmsyyPA2b-yqNhIE4gehchH23g",
 									"type": "string"
 								}
 							]
@@ -1595,13 +1574,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_URI}}/users/96385214A",
+							"raw": "{{API_URI}}/users/52366325A",
 							"host": [
 								"{{API_URI}}"
 							],
 							"path": [
 								"users",
-								"96385214A"
+								"52366325A"
 							]
 						}
 					},
@@ -1615,7 +1594,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMTExMTExMVAiLCJpc3MiOiJBRFREQU0iLCJpYXQiOjE2NzU0NDgyNDYsImV4cCI6MTY3NTUzNDY0NiwidXNlckRuaSI6IjExMTExMTExUCIsInJvbGVzIjpbeyJyb2xlSUQiOjIsInJvbGUiOiJQcm9mZXNzb3IifV19.Ttw9v1XEJFuDuY5cSpcSOCL4jlvcBNxOdBOelfMEn1aQWXME4GvcZyQhGSvVBthH9GCsnLoq9J2rF6DYsJyq8Q",
+				"value": "",
 				"type": "string"
 			}
 		]
